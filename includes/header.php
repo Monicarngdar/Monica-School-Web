@@ -22,22 +22,34 @@
         
         <div class="d-flex align-items-center navbar-brand-wrapper"> 
             <a class="navbar-brand px-2" href="#">MYSKOLAR</a>
-            
-        <a class="nav-link text-white mx-3 fw-semibold" href="#">Dashboard</a>
-        <a class="nav-link text-white fw-semibold" href="#">Emails</a>
-            
+
+   <!--When the user is logged in, the dashboard and email link would be shown -->
+        <?php if (isset($_SESSION["username"])) {   ?>
+            <a class="nav-link text-white mx-3 fw-semibold" href="#">Dashboard</a>
+            <a class="nav-link text-white fw-semibold" href="#">Emails</a>
+        <?php }  ?>
+       
+        
             </div>
+
+
         <div class="w-100 d-none d-md-block"></div>
 
         <div class="d-flex align-items-center me-3">
-            <!--<span class="profile-text text-light me-3">Prof</span> -->
+
+    <!--When the user is logged in, the profile would be shown -->
+        <?php if (isset($_SESSION["username"])) {   ?>
             <img src="images/circle.png" /> &nbsp;
+             <?php }  ?>
             <button class="navbar-toggler d-md-none" type="button"  data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon" style="width: 1em; height: 1em;"></span> 
             </button>
         </div>
     </header>
 
+    
+    <!--When the user is logged in, my academics would be shown -->
+    <?php if (isset($_SESSION["username"])) {   ?>
     <div class="container-fluid">
         <div class="row">
             
@@ -64,4 +76,6 @@
                         </li>
                     </ul>
                 </div>
+                 <?php }  ?>
+                
             </nav>

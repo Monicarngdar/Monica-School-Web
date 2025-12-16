@@ -40,6 +40,7 @@ function createUser($conn, $username, $password, $roleId, $name, $surname, $date
         session_start();
         $_SESSION["username"] = $username;
         $_SESSION["userId"] = $userId;
+        $_SESSION["userRole"] = $user["roleId"];
 
         header("location: ../profile.php");
         exit();

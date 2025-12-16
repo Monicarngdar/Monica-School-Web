@@ -10,17 +10,16 @@
     else{
 
         $username = $_POST["username"];
-        $nationality = $_POST["nationality"];
         $password = $_POST["password"];
         $confpass = $_POST["confpass"];
         $firstName = $_POST["name"];
         $lastName = $_POST["surname"];
         $email = $_POST["email"];
-        $age = $_POST["age"];
+    
 
         $error = "";
 
-        if(emptyRegistrationInput($username,$password,$firstName,$lastName,$age,$nationality,$email)){
+        if(emptyRegistrationInput($username,$password,$firstName,$lastName,$email)){
 y
             $error = $error."emptyinput=true&";
         }
@@ -42,7 +41,7 @@ y
             exit();
         }
 
-        registerUser($conn,$username,$password,$firstName,$lastName,$age,$nationality,$email);
+        registerUser($conn$username,$password,$firstName,$lastName,$emaill);
 
        
         header("location: ../register.php?success=true");

@@ -85,26 +85,16 @@
 
         /*Login Page */
 
-        .login-container{
-            text-align: center;
-            background-color: white;
-            padding: 40px;
-            width: 100%;
-            max-width: 400px;
+  
 
-            margin-left: auto;
-            margin-right: auto;
-        }
+  
+    .user-login-form{
+    display: block;
+    width: 100%;
+    background-color: white;
+    border: 3px solid #2787B4;
+    height: 50px;
+    font-size: 1.1rem;
+}
 
-        
-    
-        .user-login-form{
-         display: block;
-         width: 100%;
-         background-color: white;
-         border: 3px solid #2787B4;
-         height: 50px;
-         font-size: 1.1rem;
-        }
 
-        

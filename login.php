@@ -37,38 +37,34 @@
             </div>
     <?php } ?>
 
-    
 
+<form action="includes/login-inc.php" method="POST">
+    <div class="container">
+        <h2 class="user-login text-center">User Log in</h2>
 
-<div class = "login-container mx-auto">
-<h2 class="user-login text-center ">User Log in</h2>
+        <!-- Username -->
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" id="username"  name="username"  class="user-login-form form-control"  placeholder="Username"> </div>
+        </div>
 
-     <form action="includes/login-inc.php" method= "POST">
+        <!-- Password -->
+        <div class="row mb-4">
+            <div class="col">
+                <input   type="password"   id="password"  name="password"  class="user-login-form form-control" placeholder="Password"></div>
+        </div>
 
-     <div class = "mb-3"> 
-         <input type="text" id="username" name="username" class = "user-login-form" placeholder = "Username"> 
-         </div>
-
-     <div class = "mb-4"> 
-         <input type="text" id="password" name="password" class = "user-login-form" placeholder = "Password"> 
-        
-
+        <!-- Button -->
+        <div class="row">
+            <div class="col">
+                <button   type="submit"   name="submit"  id="submit"  class="btn btn-primary w-100"> LOG IN</button>
             </div>
-            </div>
-
-    
-<div class="d-flex justify-content-center gap-3">
-    <button type="button" class="btn btn-secondary">BACK</button>                
-     <button type="submit" class="btn btn-primary">LOG IN</button>
-     </div>
-
-
-  </div>
-</div>
-
+        </div>
+    </div>
 </form>
 
-            </main>
+    
+
 
     <?php  include "includes/footer.php";?>
 
