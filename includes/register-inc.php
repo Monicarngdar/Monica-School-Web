@@ -14,13 +14,15 @@
         $confpass = $_POST["confpass"];
         $firstName = $_POST["name"];
         $lastName = $_POST["surname"];
+        $role = $_POST["role"];
+        $date_of_birth = $_POST["date_of_birth"];
         $email = $_POST["email"];
     
 
         $error = "";
 
-        if(emptyRegistrationInput($username,$password,$firstName,$lastName,$email)){
-y
+        if(emptyRegistrationInput($username,$password,$firstName,$lastName,$role,$date_of_birth ,$email)){
+
             $error = $error."emptyinput=true&";
         }
 
@@ -41,7 +43,7 @@ y
             exit();
         }
 
-        registerUser($conn$username,$password,$firstName,$lastName,$emaill);
+        registerUser($conn,$username,$password,$firstName,$lastName,$role,$date_of_birth,$emaill);
 
        
         header("location: ../register.php?success=true");

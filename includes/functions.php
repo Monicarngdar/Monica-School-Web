@@ -1,7 +1,7 @@
 <?php
 
 // Insert into the user_profile
-function createUser($conn, $username, $password, $roleId, $name, $surname, $date_of_brith = null, $street1 = null, $street2 = null, $city = null, $postCode = null){
+function registerUser($conn, $username,$password,$firstName,$lastName,$role,$date_of_birth,$emailll){
 // Insert into the user_account
    $sql1 = "INSERT INTO user_account (roleId, username, password) VALUES (?, ?, ?)";
    $stmt1 = mysqli_stmt_init($conn);
@@ -11,9 +11,27 @@ function createUser($conn, $username, $password, $roleId, $name, $surname, $date
     }
     //Hashed password making our user's passwords secure
      $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    mysqli_stmt_bind_param($stmt1, "iss", $roleId, $username, $hashedPassword);
+    mysqli_stmt_bind_param($stmt1, "iss", $role, $username, $hashedPassword);
+    mysqli_stmt_execute($stmt1);
+
+    $user = userExists($conn,$username);
+    $userId = $user[$userId];
+
+    //Insert into the user profile
+   $sql2 = "INSERT INTO user_profile (userId,name,surname,email,date_of_birth) VALUES (?,?,?,?,?)";
+   $stmt2 = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt2, $sql2)) {
+        return "Error preparing user_profile";
+
+    }
+    
+    mysqli_stmt_bind_param($stmt1, "iss", $userId, $name, $surname, $email, $date_of_birth);
     mysqli_stmt_execute($stmt1);
 }
+
+
+
+
 
  function login($conn, $username, $password){
         $user = userExists($conn, $username);
@@ -73,11 +91,10 @@ function createUser($conn, $username, $password, $roleId, $name, $surname, $date
     }
 
     function getUser($conn, $userId){
-        /*
-            This function is very similar to the one above. It gets all details from the users table, but only for one user.
-            We add a userId parameter to be able to receive it from elsewhere, and then we can use it to filter out the results through SQL. 
-        */
+       
+        //
         $sql = "SELECT * FROM user_account WHERE userId = ?;";
+        
         // The ? above is called a wildcard. It's used to test the SQL statement and then replace it with an actual value.
         $stmt = mysqli_stmt_init($conn);
 
@@ -99,6 +116,36 @@ function createUser($conn, $username, $password, $roleId, $name, $surname, $date
         }
         else{
             return false;
+        }
+    }
+
+
+    // Registration Form
+    function emptyRegistrationInput($username,$password,$firstName,$lastName, $role,$date_of_birth ,$email){
+        if(empty($username) || empty($password) || empty($firstName) || empty($lastName) || empty ($role) || empty ($date_of_birthl) || empty ($email)){
+            return true;
+        }
+    }
+
+
+    //Invalid Forms 
+     function invalidUsername($username){
+        // allow letters and numbers, but nothing else
+        if(!preg_match("/^[a-zA-Z0-9]*$/",$username)){
+            return true;
+        }
+    }
+
+    function passwordsDoNotMatch($password, $confpass){
+        // check if passwords have the same value
+        if($password != $confpass){
+            return true;
+        }
+    }
+
+    function invalidEmail($email){
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            return true;
         }
     }
     

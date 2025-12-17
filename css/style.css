@@ -9,8 +9,10 @@
 
 
         .bg-myskolar {
-            background-color: #2787B4;
+        background-color: #2787B4;
 }
+
+
         /* Adjusted .page-subtitle to be generic for all subtitles */
         .dashboard-subtitle {
             margin-left: 5px;

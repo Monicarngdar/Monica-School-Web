@@ -30,7 +30,7 @@
                         <input type="password" name="password" id="password" placeholder="Password" class="w-100 m-2">
                     </div>
                     <div class="col">
-                        <input type="password" name="confpass" id="confpass" placeholder="abc123!" class="w-100 m-2">
+                        <input type="password" name="confpass" id="confpass" placeholder="Confirm Password" class="w-100 m-2">
                     </div>
                 </div>
                 <div class="row">
@@ -41,13 +41,32 @@
                         <input type="text" name="surname" id="surname" placeholder="Surname" class="w-100 m-2">
                     </div>
                 </div>
+
+                        <div class="row">
+                        <div class="col">
+                        <select name="role" id="role" class="w-100 m-2" >
+      <option value="1" selected="selected">Student</option>
+      <option value="2">Lecturer</option>
+      <option value="3">Admin</option>
+    
+    
+    </select>
+  </div>
+</div>
+
+                 <div class="row">
+            <div class="col">
+                <input type="date" name="date_of_birth" id="date_of_birth"  value="Date of Birth" placeholder="Date of Birth" class="w-100 m-2">
+            </div>
+        </div>
+
                 
                 <div class="row my-3">
                     <div class="col">
                         <button class="btn btn-primary w-100 m-2" type="submit" name="submit" id="submit">SUBMIT</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-danger w-100 m-2" type="reset" name="reset" id="reset">CANCEL</button>
+                        <button class="btn btn-secondary w-100 m-2" type="reset" name="reset" id="reset">CANCEL</button>
                     </div>
                 </div>
             </form>
