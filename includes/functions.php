@@ -47,7 +47,6 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         if (password_verify($password, $dbPassword)){
             $checkedPassword = true;
         }
-       // $checkedPassword = password_verify($password, $dbPassword);
 
         if(!$checkedPassword){
             header("location: ../login.php?error=incorrectlogin");
@@ -89,20 +88,44 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
     }
 
+    //
     function getUser($conn, $userId){
        
         //
         $sql = "SELECT * FROM user_account WHERE userId = ?;";
-        
-        // The ? above is called a wildcard. It's used to test the SQL statement and then replace it with an actual value.
+
         $stmt = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
             echo "<p>We have an error - Could not load user.</p>";
             exit();
         }
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+        
+        mysqli_stmt_execute($stmt);
 
-        // Here, we replace the ? wildcard with an integer, its value being in the userId variable
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+    function getUserProfile($conn, $userId){
+       
+        //
+        $sql = "SELECT * FROM user_profile WHERE userId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load user.</p>";
+            exit();
+        }
         mysqli_stmt_bind_param($stmt, "i", $userId);
         
         mysqli_stmt_execute($stmt);
