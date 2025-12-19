@@ -68,13 +68,13 @@
                             <a class="nav-link active" aria-current="page" >My Academics</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Timetable</a>
+                            <a class="nav-link" href="#">Manage Users</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">My Units</a>
+                            <a class="nav-link" href="#">Manage Courses</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Attendance</a>
+                            <a class="nav-link" href="#">Manage Units</a>
                         </li>
                          <li class="nav-item">
                             <a class="nav-link" href="#">Assignments</a>
