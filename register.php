@@ -3,6 +3,42 @@
 
 ?>
 
+
+<!--- User Register -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content-wrapper">
+
+<!--- Success and Errors Message in form -->
+      <?php 
+              if(isset($_GET["success"])) { 
+                 $message = "User Created Successfully";
+                 include "includes/show-success.php";
+            }
+
+
+        if(isset($_GET["error"])) { 
+            $message = "";
+
+             if (isset($_GET["missingFields"])) {
+                 $message = "Missing Fields";
+                 include "includes/show-error.php";
+            }
+            if (isset($_GET["invalidUsername"])) {
+                $message = "Invalid Username";
+                include "includes/show-error.php";
+            }
+             if (isset($_GET["invalidEmail"])) {
+                $message = "Invalid Email";
+                 include "includes/show-error.php";
+            }
+            if (isset($_GET["passwordsDoNotMatch"])) {
+                 $message = "Passwords Do Not Match";
+                 include "includes/show-error.php";
+            }
+            ?>
+
+    <?php } ?>    
+        
+
 <div class="container user-register mt-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6"> 
@@ -73,3 +109,4 @@
         </div>
     </div>
 
+</main>

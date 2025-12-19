@@ -1,4 +1,3 @@
-
 <?php  include "includes/header.php";?>
 
 
@@ -10,22 +9,6 @@
             $message = "";
             if ($_GET["error"] == "incorrectlogin"){
                 $message = "Incorrect Login";
-            }
-            ?>
-            <div class="row">
-                <div class="col"></div>
-                <div class="col border border-danger text-danger">
-                    <p><?php echo $message; ?></p>
-                </div>
-                <div class="col"></div>
-            </div>
-    <?php } ?>
-
-    <?php 
-        if(isset($_GET["error"])) { 
-            $message = "";
-            if ($_GET["error"] == "stmtfailed"){
-                $message = "error with sql query";
             }
             ?>
             <div class="row">
@@ -62,7 +45,7 @@
         </div>
     </div>
 </form>
-
+ </main>
     
 
 

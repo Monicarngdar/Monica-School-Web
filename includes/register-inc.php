@@ -21,9 +21,9 @@
 
         $error = "";
 
-        if(emptyRegistrationInput($username,$password,$firstName,$lastName,$role,$date_of_birth ,$email)){
+        if(emptyRegistrationInput($username,$password, $confpass, $firstName,$lastName,$role,$date_of_birth ,$email)){
 
-            $error = $error."emptyinput=true&";
+            $error = $error."missingFields=true&";
         }
 
         if(invalidUsername($username)){
@@ -43,7 +43,7 @@
             exit();
         }
 
-        registerUser($conn,$username,$password,$firstName,$lastName,$role,$date_of_birth,$emaill);
+        registerUser($conn,$username,$password,$firstName,$lastName,$role,$date_of_birth,$email);
 
        
         header("location: ../register.php?success=true");

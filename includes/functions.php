@@ -1,7 +1,7 @@
 <?php
 
 // Insert into the user_profile
-function registerUser($conn, $username,$password,$firstName,$lastName,$role,$date_of_birth,$emailll){
+function registerUser($conn, $username,$password,$firstName,$lastName,$role,$date_of_birth,$email){
 // Insert into the user_account
    $sql1 = "INSERT INTO user_account (roleId, username, password) VALUES (?, ?, ?)";
    $stmt1 = mysqli_stmt_init($conn);
@@ -15,7 +15,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     mysqli_stmt_execute($stmt1);
 
     $user = userExists($conn,$username);
-    $userId = $user[$userId];
+    $userId = $user["userId"];
 
     //Insert into the user profile
    $sql2 = "INSERT INTO user_profile (userId,name,surname,email,date_of_birth) VALUES (?,?,?,?,?)";
@@ -25,14 +25,13 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
     }
     
-    mysqli_stmt_bind_param($stmt1, "iss", $userId, $name, $surname, $email, $date_of_birth);
-    mysqli_stmt_execute($stmt1);
+    mysqli_stmt_bind_param($stmt2, "issss", $userId, $firstName, $lastName, $email, $date_of_birth);
+    mysqli_stmt_execute($stmt2);
 }
 
 
 
-
-
+//Log in 
  function login($conn, $username, $password){
         $user = userExists($conn, $username);
         
@@ -45,7 +44,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
         $user = getUser($conn, $userId);
         $dbPassword = $user["password"];
-        if ($dbPassword == $password){
+        if (password_verify($password, $dbPassword)){
             $checkedPassword = true;
         }
        // $checkedPassword = password_verify($password, $dbPassword);
@@ -121,8 +120,9 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
 
     // Registration Form
-    function emptyRegistrationInput($username,$password,$firstName,$lastName, $role,$date_of_birth ,$email){
-        if(empty($username) || empty($password) || empty($firstName) || empty($lastName) || empty ($role) || empty ($date_of_birthl) || empty ($email)){
+    function emptyRegistrationInput($username,$password, $confpass, $firstName,$lastName, $role,$date_of_birth ,$email){
+  
+        if(empty($username) || empty($password) || empty ($confpass) || empty($firstName) || empty($lastName) || empty ($role) || empty ($date_of_birth) || empty ($email)){
             return true;
         }
     }
