@@ -11,27 +11,29 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     }
     //Hashed password making our user's passwords secure
      $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+      // Bind parameters and execute the statement
     mysqli_stmt_bind_param($stmt1, "iss", $role, $username, $hashedPassword);
     mysqli_stmt_execute($stmt1);
 
+     // Get the userId of the newly inserted user
     $user = userExists($conn,$username);
     $userId = $user["userId"];
 
-    //Insert into the user profile
+   // Insert into the user_profile table
    $sql2 = "INSERT INTO user_profile (userId,name,surname,email,date_of_birth) VALUES (?,?,?,?,?)";
    $stmt2 = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt2, $sql2)) {
         return "Error preparing user_profile";
-
     }
-    
+
+     // Bind parameters and execute the statement
     mysqli_stmt_bind_param($stmt2, "issss", $userId, $firstName, $lastName, $email, $date_of_birth);
     mysqli_stmt_execute($stmt2);
 }
 
 
 
-//Log in 
+// Function to log in a user
  function login($conn, $username, $password){
         $user = userExists($conn, $username);
         
@@ -48,11 +50,13 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
             $checkedPassword = true;
         }
 
+         // If password is incorrect, redirect with error
         if(!$checkedPassword){
             header("location: ../login.php?error=incorrectlogin");
             exit();
         }
 
+         // Start session and store user data
         session_start();
         $_SESSION["username"] = $username;
         $_SESSION["userId"] = $userId;
@@ -62,6 +66,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         exit();
     }
 
+    // Function to check if a user exists by username
     function userExists($conn, $username){
         $sql = "SELECT userId FROM user_account WHERE username = ?;";
 
@@ -72,8 +77,8 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
             exit();
         }
 
+          // Bind the username parameter and execute
         mysqli_stmt_bind_param($stmt, "s", $username);
-        
         mysqli_stmt_execute($stmt);
 
         $result = mysqli_stmt_get_result($stmt);
@@ -88,10 +93,8 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
     }
 
-    //
-    function getUser($conn, $userId){
-       
-        //
+    // Function to get user account data by userId
+    function getUser($conn, $userId){    
         $sql = "SELECT * FROM user_account WHERE userId = ?;";
 
         $stmt = mysqli_stmt_init($conn);
@@ -115,10 +118,9 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
+    // Function to get user profile data by userId
     function getUserProfile($conn, $userId){
-       
-        //
-        $sql = "SELECT * FROM user_profile WHERE userId = ?;";
+            $sql = "SELECT * FROM user_profile WHERE userId = ?;";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -153,19 +155,16 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
     //Invalid Forms 
      function invalidUsername($username){
-        // allow letters and numbers, but nothing else
         if(!preg_match("/^[a-zA-Z0-9]*$/",$username)){
             return true;
         }
     }
-
     function passwordsDoNotMatch($password, $confpass){
         // check if passwords have the same value
         if($password != $confpass){
             return true;
         }
     }
-
     function invalidEmail($email){
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             return true;
