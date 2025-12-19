@@ -7,13 +7,21 @@
         header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
         header('Cache-Control: post-check=0, pre-check=0',false);
         header('Pragma: no-cache');
+
+        if (session_status() !== PHP_SESSION_ACTIVE ) {
+             session_start();
+       }
+
+      
     ?>
+    
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Myskolar Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet" >
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>

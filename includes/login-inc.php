@@ -1,5 +1,10 @@
 <?php 
 
+// if (session_status() !== PHP_SESSION_ACTIVE ) {
+    // if (isset($_SESSION["username"])) { //
+  //  header("location: ../logout-inc.php"); //
+   // exit();//
+ //} }//
 
 // If a user ended up executing this code without submitting a form, we redirect them back to the login page itself
 if(!isset($_POST["submit"])){
