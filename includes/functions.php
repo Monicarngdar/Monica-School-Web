@@ -90,7 +90,6 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         else{
             return false;
         }
-
     }
 
     // Function to get user account data by userId
@@ -141,6 +140,23 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         else{
             return false;
         }
+    }
+
+    //Profile Edit
+       function editProfile($conn, $userId,  $street1, $street2, $city, $postCode){
+        $sql = "UPDATE user_profile SET street1= ?,  street2= ?,  city= ?, postCode= ? WHERE userId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../profile.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "ssssi", $street1, $street2, $city, $postCode, $userId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
     }
 
 
