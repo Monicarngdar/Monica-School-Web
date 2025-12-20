@@ -3,8 +3,8 @@
     require_once "functions.php";
 
 if (isset($_POST['submit'])) {
-    $course_name = $_POST['course_name'];
-    $course_description = $_POST['course_description'];
+    $courseName = $_POST['courseName'];
+    $courseDescription = $_POST['courseDescription'];
     $credits = $_POST['credits'];
 
     if (!is_numeric($credits) || $credits <= 0) {
@@ -13,6 +13,6 @@ if (isset($_POST['submit'])) {
 
     $credits = (float)$credits;
 
-    addCourse($conn, $course_name, $course_description, $credits);
+    addCourse($conn, $courseName, $courseDescription, $credits);
 }
 ?>

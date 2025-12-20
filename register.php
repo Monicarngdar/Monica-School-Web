@@ -3,10 +3,6 @@
 
 ?>
 
-
-<!--- User Register -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content-wrapper">
-
 <!--- Success and Errors Message in form -->
       <?php 
               if(isset($_GET["success"])) { 
@@ -49,62 +45,60 @@
                 </div>
             </div>
 
-    <div class="row">
+
+        <form action="includes/register-inc.php" method="post" class="mt-4">
+          <div class="row mb-3">
         <div class="col">
-        
-            <form action="includes/register-inc.php" method="post" class="mt-4">
-                <div class="row">
-                    <div class="col">
-                        <input type="text" name="username" id="username" placeholder="Username" class="w-100 m-2">
-                    </div>
-                    <div class="col">
-                        <input type="email" name="email" id="email" placeholder="Email Address" class="w-100 m-2">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <input type="password" name="password" id="password" placeholder="Password" class="w-100 m-2">
-                    </div>
-                    <div class="col">
-                        <input type="password" name="confpass" id="confpass" placeholder="Confirm Password" class="w-100 m-2">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <input type="text" name="name" id="name" placeholder="Name" class="w-100 m-2">
-                    </div>
-                    <div class="col">
-                        <input type="text" name="surname" id="surname" placeholder="Surname" class="w-100 m-2">
-                    </div>
-                </div>
-
-                        <div class="row">
-                        <div class="col">
-                        <select name="role" id="role" class="w-100 m-2" >
-      <option value="1" selected="selected">Student</option>
-      <option value="2">Lecturer</option>
-      <option value="3">Admin</option>
-    
-    
-    </select>
-  </div>
-</div>
-
-                 <div class="row">
-            <div class="col">
-                <input type="date" name="date_of_birth" id="date_of_birth"  value="Date of Birth" placeholder="Date of Birth" class="w-100 m-2">
-            </div>
+            <input type="text" name="username" id="username" placeholder="Username" class="form-control" >
+        </div>
+        <div class="col">
+            <input type="email" name="email" id="email" placeholder="Email Address" class="form-control" >
+        </div>
         </div>
 
-                
-                <div class="row my-3">
-                    <div class="col">
-                        <button class="btn btn-primary w-100 m-2" type="submit" name="submit" id="submit">SUBMIT</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-secondary w-100 m-2" type="reset" name="reset" id="reset">CANCEL</button>
-                    </div>
-                </div>
+             <div class="row mb-3">
+        <div class="col">
+            <input type="password" name="password" id="password" placeholder="Password" class="form-control" >
+        </div>
+        <div class="col">
+            <input type="password" name="confpass" id="confpass" placeholder="Confirm Password" class="form-control" >
+        </div>
+    </div>
+
+                <div class="row mb-3">
+        <div class="col">
+            <input type="text" name="name" id="name" placeholder="Name" class="form-control" >
+        </div>
+        <div class="col">
+            <input type="text" name="surname" id="surname" placeholder="Surname" class="form-control">
+        </div>
+    </div>
+
+         <div class="row mb-3">
+        <div class="col">
+            <select name="role" id="role" class="form-select">
+                <option value="1" selected>Student</option>
+                <option value="2">Lecturer</option>
+                <option value="3">Admin</option>
+            </select>
+        </div>
+    </div>
+
+           <div class="row mb-3">
+        <div class="col">
+            <input type="date" name="date_of_birth" id="date_of_birth" value="Date of Birth" placeholder="Date of Birth" class="form-control" >
+        </div>
+    </div>
+        
+             <div class="row">
+        <div class="col">
+            <button type="submit" name="submit" class="btn btn-primary w-100">SUBMIT</button>
+        </div>
+        <div class="col">
+            <button type="reset" class="btn btn-secondary w-100">CANCEL</button>
+        </div>
+    </div>
+
             </form>
         </div>
     </div>

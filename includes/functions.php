@@ -188,8 +188,8 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     }
 
     //Manage Courses
-    function addCourse($conn, $name, $description, $credits){
-    $sql = "INSERT INTO course (course_name, course_description, credits) VALUES (?, ?, ?)";
+    function addCourse($conn, $courseName, $courseDescription, $credits){
+    $sql = "INSERT INTO course (courseName, courseDescription, credits) VALUES (?, ?, ?)";
     
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -197,8 +197,48 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         header("location: ../course.php?error=stmtfailed");
         exit();
     }
-    mysqli_stmt_bind_param($stmt, "ssd", $name, $description, $credits);
+    mysqli_stmt_bind_param($stmt, "ssd", $courseName, $courseDescription, $credits);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 }
+
+    //Manage Units
+    function addUnit($conn, $unitName, $unitDescription, $courseId, $semester){
+    $sql = "INSERT INTO unit (unitName, unitDescription, courseId, semester) VALUES (?, ?, ?, ?)";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../unit.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "ssis", $unitName, $unitDescription, $courseId, $semester);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+    function getCourses($conn){
+      
+        $sql = "SELECT * FROM course";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load courses.</p>";
+            exit();
+        }
+
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return $result;
+    }
+
+
+
+
+
+
+
 ?>
