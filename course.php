@@ -1,7 +1,17 @@
 <?php 
     include "includes/header.php";
+     include "includes/functions.php";
+    include "includes/dbh.php";
+    $units = getUnits($conn)
 
 ?>
+
+<?php
+             if(isset($_GET["success"])) { 
+                 $message = "Course Created Successfully";
+                 include "includes/show-success.php";
+            }
+      ?>
 
 
 
@@ -12,7 +22,7 @@
             
             <div class="row">
                 <div class="col">
-                    <h2 class="text-center mb-5">Manage Courses</h2>
+                    <h2 class="text-center mb-5">Add Course</h2>
                 </div>
             </div>
         

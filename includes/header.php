@@ -71,14 +71,17 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Manage Users</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Manage Courses</a>
+                           <li class="nav-item">
+                            <a class="nav-link" href="list-courses.php?action=list">Manage Courses</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Manage Units</a>
+                            <a class="nav-link" href="course.php?action=add">Add Course</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="list-units.php?action=list">Manage Units</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href="#">Assignments</a>
+                            <a class="nav-link" href="unit.php?action=add">Add Unit</a>
                         </li>
                        <li class="nav-item">
                             <a class="nav-link" href="#">Grades</a>

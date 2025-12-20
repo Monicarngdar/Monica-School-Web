@@ -236,6 +236,49 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         return $result;
     }
 
+    // Get Course
+    function getCourse($conn, $courseId){    
+        $sql = "SELECT * FROM course WHERE courseId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load course.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $courseId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+            //Delete Courses
+    function deleteCourse($conn, $courseId){
+        $sql = "DELETE FROM course WHERE courseId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../list-courses.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $courseId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+
     //Get Units
     function getUnits($conn){
       
@@ -255,7 +298,33 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         return $result;
     }
 
-    //Delete Units
+
+     // Get Unit
+    function getUnit($conn, $unitId){    
+        $sql = "SELECT * FROM unit WHERE unitId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load unit.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $unitId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+        //Delete Units
     function deleteUnit($conn, $unitId){
         $sql = "DELETE FROM unit WHERE unitId = ?;";
 
@@ -271,7 +340,6 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
-
 
 
 

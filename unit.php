@@ -6,13 +6,21 @@
 
 ?>
 
+<?php
+             if(isset($_GET["success"])) { 
+                 $message = "Unit Created Successfully";
+                 include "includes/show-success.php";
+            }
+      ?>
+
+
 <div class="container user-register mt-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6"> 
             
             <div class="row">
                 <div class="col">
-                    <h2 class="text-center mb-5">Manage Units</h2>
+                    <h2 class="text-center mb-5">Add Unit</h2>
                 </div>
             </div>
 

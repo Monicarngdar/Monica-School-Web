@@ -6,13 +6,22 @@
 
 ?>
 
+<script>
+function submitForm(Id,action){
+    
+    form = document.getElementById('form' + Id);
+    form.action.value=action;
+    document.getElementById('form' + Id).submit();
+}
+</script>
+
 <div class="container user-register mt-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6"> 
             
             <div class="row">
                 <div class="col">
-                    <h2 class="text-center mb-5">Courses</h2>
+                    <h2 class="text-center mb-5">Manage Courses</h2>
                 </div>
             </div>
         
@@ -26,41 +35,24 @@
     <div class="col-3 text-center">Delete</div>
   </div>
 
+  
+   <?php foreach($courses as $course):?>
+    <form action="includes/course-inc.php" method="post" id = "form<?php echo $course["courseId"] ?>" class="mt-4">
   <div class="row align-items-center mb-3 border-bottom pb-2">
-    <div class="col-6">Interactive Media</div>
+    <input type="hidden" name = "id" value="<?php echo $course["courseId"] ?>" >
+    <input type="hidden" name = "action"  value = "edit">
+    <div class="col-6"><?php echo $course["courseName"] ?></div>
     <div class="col-3 text-center">
-      <i class="fa-solid fa-pen" style="color: #007bff; cursor: pointer;"></i>
-    </div>
+      <i class="fa-solid fa-pen" style="color: #007bff; cursor: pointer;" onclick="submitForm(<?php echo $course["courseId"] ?>,'edit');" ></i>
+    </div> 
     <div class="col-3 text-center">
-      <i class="fa-solid fa-x" style="color: #dc3545; cursor: pointer;"></i>
+      <i class="fa-solid fa-x" style="color: #dc3545; cursor: pointer;" onclick="submitForm(<?php echo $course["courseId"] ?>,'delete');"></i>
     </div>
   </div>
+    </form>
+    <?php endforeach?>
 
-  <div class="row align-items-center mb-3 border-bottom pb-2">
-    <div class="col-6">Photography</div>
-    <div class="col-3 text-center">
-      <i class="fa-solid fa-pen" style="color: #007bff; cursor: pointer;"></i>
-    </div>
-    <div class="col-3 text-center">
-      <i class="fa-solid fa-x" style="color: #dc3545; cursor: pointer;"></i>
-    </div>
-  </div>
-
-  <div class="row align-items-center mb-3 border-bottom pb-2">
-    <div class="col-6">Graphic Design</div>
-    <div class="col-3 text-center">
-      <i class="fa-solid fa-pen" style="color: #007bff; cursor: pointer;"></i>
-    </div>
-    <div class="col-3 text-center">
-      <i class="fa-solid fa-x" style="color: #dc3545; cursor: pointer;"></i>
-    </div>
-  </div>
-</div>
-
-     
-      
-
-            </form>
+               </div>
         </div>
     </div>
 

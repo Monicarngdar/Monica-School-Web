@@ -13,10 +13,6 @@ function submitForm(Id,action){
     form.action.value=action;
     document.getElementById('form' + Id).submit();
 }
-
-
-
-
 </script>
 
 <div class="container user-register mt-5">
@@ -25,7 +21,7 @@ function submitForm(Id,action){
             
             <div class="row">
                 <div class="col">
-                    <h2 class="text-center mb-5">Units</h2>
+                    <h2 class="text-center mb-5">Manage Units</h2>
                 </div>
             </div>
         
@@ -52,8 +48,7 @@ function submitForm(Id,action){
     </form>
     <?php endforeach?>
    
-</div>
-          
+            </div>
         </div>
     </div>
 
