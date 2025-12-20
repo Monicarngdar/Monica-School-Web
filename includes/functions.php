@@ -217,6 +217,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     mysqli_stmt_close($stmt);
 }
 
+//Get Courses
     function getCourses($conn){
       
         $sql = "SELECT * FROM course";
@@ -234,6 +235,44 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
         return $result;
     }
+
+    //Get Units
+    function getUnits($conn){
+      
+        $sql = "SELECT * FROM unit";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load units.</p>";
+            exit();
+        }
+
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return $result;
+    }
+
+    //Delete Units
+    function deleteUnit($conn, $unitId){
+        $sql = "DELETE FROM unit WHERE unitId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../list-units.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $unitId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+
 
 
 

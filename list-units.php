@@ -1,0 +1,60 @@
+<?php 
+    include "includes/header.php";
+    include "includes/functions.php";
+    include "includes/dbh.php";
+    $units = getUnits($conn);
+
+?>
+
+<script>
+function submitForm(Id,action){
+    
+    form = document.getElementById('form' + Id);
+    form.action.value=action;
+    document.getElementById('form' + Id).submit();
+}
+
+
+
+
+</script>
+
+<div class="container user-register mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6"> 
+            
+            <div class="row">
+                <div class="col">
+                    <h2 class="text-center mb-5">Units</h2>
+                </div>
+            </div>
+        
+      <div class="container mt-3">
+  <div class="row fw-bold border-bottom pb-2 mb-3">
+    <div class="col-6">Unit Name</div>
+    <div class="col-3 text-center">Edit</div>
+    <div class="col-3 text-center">Delete</div>
+  </div>
+
+   <?php foreach($units as $unit):?>
+    <form action="includes/unit-inc.php" method="post" id = "form<?php echo $unit["unitId"] ?>" class="mt-4">
+  <div class="row align-items-center mb-3 border-bottom pb-2">
+    <input type="hidden" name = "id" value="<?php echo $unit["unitId"] ?>" >
+    <input type="hidden" name = "action"  value = "edit">
+    <div class="col-6"><?php echo $unit["unitName"] ?></div>
+    <div class="col-3 text-center">
+      <i class="fa-solid fa-pen" style="color: #007bff; cursor: pointer;" onclick="submitForm(<?php echo $unit["unitId"] ?>,'edit');" ></i>
+    </div> 
+    <div class="col-3 text-center">
+      <i class="fa-solid fa-x" style="color: #dc3545; cursor: pointer;" onclick="submitForm(<?php echo $unit["unitId"] ?>,'delete');"></i>
+    </div>
+  </div>
+    </form>
+    <?php endforeach?>
+   
+</div>
+          
+        </div>
+    </div>
+
+       <?php  include "includes/footer.php";?>

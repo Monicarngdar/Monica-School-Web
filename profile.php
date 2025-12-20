@@ -8,7 +8,7 @@ if (!isset($_SESSION["userId"])) {
 }
 ?>
 
-<!--Java scrpit to make the fields editable when the user clicks on edit-->
+<!--Java script to make the fields editable when the user clicks on edit-->
 <script>
         $(document).ready(function() {
             $("#edit").on("click", function(e) {
