@@ -268,14 +268,20 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         $stmt = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
-            header("location: ../list-courses.php?error=stmtfailed");
+            header("location: list-courses.php?error=stmtfailed");
             exit();
         }
-
-        mysqli_stmt_bind_param($stmt, "i", $courseId);
         
-        mysqli_stmt_execute($stmt);
+        try{
+        mysqli_stmt_bind_param($stmt, "i", $courseId);
+         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
+} catch (mysqli_sql_exception $e){
+    if ($e->getCode() === 1451) {
+            header("location: list-courses.php?error=courseinuse");
+            exit();
+        }
+        }
     }
 
 

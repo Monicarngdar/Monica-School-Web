@@ -5,6 +5,32 @@
     $courses = getCourses($conn);
 
 ?>
+   <?php     
+          if(isset($_GET["error"])) { 
+            $message = "";
+
+             if ($_GET["error"]=="courseinuse") {
+                 $message = "The Course is being used by a Unit and cannot be deleted";
+                 include "includes/show-error.php";
+            } }
+
+            ?>
+  <?php
+             if(isset($_GET["success"])) { 
+                 $message = "Course Saved Successfully";
+                 include "includes/show-success.php";
+            }
+      ?>
+
+      <?php
+             if(isset($_GET["deleted"])) { 
+                 $message = "Course Deleted Successfully";
+                 include "includes/show-success.php";
+            }
+      ?>
+
+
+
 
 <script>
 function submitForm(Id,action){

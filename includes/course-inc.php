@@ -18,7 +18,7 @@
     if(isset($_POST["action"]) && $_POST["action"] == "delete"){
        $courseId = $_POST['id'];
        deleteCourse($conn, $courseId);
-        header("location: ../list-courses.php");   
+        header("location: list-courses.php?deleted=true&action=list");   
         exit();
     }
 
@@ -32,13 +32,26 @@
 
   }
 
+  //This trigger for the save unit
+    if (isset($_POST['submit'])&& $_POST ["action"] == "save") {  
+    $courseName = $_POST['courseName'];
+    $courseDescription = $_POST['courseDescription'];
+    $credits = $_POST['credits'];
+    $_GET["action"] = "save";
+    saveCourse($conn, $courseName, $courseDescription, $credits);
+
+      header("location:  list-courses.php?success=true&action=list");   
+        exit();
+    
+}
+
   if (isset($_POST['submit'])) {  
     $courseName = $_POST['courseName'];
     $courseDescription = $_POST['courseDescription'];
     $credits = $_POST['credits'];
     addCourse($conn, $courseName, $courseDescription, $credits);
 
-      header("location: ../course.php?success=true");   
+      header("location:  list-courses.php?success=true");   
         exit();
     
 }

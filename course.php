@@ -30,8 +30,7 @@
             </div>
 
          <div class="mb-3">
-        <textarea name="courseDescription" id="courseDescription"  placeholder="Course Description"  class="form-control"  rows="4"><?php echo $courseDescription?>
-    </textarea>
+        <textarea name="courseDescription" id="courseDescription"  placeholder="Course Description"  class="form-control"  rows="4"><?php echo $courseDescription?></textarea>
     </div>
 
          <!--Credits-->
@@ -42,9 +41,9 @@
          <!--Buttons-->
                <div class="row">
         <div class="col">
-            <button type="submit" name="submit" class="btn btn-primary w-100"> CREATE</button>
+            <button type="submit" name="submit" class="btn btn-primary w-100"><?php if(isset($_GET["action"])&& $_GET["action"]=="add") {echo "CREATE";} else {echo "SAVE"; }?></button>
         </div>
-        <div class="col">
+            <div class="col">
             <button type="reset" class="btn btn-secondary w-100"> CANCEL</button>
         </div>
     </div>
