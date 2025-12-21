@@ -117,6 +117,43 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
+    //Get users
+     function getUsers($conn){
+   
+        $sql = "SELECT user_account.userId as userId, username, name, surname FROM user_account, user_profile WHERE user_account.userId = user_profile.userId";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load users.</p>";
+            exit();
+        }
+
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return $result;
+    }
+
+        //Save User
+       function saveUser($conn, $userId, $username, $password, $roleId, $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode){
+        $sql = "UPDATE user_profile SET username =?, password = ?, roleId = ?, name = ?, surname = ?, email = ?, date_of_birth = ?, street1= ?,  street2= ?,  city= ?, postCode= ? WHERE userId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: user.php.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "ssissssssss", $username, $password, $roleId, $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode, $userId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+
     // Function to get user profile data by userId
     function getUserProfile($conn, $userId){
             $sql = "SELECT * FROM user_profile WHERE userId = ?;";

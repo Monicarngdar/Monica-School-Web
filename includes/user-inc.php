@@ -2,6 +2,34 @@
  require_once "dbh.php";
  require_once "functions.php";
 
+  if(isset($_GET["action"]) && $_GET["action"]=="list")
+    {
+         $users = getUsers($conn);
+    }
+
+    //This trigger for the save a user
+    if (isset($_POST['submit'])&& $_POST ["action"] == "save") {  
+    $userId =  $_POST['userId'];
+    $username =  $_POST['username'];
+    $password =  $_POST['password'];
+    $roleId =  $_POST['roleId'];
+    $name =  $_POST['name'];
+    $surname =  $_POST['surname'];
+    $email =  $_POST['email'];
+    $date_of_birth =  $_POST['date_of_birth'];
+    $street1 =  $_POST['street1'];
+    $street2 =  $_POST['street2'];
+    $city = $_POST['city'];
+    $postCode =  $_POST['postCode'];
+   $pageTitle = "Edit User";
+    $_GET["action"] = "save";
+    saveUser($conn, $userId, $username, $password, $roleId, $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode);
+
+      header("location:  list-users.php?success=true&action=list");   
+        exit();
+    
+}
+
  if(!isset($_POST["submit"])){
      
  $user = getUser($conn, $_SESSION["userId"]);

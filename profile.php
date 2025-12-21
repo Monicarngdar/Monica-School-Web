@@ -84,7 +84,7 @@ if (!isset($_SESSION["userId"])) {
     <div class="row my-3"> 
         <div class="col" id = "dedit"> <button class="btn btn-primary w-100 m-2" type="button" name="edit" id="edit">EDIT</button>
     </div>
-         <div class="col d-none" id = "dsave"> <button class="btn btn-success w-100 m-2" type="submit" name="submit" id="save">SAVE</button>
+         <div class="col d-none" id = "dsave"> <button class="btn btn-primary w-100 m-2" type="submit" name="submit" id="save">SAVE</button>
 </div> 
 
     <div class="col" id = "dlogout">

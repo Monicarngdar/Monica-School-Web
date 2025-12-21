@@ -1,0 +1,69 @@
+<?php
+include "includes/header.php";
+include "includes/user-inc.php";
+
+?>
+
+     <!--Profile form with the users fields-->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6"> 
+            
+            <div class="row">
+                <div class="col">
+                    <h2 class="text-center mb-5"><?php echo $pageTitle?></h2>
+                </div>
+            </div>
+<div class="text-center mb-4">
+    
+
+        <?php if($roleId == 1):?>
+            <h4 class="mt-3 mb-0">Student</h4>
+        <?php elseif($roleId == 2):?>
+            <h4 class="mt-3 mb-0">Lecturer</h4>
+        <?php elseif($roleId == 3): ?>
+            <h4 class="mt-3 mb-0">Admin</h4>
+        <?php endif ?>
+</div>
+
+    <div class="row">
+        <div class="col">
+            <form action="includes/user-inc.php" method="post" class="mt-4">
+            <input type="hidden" name ="userId" value ="<?php echo $userId?>">
+            <input type="hidden" name ="action" value ="<?php echo $action?>">
+          
+    <!--Name, Surname, Email and Date of Birth-->
+   <div class="row">
+        <div class="col-md-6">
+            <input type="text"  name="name"  placeholder="Name" value="<?php echo $name ?>" class="form-control mb-3">
+             <input type="text" name="surname"placeholder="Surname"  value="<?php echo $surname ?>" class="form-control mb-3">
+             <input type="email" name="email" placeholder="Email" value="<?php echo $email ?>" class="form-control mb-3">
+             <input type="date"  name="date_of_birth"  placeholder= "Date of Birth" value="<?php echo $date_of_birth ?>" class="form-control mb-3">
+</div>
+
+    <!--Editable Address Details-->
+    <div class="col-md-6">
+          <input type="text" id="street1" name="street1" placeholder="Street 1"  value="<?php echo $street1 ?>" class="form-control mb-3">
+          <input type="text" id="street2" name="street2"  placeholder="Street 2"value="<?php echo $street2 ?>" class="form-control mb-3">
+          <input type="text" id="city" name="city" placeholder="City"value="<?php echo $city ?>" class="form-control mb-3">
+          <input type="text" id="postCode" name="postCode" placeholder="Post Code" value="<?php echo $postCode ?>" class="form-control mb-3">
+</div>
+
+ <!--Buttons-->
+    <div class="row my-3"> 
+         <div class="col" id = "dsave"> 
+        <button class="btn btn-primary w-100 m-2" type="submit" name="submit" id="save">SAVE</button>
+</div> 
+
+     <div class="col"  id = "dcancel">
+        <a href="profile.php" class="btn btn-secondary w-100 m-2">CANCEL </a>
+    </div>
+
+
+</div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<?php include "includes/footer.php"; ?>

@@ -69,7 +69,7 @@
                             <a class="nav-link active" aria-current="page" >My Academics</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Manage Users</a>
+                            <a class="nav-link" href="list-users.php?action=list">Manage Users</a>
                         </li>
                            <li class="nav-item">
                             <a class="nav-link" href="list-courses.php?action=list">Manage Courses</a>
