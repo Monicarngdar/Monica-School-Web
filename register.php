@@ -2,6 +2,7 @@
     include "includes/header.php";
 
 ?>
+<main>
 
 <!--- Success and Errors Message in form -->
       <?php 

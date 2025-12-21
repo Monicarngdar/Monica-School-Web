@@ -25,9 +25,7 @@ function submitForm(Id,action){
                 </div>
             </div>
         
-            <form action="includes/course-inc.php" method="post" class="mt-4">
-
-        
+         
       <div class="container mt-3">
   <div class="row fw-bold border-bottom pb-2 mb-3">
     <div class="col-6">Course Name</div>
@@ -37,7 +35,7 @@ function submitForm(Id,action){
 
   
    <?php foreach($courses as $course):?>
-    <form action="includes/course-inc.php" method="post" id = "form<?php echo $course["courseId"] ?>" class="mt-4">
+    <form action="course.php" method="post" id = "form<?php echo $course["courseId"] ?>" class="mt-4">
   <div class="row align-items-center mb-3 border-bottom pb-2">
     <input type="hidden" name = "id" value="<?php echo $course["courseId"] ?>" >
     <input type="hidden" name = "action"  value = "edit">

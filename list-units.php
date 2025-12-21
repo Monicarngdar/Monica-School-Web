@@ -1,10 +1,22 @@
 <?php 
     include "includes/header.php";
-    include "includes/functions.php";
-    include "includes/dbh.php";
-    $units = getUnits($conn);
-
+    include "includes/unit-inc.php";
 ?>
+
+<?php
+             if(isset($_GET["success"])) { 
+                 $message = "Unit Saved Successfully";
+                 include "includes/show-success.php";
+            }
+      ?>
+
+      <?php
+             if(isset($_GET["deleted"])) { 
+                 $message = "Unit Deleted Successfully";
+                 include "includes/show-success.php";
+            }
+      ?>
+
 
 <script>
 function submitForm(Id,action){
@@ -33,7 +45,7 @@ function submitForm(Id,action){
   </div>
 
    <?php foreach($units as $unit):?>
-    <form action="includes/unit-inc.php" method="post" id = "form<?php echo $unit["unitId"] ?>" class="mt-4">
+    <form action="unit.php" method="post" id = "form<?php echo $unit["unitId"] ?>" class="mt-4">
   <div class="row align-items-center mb-3 border-bottom pb-2">
     <input type="hidden" name = "id" value="<?php echo $unit["unitId"] ?>" >
     <input type="hidden" name = "action"  value = "edit">

@@ -7,6 +7,14 @@
          $courses = getCourses($conn);
     } 
 
+    if(isset($_GET["action"]) && $_GET["action"] == "add"){
+    $courseName = "";
+    $courseDescription = "";
+    $credits = "";
+    $pageTitle = "Add Course";
+}
+    
+
     if(isset($_POST["action"]) && $_POST["action"] == "delete"){
        $courseId = $_POST['id'];
        deleteCourse($conn, $courseId);
@@ -20,6 +28,7 @@
     $courseName  = $course ['courseName'];
     $courseDescription  =  $course['courseDescription'];
     $credits = $course['credits'];
+    $pageTitle = "Edit Course";
 
   }
 
@@ -34,12 +43,8 @@
     
 }
 
-     if (!is_numeric($credits) || $credits <= 0) {
-        exit();
-    }
+  
 
-    $credits = (float)$credits;
 
-    addCourse($conn, $courseName, $courseDescription, $credits);
 
 ?>
