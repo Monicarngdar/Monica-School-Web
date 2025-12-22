@@ -31,22 +31,27 @@ include "includes/user-inc.php";
             <form action="includes/user-inc.php" method="post" class="mt-4">
             <input type="hidden" name ="userId" value ="<?php echo $userId?>">
             <input type="hidden" name ="action" value ="<?php echo $action?>">
-          
-    <!--Name, Surname, Email and Date of Birth-->
+    <!--Name, Surname, Email, Username, Password and Date of Birth-->
    <div class="row">
         <div class="col-md-6">
             <input type="text"  name="name"  placeholder="Name" value="<?php echo $name ?>" class="form-control mb-3">
              <input type="text" name="surname"placeholder="Surname"  value="<?php echo $surname ?>" class="form-control mb-3">
-             <input type="email" name="email" placeholder="Email" value="<?php echo $email ?>" class="form-control mb-3">
+            <input type="text" name="username" id="username" placeholder="Username" class="form-control mb-3" value = "<?php echo $username?>" >
+            <input type= "email" name="email" placeholder="Email" value="<?php echo $email ?>" class="form-control mb-3">
+            <input type="password" name="password" id="password" placeholder="Password" class="form-control mb-3" >
              <input type="date"  name="date_of_birth"  placeholder= "Date of Birth" value="<?php echo $date_of_birth ?>" class="form-control mb-3">
 </div>
 
-    <!--Editable Address Details-->
+
+
+
+    <!--Editable Address and Confirm Password-->
     <div class="col-md-6">
           <input type="text" id="street1" name="street1" placeholder="Street 1"  value="<?php echo $street1 ?>" class="form-control mb-3">
           <input type="text" id="street2" name="street2"  placeholder="Street 2"value="<?php echo $street2 ?>" class="form-control mb-3">
           <input type="text" id="city" name="city" placeholder="City"value="<?php echo $city ?>" class="form-control mb-3">
           <input type="text" id="postCode" name="postCode" placeholder="Post Code" value="<?php echo $postCode ?>" class="form-control mb-3">
+           <input type="password" name="confpass" id="confpass" placeholder="Confirm Password" class="form-control mb-3">
 </div>
 
  <!--Buttons-->

@@ -28,19 +28,19 @@
         <!-- Username -->
         <div class="row mb-3">
             <div class="col">
-                <input type="text" id="username"  name="username"  class="user-login-form form-control"  placeholder="Username"> </div>
+                <input type="text" id="username"  name="username"  class="form-control"  placeholder="Username"> </div>
         </div>
 
         <!-- Password -->
         <div class="row mb-4">
             <div class="col">
-                <input   type="password"   id="password"  name="password"  class="user-login-form form-control" placeholder="Password"></div>
+                <input   type="password"   id="password"  name="password"  class="form-control" placeholder="Password"></div>
         </div>
 
         <!-- Button -->
         <div class="row">
             <div class="col">
-                <button   type="submit"   name="submit"  id="submit"  class="btn btn-primary w-100"> LOG IN</button>
+                <button   type="submit"   name="submit"  id="submit"  class="btn btn-primary w-100 m-2"> LOG IN</button>
             </div>
         </div>
     </div>

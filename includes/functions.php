@@ -136,22 +136,42 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         return $result;
     }
 
-        //Save User
-       function saveUser($conn, $userId, $username, $password, $roleId, $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode){
-        $sql = "UPDATE user_profile SET username =?, password = ?, roleId = ?, name = ?, surname = ?, email = ?, date_of_birth = ?, street1= ?,  street2= ?,  city= ?, postCode= ? WHERE userId = ?;";
+        //Save Profile Admin
+       function saveProfileAdmin($conn, $userId, $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode){
+        $sql = "UPDATE user_profile SET name = ?, surname = ?, email = ?, date_of_birth = ?, street1= ?,  street2= ?,  city= ?, postCode= ? WHERE userId = ?;";
 
         $stmt = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
-            header("location: user.php.php?error=stmtfailed");
+            header("location: user.php?error=stmtfailed");
             exit();
         }
 
-        mysqli_stmt_bind_param($stmt, "ssissssssss", $username, $password, $roleId, $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode, $userId);
+        mysqli_stmt_bind_param($stmt, "ssssssssi", $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode, $userId);
+   
+        mysqli_stmt_execute($stmt);
+             print_r($stmt);
+        exit;
+        mysqli_stmt_close($stmt);
+    }
+
+    //Save Account Admin
+           function saveAccountAdmin($conn, $userId, $username){
+        $sql = "UPDATE user_account SET username = ? WHERE userId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: user.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "si", $username, $userId);
         
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
+
 
 
     // Function to get user profile data by userId
@@ -195,6 +215,45 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
+
+
+    //Update user profile password
+        function updatePassword($conn, $userId, $passwordl){
+            $sql = "UPDATE user_account SET password = ?, WHERE userId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not set password.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+    }
+
+    
+        //Delete Unser
+    function deleteUser($conn, $userId){
+        $sql = "DELETE FROM user_account WHERE userId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../list-users.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
 
 
     // Registration Form

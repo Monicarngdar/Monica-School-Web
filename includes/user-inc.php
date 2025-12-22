@@ -12,7 +12,6 @@
     $userId =  $_POST['userId'];
     $username =  $_POST['username'];
     $password =  $_POST['password'];
-    $roleId =  $_POST['roleId'];
     $name =  $_POST['name'];
     $surname =  $_POST['surname'];
     $email =  $_POST['email'];
@@ -21,15 +20,46 @@
     $street2 =  $_POST['street2'];
     $city = $_POST['city'];
     $postCode =  $_POST['postCode'];
-   $pageTitle = "Edit User";
+    $pageTitle = "Edit User";
     $_GET["action"] = "save";
-    saveUser($conn, $userId, $username, $password, $roleId, $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode);
+    saveProfileAdmin($conn, $userId, $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode);
+    saveAccountAdmin($conn, $userId, $username);
 
-      header("location:  list-users.php?success=true&action=list");   
+      header("location:  ../list-users.php?success=true&action=list");   
         exit();
-    
 }
 
+//Edit a user
+  if(isset($_POST["action"]) && $_POST["action"] == "edit"){
+
+    $user = getUser($conn, $_POST["id"]);
+    $profile = getUserProfile($conn, $_POST["id"]);
+    $userId =  $user ['userId'];
+    $username =  $user ['username'];
+    $password =  $user['password'];
+    $roleId =  $user['roleId'];
+    $name =  $profile['name'];
+    $surname =  $profile['surname'];
+    $email =   $profile['email'];
+    $date_of_birth =  $profile['date_of_birth'];
+    $street1 =  $profile['street1'];
+    $street2 = $profile['street2'];
+    $city =  $profile['city'];
+    $postCode = $profile['postCode'];
+    $pageTitle = "Edit User";
+    $action ="save";
+    }
+
+    //Delete a user
+    if(isset($_POST["action"]) && $_POST["action"] == "delete"){
+       $userId = $_POST['id'];
+       deleteUser($conn, $userId);
+        header("location: list-users.php?deleted=true&action=list");   
+        exit();
+    }
+
+
+/*
  if(!isset($_POST["submit"])){
      
  $user = getUser($conn, $_SESSION["userId"]);
@@ -59,10 +89,10 @@
 
    editProfile($conn, $_SESSION["userId"], $street1, $street2, $city, $postCode);
 
-   header("location: ../profile.php");   
+   header("location: profile.php");   
     exit();
     }
-    
+  */  
 
 
 
