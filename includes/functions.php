@@ -136,6 +136,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         return $result;
     }
 
+
         //Save Profile Admin
        function saveProfileAdmin($conn, $userId, $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode){
         $sql = "UPDATE user_profile SET name = ?, surname = ?, email = ?, date_of_birth = ?, street1= ?,  street2= ?,  city= ?, postCode= ? WHERE userId = ?;";
@@ -150,8 +151,6 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         mysqli_stmt_bind_param($stmt, "ssssssssi", $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode, $userId);
    
         mysqli_stmt_execute($stmt);
-             print_r($stmt);
-        exit;
         mysqli_stmt_close($stmt);
     }
 
@@ -237,7 +236,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     }
 
     
-        //Delete Unser
+        //Delete User
     function deleteUser($conn, $userId){
         $sql = "DELETE FROM user_account WHERE userId = ?;";
 
@@ -254,6 +253,14 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         mysqli_stmt_close($stmt);
     }
 
+
+       // Empty User Inputs
+    function emptyUserInput($username, $name,$surname,$date_of_birth ,$email){
+  
+        if(empty($username) ||empty($name) || empty($surname) || empty ($date_of_birth) || empty ($email)){
+            return true;
+        }
+    }
 
 
     // Registration Form

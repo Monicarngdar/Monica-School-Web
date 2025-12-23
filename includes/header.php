@@ -68,6 +68,9 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" >My Academics</a>
                         </li>
+                           <li class="nav-item">
+                            <a class="nav-link" href="register.php?action=list">Register Users</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="list-users.php?action=list">Manage Users</a>
                         </li>
