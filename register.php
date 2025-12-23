@@ -11,7 +11,6 @@
                  include "includes/show-success.php";
             }
 
-
         if(isset($_GET["error"])) { 
             $message = "";
 
