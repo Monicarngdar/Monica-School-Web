@@ -27,7 +27,7 @@
 
 <body>
 
-    <header class="navbar navbar-dark sticky-top bg-myskolar flex-md-nowrap z-3 main-header">
+    <header class="navbar navbar-dark overflow-hidden sticky-top bg-myskolar flex-md-nowrap z-3 main-header">
         
         <div class="d-flex align-items-center navbar-brand-wrapper"> 
             <a class="navbar-brand px-2" href="#">MYSKOLAR</a>
@@ -35,7 +35,7 @@
    <!--When the user is logged in, the dashboard and email link would be shown -->
         <?php if (isset($_SESSION["username"])) {   ?>
             <a class="nav-link text-white mx-3 fw-semibold" href="#">Dashboard</a>
-            <a class="nav-link text-white fw-semibold" href="#">Emails</a>
+            <a class="nav-link text-white fw-semibold" href="message.php">Emails</a>
         <?php }  ?>
        
         
@@ -43,7 +43,6 @@
 
 
         <div class="w-100 d-none d-md-block"></div>
-
         <div class="d-flex align-items-center me-3">
 
     <!--When the user is logged in, the profile would be shown -->
@@ -59,14 +58,15 @@
     
     <!--When the user is logged in, my academics would be shown -->
     <?php if (isset($_SESSION["username"])) {   ?>
-    <div class="container-fluid">
-        <div class="row">
-            
+ 
             <nav id="sidebarMenu" class="d-md-block bg-skolar sidebar collapse">
                 <div class="position-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" >My Academics</a>
+                            <h5 style="color: white; font-weight: bold; ">My Academics</h5>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="register.php?action=add">Register a User</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="list-users.php?action=list">Manage Users</a>
@@ -86,8 +86,7 @@
                        <li class="nav-item">
                             <a class="nav-link" href="#">Grades</a>
                         </li>
-                    </ul>
-                </div>
+      
                  <?php }  ?>
                 
             </nav>

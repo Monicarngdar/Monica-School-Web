@@ -1,6 +1,6 @@
 <?php
 include "includes/header.php";
-include "includes/user-inc.php";
+include "includes/profile-inc.php";
 
 if (!isset($_SESSION["userId"])) {
     header("location: login.php");
@@ -61,7 +61,7 @@ if (!isset($_SESSION["userId"])) {
 
     <div class="row">
         <div class="col">
-            <form action="includes/user-inc.php" method="post" class="mt-4">
+            <form action="includes/profile-inc.php" method="post" class="mt-4">
           
     <!--Name, Surname, Email and Date of Birth-->
    <div class="row">
