@@ -1,8 +1,28 @@
 <?php include "includes/header.php"; ?>
 
 <main class="main-content-wrapper p-0 overflow-hidden ">
-    <div class="row g-0 overflow-hidden bg-white" style="min-height: calc(100vh - 44px);">
+    <!--- Success and Errors Message in form -->
+      <?php 
+              if(isset($_GET["success"])) { 
+                 $message = "Message Sent Successfully";
+                 include "includes/show-success.php";
+            }
 
+
+        if(isset($_GET["error"])) { 
+            $message = "";
+
+            if (isset($_GET["username"])) {
+                $message = "Username not found: {$_GET['username']}";
+                include "includes/show-error.php";
+            }
+        
+            ?>
+
+    <?php } ?>    
+        
+
+    <div class="row g-0 overflow-hidden bg-white" style="min-height: calc(100vh - 44px);">
         <!-- Email menu -->
         <div class="col-12 col-md-3 p-0" style="background-color:#8296A3;">
             <div class="list-group list-group-flush">
@@ -31,27 +51,27 @@
             </div>
 
             <div class="p-4 d-flex flex-column flex-grow-1">
-                <form class="d-flex flex-column flex-grow-1">
+                <form class="d-flex flex-column flex-grow-1" action="includes/message-inc.php" method="post" >
                     <div class="mb-4 border-bottom">
                         <label class="small fw-bold text-muted">To:</label>
-                        <input type="email" class="form-control border-0 shadow-none p-0">
+                        <input type="text"  name="recipients" class="form-control border-0 shadow-none p-0"  required=required>
                     </div>
 
                     <div class="mb-4 border-bottom">
                         <label class="small fw-bold text-muted">Subject:</label>
-                        <input type="text" class="form-control border-0 shadow-none p-0">
+                        <input type="text" name="subject" class="form-control border-0 shadow-none p-0" required=required />
                     </div>
 
                     <textarea class="form-control border-0 shadow-none flex-grow-1 mb-3"
-                        placeholder="Write your Message here..." style="resize:none;"></textarea>
+                        placeholder="Write your Message here..." name="messageBody" style="resize:none;" required=required></textarea>
 
                     <div class="pt-3 border-top d-flex align-items-center">
-                        <button class="btn px-5 py-2 me-3" style="background:#2787B4;color:#fff;">
+                        <button  type = "submit" name="submit" class="btn px-5 py-2 me-3" style="background:#2787B4;color:#fff;">
                             Send
                         </button>
 
                         <label class="btn btn-outline-secondary border-0 p-2 attach-file"> 
-                            <i class="fa-solid fa-upload fs-4"></i> <input type="file" hidden> 
+                            <i class="fa-solid fa-upload fs-4"></i> <input type="file" hidden name="file"> 
                         </label>
                     </div>
                 </form>

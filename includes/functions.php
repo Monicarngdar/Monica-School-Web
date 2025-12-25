@@ -237,7 +237,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     }
 
     
-        //Delete Unser
+        //Delete User
     function deleteUser($conn, $userId){
         $sql = "DELETE FROM user_account WHERE userId = ?;";
 
@@ -459,6 +459,77 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     mysqli_stmt_close($stmt);
 }
 
+//Email
+//Create a Message
+    function createMessage($conn, $senderUserId, $Ids , $subject, $messageBody, $file ){
+    $sql = "INSERT INTO message (senderUserId, messageSubject, messageBody, sendDateTime)VALUES (?, ?, ?, NOW())";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../message.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "iss", $senderUserId, $subject, $messageBody);
+    mysqli_stmt_execute($stmt);
+    $messageId=mysqli_insert_id($conn);
+
+
+    foreach($Ids as $recipientId){
+          $sql2 = "INSERT INTO recipient (messageId, recipientUserId) VALUES (?, ?)";
+       if (!mysqli_stmt_prepare($stmt, $sql2)) {
+            header("location: ../message.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "ii", $messageId, $recipientId);
+    mysqli_stmt_execute($stmt);
+    }
+    mysqli_stmt_close($stmt);
+
+}
+
+//Get recipients
+  function getRecipientsIds($conn, $recipients){
+  $list = explode(",", $recipients);
+  $Ids = [];
+  foreach ($list as $username)
+    {
+        $user=getUserByUsername($conn, $username);
+        if(!$user){
+             header("location: ../message.php?error=usernotfound&username=$username");
+        }
+        else{
+            $Ids[]=$user["userId"];
+        }
+    }
+    return $Ids;
+  }
+
+  // Get user by username
+    function getUserByUsername($conn, $username){    
+        $sql = "SELECT * FROM user_account WHERE username = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load user.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
 
 
 
