@@ -46,7 +46,7 @@
         registerUser($conn,$username,$password,$firstName,$lastName,$role,$date_of_birth,$email);
 
        
-        header("location: ../register.php?success=true");
+        header("location: ../list-users.php?success=true&action=list");
         exit();
     }
 
