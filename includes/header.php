@@ -47,7 +47,7 @@
 
     <!--When the user is logged in, the profile would be shown -->
         <?php if (isset($_SESSION["username"])) {   ?>
-            <img src="images/circle.png" /> &nbsp;
+            <a href = "profile.php" > <img src="images/circle.png" /></a>
              <?php }  ?>
             <button class="navbar-toggler d-md-none" type="button"  data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon" style="width: 1em; height: 1em;"></span> 
@@ -63,7 +63,7 @@
                 <div class="position-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <h5 style="color: white; font-weight: bold; ">My Academics</h5>
+                            <h5 style="color: white; font-weight: bold;  margin-left: 10px;">My Academics</h5>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="register.php?action=add">Register a User</a>

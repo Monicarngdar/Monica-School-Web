@@ -23,26 +23,8 @@
         
 
     <div class="row g-0 overflow-hidden bg-white" style="min-height: calc(100vh - 44px);">
-        <!-- Email menu -->
-        <div class="col-12 col-md-3 p-0" style="background-color:#8296A3;">
-            <div class="list-group list-group-flush">
-                <a href="message.php" class="list-group-item text-white py-3 email-item">
-                    <i class="fa-solid fa-pen-to-square me-2"></i>Compose
-                </a>
-                <a href="inbox.php" class="list-group-item text-white py-3 email-item">
-                    <i class="fa-solid fa-inbox me-2"></i> Inbox
-                </a>
-                <a href="send-items.php" class="list-group-item text-white py-3 email-item">
-                    <i class="fa-solid fa-paper-plane me-2"></i> Send Items
-                </a>
-                <a href="archives.php" class="list-group-item text-white py-3 email-item">
-                    <i class="fa-solid fa-box-archive me-2"></i> Archives
-                </a>
-                <a href="favourites.php" class="list-group-item text-white py-3 email-item">
-                    <i class="fa-solid fa-star me-2"></i> Favourites
-                </a>
-            </div>
-        </div>
+            <!--Message Menu-->
+    <?php include "includes/message-menu-inc.php"; ?>
 
         <!-- Message -->
         <div class="col-12 col-md-9 d-flex flex-column bg-white p-0">
@@ -64,16 +46,15 @@
 
                     <textarea class="form-control border-0 shadow-none flex-grow-1 mb-3"
                         placeholder="Write your Message here..." name="messageBody" style="resize:none;" required=required></textarea>
-
-                    <div class="pt-3 border-top d-flex align-items-center">
-                        <button  type = "submit" name="submit" class="btn px-5 py-2 me-3" style="background:#2787B4;color:#fff;">
+                <div class="pt-3 border-top">
+                    <div class="input-group">
+                        <button type="submit" name="submit" class="btn px-4" style="background:#2787B4; color:#fff; border-color:#2787B4;">
                             Send
                         </button>
-
-                        <label class="btn btn-outline-secondary border-0 p-2 attach-file"> 
-                            <i class="fa-solid fa-upload fs-4"></i> <input type="file" hidden name="file"> 
-                        </label>
-                    </div>
+        
+                    <input type="file" name="file" id="file" class="form-control" style="border-color:#2787B4;">
+                </div>
+            </div>
                 </form>
             </div>
         </div>

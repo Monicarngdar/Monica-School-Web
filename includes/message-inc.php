@@ -7,7 +7,7 @@
     $recipients = $_POST['recipients'];
     $subject = $_POST['subject'];
     $messageBody = $_POST['messageBody'];
-    $file= $_POST['file'];
+    $file= $_FILES['file'];
 
     $recipients = str_replace(' ', '', $recipients);
     $Ids=getRecipientsIds($conn, $recipients);
@@ -22,6 +22,32 @@
         exit();
     
 }
+
+       if(isset($_GET["action"]) && $_GET["action"] == "viewinbox"){
+         //Always get user from session to prevent other users from seeing others messages by using inspect by the browser
+    $message = getMessageInbox($conn, $_SESSION ['userId'], $_GET ['messageId']);
+    $fromUser = getUser ($conn, $message['senderUserId']);
+    $toUser = getUser ($conn, $message['recipientUserId']);
+    $from = $fromUser['username'];
+    $to = $toUser['username'];
+    $subject= $message['messageSubject'];
+    $date= $message['sendDateTime'];
+    $message = $message['messageBody'];
+     }
+
+     
+       if(isset($_GET["action"]) && $_GET["action"] == "viewoutbox"){
+        //Always get user from session to prevent other users from seeing others messages by using inspect by the browser
+    $message = getMessageOutbox($conn, $_SESSION ['userId'], $_GET ['messageId']);
+     $fromUser = getUser ($conn, $message['senderUserId']);
+     $toUser = getUser ($conn, $message['recipientUserId']);
+    $from = $fromUser['username'];
+    $to = $toUser['username'];
+    $subject= $message['messageSubject'];
+    $date= $message['sendDateTime'];
+    $message = $message['messageBody'];
+     }
+
 
 
 

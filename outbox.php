@@ -1,10 +1,10 @@
 <?php include "includes/header.php"; ?>
-<?php include "includes/inbox-inc.php"; ?>
+<?php include "includes/outbox-inc.php"; ?>
 
 
 <?php
-if (!isset($inbox)) {
-    $inbox = []; 
+if (!isset($outbox)) {
+    $outbox = []; 
 }
 ?>
 
@@ -20,17 +20,16 @@ function submitForm(Id,action){
 <main class="main-content-wrapper p-0 overflow-hidden ">
     <div class="row g-0 overflow-hidden bg-white" style="min-height: calc(100vh - 44px);">
 
-
     <!--Message Menu-->
     <?php include "includes/message-menu-inc.php"; ?>
 
-        <!-- Inbox Title -->
+        <!-- Outbox Title -->
         <div class="col-12 col-md-9 d-flex flex-column bg-white p-0">
             <div class="p-3 border-bottom text-center" style="background:#385D7B;">
-                <h6 class="mb-0 fw-bold text-white">Inbox</h6>
+                <h6 class="mb-0 fw-bold text-white">Outbox</h6>
             </div>
 
-     <!--Inbox List-->
+     <!--Outbox List-->
         <div class="p-4">
             <div class="container-fluid">
                 <div class="row">
@@ -47,11 +46,11 @@ function submitForm(Id,action){
                         <div class="col-2">Actions</div> 
                     </div>
 
-        <?php foreach($inbox as $mail): ?>
-             <form action="inbox.php" method="post" id="form<?php  echo $mail['messageId']; ?>" class="mb-0">
+        <?php foreach($outbox as $mail): ?>
+             <form action="outbox.php" method="post" id="form<?php  echo $mail['messageId']; ?>" class="mb-0">
                   <div class="row align-items-center py-3 border-bottom hover-effect">
                       <input type="hidden" name="messageId" value="<?php echo $mail['messageId']; ?>">
-                      <input type="hidden" name="action" id="action<?php echo $mail['messageId']; ?>" value="viewinbox">
+                      <input type="hidden" name="action" id="action<?php echo $mail['messageId']; ?>" value="viewoutbox">
 
                     <div class="col-4 fw-bold text-dark">
                       <?php echo($mail['messageSubject']); ?>
@@ -68,7 +67,7 @@ function submitForm(Id,action){
                 <!-- View button -->
                     <i class="fa-solid fa-envelope-open" 
                     style="color: #007bff;; cursor: pointer;" 
-                    onclick="submitForm(<?php echo $mail['messageId']; ?>, 'viewinbox');"
+                    onclick="submitForm(<?php echo $mail['messageId']; ?>, 'viewoutbox');"
                     title="View Message"></i>
 
                    <!-- Archive button -->
