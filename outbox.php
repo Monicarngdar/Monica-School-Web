@@ -1,0 +1,103 @@
+<?php include "includes/header.php"; ?>
+<?php include "includes/outbox-inc.php"; ?>
+
+
+<?php
+if (!isset($outbox)) {
+    $outbox = []; 
+}
+?>
+
+<script>
+function submitForm(Id,action){
+    
+    form = document.getElementById('form' + Id);
+    form.action.value=action;
+    document.getElementById('form' + Id).submit();
+}
+</script>
+
+<main class="main-content-wrapper p-0 overflow-hidden ">
+    <div class="row g-0 overflow-hidden bg-white" style="min-height: calc(100vh - 44px);">
+
+    <!--Message Menu-->
+    <?php include "includes/message-menu-inc.php"; ?>
+
+        <!-- Outbox Title -->
+        <div class="col-12 col-md-9 d-flex flex-column bg-white p-0">
+            <div class="p-3 border-bottom text-center" style="background:#385D7B;">
+                <h6 class="mb-0 fw-bold text-white">Outbox</h6>
+            </div>
+
+     <!--Outbox List-->
+        <div class="p-4">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="text-center mb-4"></h2>
+                    </div>
+                </div>
+            
+                <div class="bg-white p-3">
+                    <div class="row fw-bold border-bottom pb-2 mb-3 text-secondary">
+                        <div class="col-4">Subject</div>
+                        <div class="col-3">From</div>
+                        <div class="col-3">Date</div>
+                        <div class="col-2">Actions</div> 
+                    </div>
+
+        <?php foreach($outbox as $mail): ?>
+             <form action="outbox.php" method="post" id="form<?php  echo $mail['messageId']; ?>" class="mb-0">
+                  <div class="row align-items-center py-3 border-bottom hover-effect">
+                      <input type="hidden" name="messageId" value="<?php echo $mail['messageId']; ?>">
+                      <input type="hidden" name="action" id="action<?php echo $mail['messageId']; ?>" value="viewoutbox">
+
+                    <div class="col-4 fw-bold text-dark">
+                      <?php echo($mail['messageSubject']); ?>
+                    </div>
+                        <div class="col-3 text-muted">
+                        <?php echo($mail['username']); ?>
+                        </div>
+                        <div class="col-3 text-muted small">
+                        <?php echo date('M d, Y', strtotime($mail['sendDateTime'])); ?>
+                    </div>
+
+                <div class="col-2 d-flex justify-content-center align-items-center gap-2">
+
+                <!-- View button -->
+                    <i class="fa-solid fa-envelope-open" 
+                    style="color: #007bff;; cursor: pointer;" 
+                    onclick="submitForm(<?php echo $mail['messageId']; ?>, 'viewoutbox');"
+                    title="View Message"></i>
+
+                   <!-- Archive button -->
+                    <i class="fa-solid fa-box-archive"  
+                    style="color: #6c757d; cursor: pointer;" 
+                    onclick="submitForm(<?php echo $mail['messageId']; ?>, 'archive');"
+                    title="Archive Message"></i>
+
+                <!-- Favourites button -->
+                    <i class="fa-solid fa-star"  
+                    style="color: #FFD43B; cursor: pointer;" 
+                    onclick="submitForm(<?php echo $mail['messageId']; ?>, 'favourite');"
+                    title="Favourite Message"></i>
+                                                
+                <!-- Delete button -->
+                    <i class="fa-solid fa-trash"  
+                    style="color: #dc3545; cursor: pointer;" 
+                   onclick="submitForm(<?php echo $mail['messageId']; ?>, 'delete');"
+                   title="Delete Message"></i>
+
+                    </div>
+                </div>
+                </form>
+                <?php endforeach; ?>
+
+
+                </div>
+            </div>
+        </div>
+     </div> 
+    </main>
+
+<?php include "includes/footer.php"; ?>

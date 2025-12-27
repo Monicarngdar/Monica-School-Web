@@ -339,7 +339,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         return $result;
     }
 
-    // Get Course
+    //Get Course
     function getCourse($conn, $courseId){    
         $sql = "SELECT * FROM course WHERE courseId = ?;";
 
@@ -466,7 +466,186 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     mysqli_stmt_close($stmt);
 }
 
+//Email Screen
+//Create a Message
+    function createMessage($conn, $senderUserId, $Ids , $subject, $messageBody, $file ){
+    $sql = "INSERT INTO message (senderUserId, messageSubject, messageBody, sendDateTime)VALUES (?, ?, ?, NOW())";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
 
+        header("location: ../message.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "iss", $senderUserId, $subject, $messageBody);
+    mysqli_stmt_execute($stmt);
+    $messageId=mysqli_insert_id($conn);
+
+
+    foreach($Ids as $recipientId){
+          $sql2 = "INSERT INTO recipient (messageId, recipientUserId) VALUES (?, ?)";
+       if (!mysqli_stmt_prepare($stmt, $sql2)) {
+            header("location: ../message.php?error=stmtfailed");
+            exit();
+    }
+    mysqli_stmt_bind_param($stmt, "ii", $messageId, $recipientId);
+    mysqli_stmt_execute($stmt);
+    }
+    mysqli_stmt_close($stmt);
+
+}
+
+//Get recipients
+  function getRecipientsIds($conn, $recipients){
+  $list = explode(",", $recipients);
+  $Ids = [];
+  foreach ($list as $username)
+    {
+        $user=getUserByUsername($conn, $username);
+        if(!$user){
+             header("location: ../message.php?error=usernotfound&username=$username");
+             exit();
+        }
+        else{
+            $Ids[]=$user["userId"];
+        }
+    }
+    return $Ids;
+  }
+
+  // Get user by username
+    function getUserByUsername($conn, $username){    
+        $sql = "SELECT * FROM user_account WHERE username = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load user.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+    //Get Inbox
+    function getInbox($conn, $userId){    
+        $sql = "SELECT * FROM message, recipient, user_account 
+        WHERE recipientUserId = ? and userId = recipientUserId  and message.messageId = recipient.messageId;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load inbox.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+        
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+        return $result;
+    }
+
+        //Sent Inbox
+    function getSent($conn, $userId){    
+        $sql = "SELECT * FROM message WHERE senderUserId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load inbox.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+        
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+        return $result;
+    }
+
+
+       //Get Outbox
+    function getOutbox($conn, $userId){    
+        $sql = "SELECT * FROM message, recipient, user_account 
+        WHERE senderUserId= ? and userId = senderUserId  and message.messageId = recipient.messageId;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load outbox.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+        
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+        return $result;
+    }
+
+    
+    //Get Message Inbox
+    function getMessageInbox($conn, $userId, $messageId){
+        $sql = "SELECT * FROM message, recipient
+        WHERE recipientUserId= ?  and message.messageId = ? and recipient.messageId = message.messageId;";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load message.</p>";
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "ii", $userId, $messageId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+        //Get Message Outbox. These need to be separated 
+    function getMessageOutbox($conn, $userId, $messageId){
+        $sql = "SELECT * FROM message, recipient 
+        WHERE senderUserId= ?  and message.messageId = ? and recipient.messageId = message.messageId;";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load message.</p>";
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "ii", $userId, $messageId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
 
 
 
