@@ -1,6 +1,9 @@
-    <?php
+<?php 
+ require_once "dbh.php";
+ require_once "functions.php";
 
-     if(!isset($_POST["submit"])){
+
+ if(!isset($_POST["submit"])){
      
  $user = getUser($conn, $_SESSION["userId"]);
  $userProfile = getUserProfile($conn, $_SESSION["userId"]);
@@ -17,9 +20,10 @@
     $street2 = $userProfile['street2'];
     $city =$userProfile['city'];
     $postCode = $userProfile['postCode'];
-    }
-
+    } 
+    
     else{
+    
        session_start();
 
     $street1 = $_POST['street1'];
@@ -29,9 +33,9 @@
 
    editProfile($conn, $_SESSION["userId"], $street1, $street2, $city, $postCode);
 
-   header("location: profile.php");   
+   header("location: ../profile.php?success=true");   
     exit();
     }
+    
 
     ?>
-

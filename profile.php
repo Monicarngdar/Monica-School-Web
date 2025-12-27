@@ -1,7 +1,5 @@
 <?php
 include "includes/header.php";
-include "includes/dbh.php";
-include "includes/functions.php";
 include "includes/profile-inc.php";
 
 if (!isset($_SESSION["userId"])) {
@@ -63,7 +61,7 @@ if (!isset($_SESSION["userId"])) {
 
     <div class="row">
         <div class="col">
-            <form action="profile.php" method="post" class="mt-4">
+            <form action="includes/profile-inc.php" method="post" class="mt-4">
           
     <!--Name, Surname, Email and Date of Birth-->
    <div class="row">
