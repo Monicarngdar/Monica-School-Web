@@ -129,12 +129,34 @@
     $user = getUser($conn, $_GET["userId"]);
     $profile = getUserProfile($conn, $_GET["userId"]);
     $courseId = getEnrolledCourse($conn, $_GET["userId"]);
-
-
-    $username =  $user ['username'];
+    $courseUnits =  getCourseUnits($conn, $courseId);
+    $studentUnitsRecord =  getStudentUnits($conn, $_GET["userId"]);
+    $studentsUnits = [];
+    foreach($studentUnitsRecord as $student){
+        $studentsUnits[] = $student['unitId'];
+    }
+    $userId = $user ['userId'];
+    $username = $user ['username'];
     $roleId =  $user['roleId'];
     $name =  $profile['name'];
     $surname =  $profile['surname'];
+   }
+
+   if(isset($_POST["action"]) && $_POST["action"] == "saveuserunit"){
+    $userId =  ($_POST["userId"]);
+// Delete the student units before adding the new one or they will be duplicates 
+
+    deleteStudentUnits($conn, $userId);
+     if(!empty ($_POST["unitId"])){
+        $IdArray =  ($_POST["unitId"]);
+        foreach($IdArray as $unitId){
+            addStudentUnit($conn, $userId, $unitId);
+        }
+
+     }
+     header("location:  list-users.php?success=true&action=list");   
+        exit();
+ 
    }
 
 

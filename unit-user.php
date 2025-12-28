@@ -15,7 +15,9 @@
                 </div>
             </div>
 
-            <form action="user.php" method="post" class="mt-4">
+            <form action="unit-user.php" method="post" class="mt-4">
+            <input type="hidden" name="userId" value="<?php echo $userId; ?>" >
+            <input type="hidden" name="action" value="saveuserunit">
 
               <div class="text-center mb-4" class="form-control">
                 <?php if($roleId == 1):?>
@@ -36,17 +38,16 @@
                 </div>
 
 
-              
-              
-
                 <div class="mb-3 p-3 border rounded bg-light">
                     <label class="form-label d-block mb-2"><strong>Select Units:</strong></label>
-                    
+                    <?php foreach ($courseUnits as $unit):?>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="unitNames" value="unit1" id="unit1">
-                        <label class="form-check-label" for="unit1">Unit Name 1</label>
+                        <input class="form-check-input" type="checkbox" name="unitId[]" value="<?php echo $unit["unitId"]?>" id="unitId" <?php if(in_array($unit["unitId"],$studentsUnits)){echo "checked";}?>>
+                        <label class="form-check-label" for="unitName"><?php echo $unit["unitName"]?></label>
                     </div>
-
+                    <?php endforeach ?>
+                </div>
+   
             
                 <div class="row mt-4">
                     <div class="col">

@@ -38,7 +38,7 @@ include "includes/user-inc.php";
             <div class="row">
                 <div class="col">
                     <h2 class="text-center mb-5"><?php echo $pageTitle?></h2>
-                </div>
+                </div> 
             </div>
 <div class="text-center mb-4">
     

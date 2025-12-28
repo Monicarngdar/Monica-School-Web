@@ -704,6 +704,81 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         mysqli_stmt_close($stmt);
     }
 
+    //Get Course Units
+    function getCourseUnits($conn, $courseId){
+
+        $sql = "SELECT * FROM unit WHERE courseId = ?";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load courses.</p>";
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $courseId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return $result;
+
+    }
+
+
+      //Add Student Unit
+    function addStudentUnit($conn, $studentId, $unitId){
+    $sql = "INSERT INTO unit_student (studentId, unitId) VALUES (?, ?)";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../unit-user.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "ii",  $studentId, $unitId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+       //Delete Student Units
+    function deleteStudentUnits($conn, $userId){
+        $sql = "DELETE FROM unit_student WHERE studentId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../unit-user.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+      //Get Student Units
+    function getStudentUnits($conn, $studentId){
+
+        $sql = "SELECT * FROM unit_student WHERE studentId = ?";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load student units.</p>";
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $studentId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return $result;
+
+    }
+
 
 
 
