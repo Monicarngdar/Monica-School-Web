@@ -647,6 +647,63 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
+        // Get Enrolled Course
+    function getEnrolledCourse($conn, $userId){    
+        $sql = "SELECT * FROM enrolment WHERE userAccountId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load enrolment.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row['courseId'];
+        }
+        else{
+            return 0;
+        }
+    }
+
+        //Add Enrolment
+    function addEnrolment($conn, $userId, $courseId){
+    $sql = "INSERT INTO enrolment (userAccountId, courseId) VALUES (?, ?)";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../unit-user.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "ii",  $userId, $courseId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+       //Delete Enrolment
+    function deleteEnrolment($conn, $userId){
+        $sql = "DELETE FROM enrolment WHERE userAccountId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../unit-user.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
 
 
 

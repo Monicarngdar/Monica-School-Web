@@ -68,9 +68,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="register.php?action=add">Register a User</a>
                         </li>
-                           <li class="nav-item">
-                            <a class="nav-link" href="register.php?action=list">Register Users</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="list-users.php?action=list">Manage Users</a>
                         </li>

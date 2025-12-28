@@ -37,12 +37,13 @@ function submitForm(Id,action){
                 </div>
             </div>
         
-      <div class="container mt-3">
-  <div class="row fw-bold border-bottom pb-2 mb-3">
-    <div class="col-6">Users Name</div>
-    <div class="col-3 text-center">Edit</div>
-    <div class="col-3 text-center">Delete</div>
-  </div>
+   <div class="row fw-bold border-bottom pb-2 mb-3">
+  <div class="col-6">Users Name</div>
+  <div class="col-2 text-center">Edit</div>
+  <div class="col-2 text-center">Units</div>
+  <div class="col-2 text-center">Delete</div>
+</div>
+
 
    <?php foreach($users as $user):?>
     <form action="user.php" method="post" id = "form<?php echo $user["userId"] ?>" class="mt-4">
@@ -50,10 +51,13 @@ function submitForm(Id,action){
     <input type="hidden" name = "id" value="<?php echo $user["userId"] ?>" >
     <input type="hidden" name = "action"  value = "edit">
     <div class="col-6"><?php echo $user["username"] ?></div>
-    <div class="col-3 text-center">
+    <div class="col-2 text-center">
       <i class="fa-solid fa-pen" style="color: #007bff; cursor: pointer;" onclick="submitForm(<?php echo $user["userId"] ?>,'edit');" ></i>
     </div> 
-    <div class="col-3 text-center">
+    <div class="col-2 text-center">
+      <i class="fa-solid fa-book" style="color: #007bff; cursor: pointer;" onclick="submitForm(<?php echo $user["userId"] ?>,'unit');" ></i>
+    </div> 
+    <div class="col-2 text-center">
       <i class="fa-solid fa-x" style="color: #dc3545; cursor: pointer;" onclick="submitForm(<?php echo $user["userId"] ?>,'delete');"></i>
     </div>
   </div>

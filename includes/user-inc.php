@@ -21,7 +21,10 @@
     $street2 =  $_POST['street2'];
     $city = $_POST['city'];
     $postCode =  $_POST['postCode'];
+    $courseId = $_POST['courseId'];
+   
     $pageTitle = "Edit User";
+
     
      $error = "";
 
@@ -48,6 +51,10 @@
 
     saveProfileAdmin($conn, $userId, $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode);
     saveAccountAdmin($conn, $userId, $username);
+    deleteEnrolment($conn, $userId);
+     if(!empty ($courseId)){
+    addEnrolment($conn, $userId, $courseId);
+     }
 
       header("location:  ../list-users.php?success=true&action=list");   
         exit();
@@ -71,6 +78,8 @@
     $city =  $profile['city'];
     $postCode = $profile['postCode'];
     $pageTitle = "Edit User";
+    $courses = getCourses($conn);
+    $courseId = getEnrolledCourse($conn, $_GET["id"]);
     $action ="save";
     }
 
@@ -92,6 +101,10 @@
     $city =  $profile['city'];
     $postCode = $profile['postCode'];
     $pageTitle = "Edit User";
+    $courses = getCourses($conn);
+    $courseId = getEnrolledCourse($conn, $_POST["id"]);
+
+   
     $action ="save";
     }
 
@@ -103,6 +116,26 @@
         exit();
     }
 
+        //Unit user. This is triggered from the button in the list users
+    if(isset($_POST["action"]) && $_POST["action"] == "unit"){
+       $userId = $_POST['id'];
+        header("location: unit-user.php?action=unit&userId=$userId");   
+        exit();
+    }
+
+
+  //This would show the unit-user form as it is redirected from the button
+ if(isset($_GET["action"]) && $_GET["action"] == "unit"){
+    $user = getUser($conn, $_GET["userId"]);
+    $profile = getUserProfile($conn, $_GET["userId"]);
+    $courseId = getEnrolledCourse($conn, $_GET["userId"]);
+
+
+    $username =  $user ['username'];
+    $roleId =  $user['roleId'];
+    $name =  $profile['name'];
+    $surname =  $profile['surname'];
+   }
 
 
 

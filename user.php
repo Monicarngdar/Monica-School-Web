@@ -65,13 +65,28 @@ include "includes/user-inc.php";
         <input type="text" name="username" id="username" placeholder="Username" class="form-control mb-3" value="<?php echo $username ?>">
         <input type="email" name="email" placeholder="Email" value="<?php echo $email ?>" class="form-control mb-3">
         <input type="date" name="date_of_birth" placeholder="Date of Birth" value="<?php echo $date_of_birth ?>" class="form-control mb-3">
+
+          
     </div>
+
+             
 
     <div class="col-md-6">
         <input type="text" id="street1" name="street1" placeholder="Street 1" value="<?php echo $street1 ?>" class="form-control mb-3">
         <input type="text" id="street2" name="street2" placeholder="Street 2" value="<?php echo $street2 ?>" class="form-control mb-3">
         <input type="text" id="city" name="city" placeholder="City" value="<?php echo $city ?>" class="form-control mb-3">
         <input type="text" id="postCode" name="postCode" placeholder="Post Code" value="<?php echo $postCode ?>" class="form-control mb-3">
+        
+               <select name="courseId" id="courseId" class="form-control mb-3" >
+                        <option value="">Select Course</option>
+                        <?php foreach($courses as $course):?>
+                        <option value="<?php echo $course["courseId"]?>"
+                        <?php if($course["courseId"]== $courseId) echo "selected = selected" ?>>
+                        <?php echo $course["courseName"]?></option>
+
+                        <?php endforeach?>
+                    </select>
+
     </div>
 </div> <div class="row">
     <div class="col-md-6">
