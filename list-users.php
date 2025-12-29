@@ -39,7 +39,8 @@ function submitForm(Id,action){
             </div>
         
    <div class="row fw-bold border-bottom pb-2 mb-3">
-  <div class="col-6">Users Name</div>
+  <div class="col-3">Username</div>
+  <div class="col-3 ">Role</div>
   <div class="col-2 text-center">Edit</div>
   <div class="col-2 text-center">Units</div>
   <div class="col-2 text-center">Delete</div>
@@ -51,7 +52,27 @@ function submitForm(Id,action){
   <div class="row align-items-center mb-3 border-bottom pb-2">
     <input type="hidden" name = "id" value="<?php echo $user["userId"] ?>" >
     <input type="hidden" name = "action"  value = "edit">
-    <div class="col-6"><?php echo $user["username"] ?></div>
+
+    <div class="col-3">  
+    <span class="fw-bold" >
+    <?php echo $user["username"]  ?>
+      </span>
+  </div>
+
+    <div class="col-3">
+      <span class="text-muted fw-bold" >
+      <?php if ($user["roleId"] == 1) {
+            echo "Student";
+        } elseif ($user["roleId"] == 2) {
+            echo "Lecturer";
+        } elseif ($user["roleId"] == 3) {
+            echo "Admin";
+        }; ?>
+        </span>
+      </div>
+
+
+
     <div class="col-2 text-center">
       <i class="fa-solid fa-pen" style="color: #007bff; cursor: pointer;" onclick="submitForm(<?php echo $user["userId"] ?>,'edit');" ></i>
     </div> 

@@ -120,7 +120,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     //Get users
      function getUsers($conn){
    
-        $sql = "SELECT user_account.userId as userId, username, name, surname FROM user_account, user_profile WHERE user_account.userId = user_profile.userId";
+        $sql = "SELECT user_account.userId as userId, username, roleId, name, surname FROM user_account, user_profile WHERE user_account.userId = user_profile.userId";
         $stmt = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
