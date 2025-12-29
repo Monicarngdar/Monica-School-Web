@@ -86,6 +86,13 @@
                         </li>
                         <?php endif ?>
 
+                        <?php  if ($_SESSION ['userRole']==2 ):?>
+                       <li class="nav-item">
+                            <a class="nav-link" href="#">Grades</a>
+                        </li>
+                         <?php endif ?>
+      
+
                         <?php  if ($_SESSION ['userRole']==1 ):?>
                        <li class="nav-item">
                             <a class="nav-link" href="#">Grades</a>

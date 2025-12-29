@@ -120,7 +120,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     //Get users
      function getUsers($conn){
    
-        $sql = "SELECT user_account.userId as userId, username, name, surname FROM user_account, user_profile WHERE user_account.userId = user_profile.userId";
+        $sql = "SELECT user_account.userId as userId, username, roleId, name, surname FROM user_account, user_profile WHERE user_account.userId = user_profile.userId";
         $stmt = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -770,6 +770,59 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
 
         mysqli_stmt_bind_param($stmt, "i", $studentId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return $result;
+
+    }
+
+          //Add Lecturer Unit
+    function addLecturerUnit($conn, $lecturerId, $unitId){
+    $sql = "INSERT INTO unit_lecturer (lecturerId, unitId) VALUES (?, ?)";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../unit-user.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "ii",  $lecturerId, $unitId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+         //Delete Lecturer Units
+    function deleteLecturerUnits($conn, $userId){
+        $sql = "DELETE FROM unit_lecturer WHERE lecturerId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../unit-user.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+      //Get Lecturer Units
+    function getLecturerUnits($conn, $lecturerId){
+
+        $sql = "SELECT * FROM unit_lecturer WHERE lecturerId = ?";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load lecturer units.</p>";
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $lecturerId);
         mysqli_stmt_execute($stmt);
 
         $result = mysqli_stmt_get_result($stmt);
