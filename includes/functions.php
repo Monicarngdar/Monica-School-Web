@@ -780,6 +780,44 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     }
 
 
+    //Admin Page
+    function adminPage(){
+        if (session_status() !== PHP_SESSION_ACTIVE ) {
+             session_start();
+       }
+                if ($_SESSION['userRole']!=3 ){
+            session_destroy();
+             header("location: login.php?error=adminnotloggedin");
+             exit();   
+             }
+    }
+
+        //Lecturer Page
+    function lecturerPage(){
+        if (session_status() !== PHP_SESSION_ACTIVE ) {
+             session_start();
+       }
+            if ($_SESSION['userRole']!=2 ){
+                session_destroy();
+                header("location: login.php?error=lecturernotloggedin");
+                exit();
+            }   
+    }
+
+         //Student Page
+    function studentPage(){
+        if (session_status() !== PHP_SESSION_ACTIVE ) {
+             session_start();
+       }
+        if ($_SESSION['userRole']!=1 ){
+            session_destroy();
+             header("location: login.php?error=studentnotloggedin");
+             exit();   
+        }
+    }
+
+
+
 
 
 

@@ -65,6 +65,7 @@
                         <li class="nav-item">
                             <h5 style="color: white; font-weight: bold;  margin-left: 10px;">My Academics</h5>
                         </li>
+                        <?php  if ($_SESSION ['userRole']==3 ):?>
                         <li class="nav-item">
                             <a class="nav-link" href="register.php?action=add">Register a User</a>
                         </li>
@@ -83,9 +84,13 @@
                          <li class="nav-item">
                             <a class="nav-link" href="unit.php?action=add">Add Unit</a>
                         </li>
+                        <?php endif ?>
+
+                        <?php  if ($_SESSION ['userRole']==1 ):?>
                        <li class="nav-item">
                             <a class="nav-link" href="#">Grades</a>
                         </li>
+                         <?php endif ?>
       
                  <?php }  ?>
                 

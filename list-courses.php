@@ -3,6 +3,7 @@
      include "includes/functions.php";
     include "includes/dbh.php";
     $courses = getCourses($conn);
+    adminPage() //Inforce admin only in this page
 
 ?>
    <?php     
