@@ -10,7 +10,23 @@
             if ($_GET["error"] == "incorrectlogin"){
                 $message = "Incorrect Login";
             }
+
+            //Wrong log in as student
+             if ($_GET["error"] == "studentnotloggedin"){
+                $message = "Please log in as a student";
+            }
+
+             //Wrong log in as lecturer
+             if ($_GET["error"] == "lecturernotloggedin"){
+                $message = "Please log in as a lecturer";
+            }
+
+             //Wrong log in as admin
+             if ($_GET["error"] == "adminnotloggedin"){
+                $message = "Please log in as an admin";
+            }
             ?>
+            
             <div class="row">
                 <div class="col"></div>
                 <div class="col border border-danger text-danger">

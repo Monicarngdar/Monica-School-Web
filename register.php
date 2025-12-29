@@ -1,5 +1,7 @@
 <?php 
+    include "includes/functions.php";
     include "includes/header.php";
+    adminPage() //Inforce admin only in this page
 
 ?>
 <main>
