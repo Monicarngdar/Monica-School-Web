@@ -43,7 +43,7 @@
                     <label class="form-label d-block mb-2"><strong>Select Units:</strong></label>
                     <?php foreach ($courseUnits as $unit):?>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="unitId[]" value="<?php echo $unit["unitId"]?>" id="unitId" <?php if(in_array($unit["unitId"],$studentsUnits)){echo "checked";}?>>
+                        <input class="form-check-input" type="checkbox" name="unitId[]" value="<?php echo $unit["unitId"]?>" id="unitId" <?php if(in_array($unit["unitId"],$selectedUnits)){echo "checked";}?>>
                         <label class="form-check-label" for="unitName"><?php echo $unit["unitName"]?></label>
                     </div>
                     <?php endforeach ?>

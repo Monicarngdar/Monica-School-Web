@@ -124,37 +124,63 @@
     }
 
 
-  //This would show the unit-user form as it is redirected from the button
- if(isset($_GET["action"]) && $_GET["action"] == "unit"){
+  //This would show the unit-user form as it is redirected from the button. 
+ if(isset($_GET["action"]) && $_GET["action"] == "unit" ){
     $user = getUser($conn, $_GET["userId"]);
     $profile = getUserProfile($conn, $_GET["userId"]);
     $courseId = getEnrolledCourse($conn, $_GET["userId"]);
-    $courseUnits =  getCourseUnits($conn, $courseId);
-    $studentUnitsRecord =  getStudentUnits($conn, $_GET["userId"]);
-    $studentsUnits = [];
-    foreach($studentUnitsRecord as $student){
-        $studentsUnits[] = $student['unitId'];
-    }
+
+    
     $userId = $user ['userId'];
     $username = $user ['username'];
     $roleId =  $user['roleId'];
     $name =  $profile['name'];
     $surname =  $profile['surname'];
+if($roleId == 1) {
+ $courseUnits =  getCourseUnits($conn, $courseId);
+ $studentUnitsRecord =  getStudentUnits($conn, $_GET["userId"]);
+    $selectedUnits = [];
+    foreach($studentUnitsRecord as $student){
+        $selectedUnits[] = $student['unitId'];
+    }
+
+} else{
+      $courseUnits =  getUnits($conn);
+     $lecturerUnitsRecord =  getLecturerUnits($conn, $_GET["userId"]);
+    $selectedUnits = [];
+    foreach($lecturerUnitsRecord as $lecturer){
+        $selectedUnits[] = $lecturer['unitId'];
+    }
+}
+   
    }
+
 
    if(isset($_POST["action"]) && $_POST["action"] == "saveuserunit"){
     $userId =  ($_POST["userId"]);
+    $user = getUser($conn, $userId);
+     $roleId =  $user['roleId'];
 // Delete the student units before adding the new one or they will be duplicates 
 
-    deleteStudentUnits($conn, $userId);
+    if($roleId == 1){
+
+            deleteStudentUnits($conn, $userId);
+        if(!empty ($_POST["unitId"])){
+            $IdArray =  ($_POST["unitId"]);
+            foreach($IdArray as $unitId){ 
+                addStudentUnit($conn, $userId, $unitId);
+            }
+         }    
+    } else{
+    deleteLecturerUnits($conn, $userId);
      if(!empty ($_POST["unitId"])){
         $IdArray =  ($_POST["unitId"]);
         foreach($IdArray as $unitId){
-            addStudentUnit($conn, $userId, $unitId);
+         addLecturerUnit($conn, $userId, $unitId);
         }
-
-     }
-     header("location:  list-users.php?success=true&action=list");   
+    }
+}
+         header("location:  list-users.php?success=true&action=list");   
         exit();
  
    }
