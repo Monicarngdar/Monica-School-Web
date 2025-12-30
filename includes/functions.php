@@ -869,6 +869,25 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
+    function getLecturerAssignments(){
+        
+    }
+
+
+     //Add Lecturer Assignments
+    function addAssignment($conn, $assignmentId, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate){
+    $sql = "INSERT INTO assignments (assignmentId, unitId, taskTitle, taskDescription, maxMark, dueDate) VALUES (?, ?, ?, ?, ?, ?)";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../lecturer-assign.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "iissis",  $assignmentId, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
 
 
 

@@ -87,6 +87,21 @@
                         <?php endif ?>
 
                         <?php  if ($_SESSION ['userRole']==2 ):?>
+                         <li class="nav-item">
+                            <a class="nav-link" href="#">Timetable</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link" href="#">My Units</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link" href="#">Attendance</a>
+                        </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="list-lecturer-assignments.php?action=list">Assignments</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link" href="lecturer-assign.php?action=add">Add Assignment</a>
+                        </li>
                        <li class="nav-item">
                             <a class="nav-link" href="#">Grades</a>
                         </li>
