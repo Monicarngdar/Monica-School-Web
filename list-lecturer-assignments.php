@@ -22,17 +22,31 @@ lecturerPage() //Inforce lecturer only in this page
   <div class="col-2 text-center">Edit</div>
 </div>
 
-<form action="list-lecturer-assignments.php" method="post" id="form" class="mt-4">
+ <?php foreach($lecturerAssignments as $assignments):?>
+<form action="list-lecturer-assignments.php" method="post" id="form<?php echo $assignments["assignmentId"] ?>" class="mt-4">
   <div class="row align-items-center mb-3 border-bottom pb-2">
-    <div class="col-3"></div> 
-    <div class="col-3"></div>
-    <div class="col-4"></div>
-    
+    <input type="hidden" name = "id" value="<?php echo  $assignments["assignmentId"] ?>" >
+    <input type="hidden" name = "action"  value = "edit">
+
+
+<div class="col-3">
+    <?php echo $assignments["courseName"]; ?>
+</div>
+
+<div class="col-3">
+    <?php echo $assignments["unitName"]; ?>
+</div>
+
+<div class="col-4">
+    <?php echo $assignments["taskTitle"]; ?>
+</div>
+  
     <div class="col-2 text-center">
-      <i class="fa-solid fa-pen" style="color: #007bff; cursor: pointer;" onclick="submitForm();"></i>
+      <i class="fa-solid fa-pen" style="color: #007bff; cursor: pointer;"  onclick="submitForm(<?php echo  $assignments["assignmentId"] ?>,'edit');" ></i>
     </div> 
   </div>
 </form>
+<?php endforeach?>
    
           
 

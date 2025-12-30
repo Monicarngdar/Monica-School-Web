@@ -4,7 +4,7 @@
 
 if(isset($_GET["action"]) && $_GET["action"]=="list")
     {
-         $lecturerAssignments = getLecturerAssignments($conn);
+         $lecturerAssignments = getAssignments($conn);
     } 
 
      if(isset($_GET["action"]) && $_GET["action"] == "add"){
@@ -17,7 +17,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
      }
     $unitId= "";
     $unitName = "";
-    $taskSubject = "";
+    $taskTitle = "";
     $taskDescription = "";
     $maxMark = "";
     $dueDate = "";
@@ -36,7 +36,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
      }
     $unitId= "";
     $unitName = "";
-    $taskSubject = "";
+    $taskTitle = "";
     $taskDescription = "";
     $maxMark = "";
     $dueDate = "";
