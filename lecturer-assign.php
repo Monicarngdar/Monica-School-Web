@@ -54,12 +54,12 @@ lecturerPage() //Inforce lecturer in this page
                         </div> 
 
                     </div> <div class="mb-3">
-                        <input type="text" name="taskTitle" class="form-control" placeholder="Task Title" required>
+                        <input type="text" name="taskTitle" class="form-control" placeholder="Task Title"  value ="<?php echo $taskTitle?>" required>
                     </div>
 
                      <div class="row">
                         <div class="col-md-6 mb-3">
-                            <input name ="dueDate" placeholder="Due Date" class="form-control" type="text"
+                            <input name ="dueDate" placeholder="Due Date" class="form-control"  value ="<?php echo $dueDate?>" type="text"
                                 onfocus="(this.type='date')"
                                 onblur="(this.type='text')"
                                 id="date" 
@@ -67,23 +67,22 @@ lecturerPage() //Inforce lecturer in this page
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <input type="number" name="maxMark" class="form-control" placeholder="Max Mark" min="1" max="100" required>
+                            <input type="number" name="maxMark" class="form-control" placeholder="Max Mark" min="1" max="100"   value ="<?php echo $maxMark?>"required>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <textarea name="taskDescription" class="form-control" rows="4" placeholder="Enter assignment description..."></textarea>
+                        <textarea name="taskDescription" class="form-control" rows="4" placeholder="Enter assignment description..."  value ="<?php echo $taskDescription?>"></textarea>
                     </div>
 
                     <div class="mb-4">
                         <div class="input-group">
-                            <input type="file" name="assignmentFile" class="form-control" id="assignmentFile">
+                            <input type="file" name="assignmentFile" class="form-control" id="assignmentFile"  value ="<?php echo $assignmentFile?>">
                         </div>
                     </div>
 
                     <div class="text-end">
                         <button type="reset" class="btn btn-secondary me-2">CANCEL</button>
-                        <button type="button" class="btn btn-secondary me-2">DELETE</button>
                         <button type="submit" name="action" id="save" value ="save" class="btn btn-primary px-4">SAVE</button>
                     </div>
 

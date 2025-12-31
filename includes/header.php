@@ -30,7 +30,7 @@
     <header class="navbar navbar-dark overflow-hidden sticky-top bg-myskolar flex-md-nowrap z-3 main-header">
         
         <div class="d-flex align-items-center navbar-brand-wrapper"> 
-            <a class="navbar-brand px-2" href="#">MYSKOLAR</a>
+            <a class="navbar-brand px-2" href="index.php">MYSKOLAR</a>
 
    <!--When the user is logged in, the dashboard and email link would be shown -->
         <?php if (isset($_SESSION["username"])) {   ?>

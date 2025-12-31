@@ -1,3 +1,4 @@
-<?php include "includes/header.php"; ?>
+<?php 
+include "profile.php";
+?>
 
-<?php include "includes/footer.php"; ?>
