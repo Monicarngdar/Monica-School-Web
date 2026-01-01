@@ -906,6 +906,22 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         mysqli_stmt_close($stmt);
     }
 
+       //Save Assignment
+    function saveAssignment($conn, $assignmentId,  $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate){
+    $sql = "UPDATE  assignments SET  unitId = ?, taskTitle = ?, taskDescription = ?,  maxMark = ?, dueDate = ? WHERE assignmentId = ?;";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../lecturer.assign.php?error=stmtfailed");
+        exit();
+    }
+    
+    mysqli_stmt_bind_param($stmt, "issisi", $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $assignmentId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
 
 //Get Lecturer Assignments
     function getAssignments($conn, $userId){

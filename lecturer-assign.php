@@ -9,8 +9,10 @@ lecturerPage() //Inforce lecturer in this page
 <script>
 
         $(document).ready(function() {
-        $('#courseId').on('change', function() {
-            document.forms["courseForm"].submit();
+        $('#courseIdSelected').on('change', function() {
+            var selectedCourse = $(this).children("option:selected").val();
+             $('#courseId').value = selectedCourse;
+            document.forms["unitForm"].submit();
         });
         });
 
@@ -29,10 +31,10 @@ lecturerPage() //Inforce lecturer in this page
                         <div class="col-md-6 mb-3">
                             <form action="lecturer-assign.php" method="post" id="courseForm" name = "courseForm">
                              <input type="hidden" name ="action" value ="courseFieldSelection">
-                                <select name="courseId" id="courseId" class="form-select"  required>
+                                <select name="courseId" id="courseIdSelected" class="form-select"  required  <?php  if(!empty ($assignmentId)) echo "disabled"; ?>>
                                     <option value=""selected disabled>Select Course</option>
                                     <?php foreach($courses as $course): ?>
-                                        <option value="<?php echo $course["courseId"]; ?>" <?php if($course["courseId"] == $courseId) echo "selected"; ?>>
+                                        <option value="<?php echo $course["courseId"]; ?>" <?php if($course["courseId"] == $courseId) echo "selected"; ?> >
                                             <?php echo $course["courseName"]; ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -42,8 +44,10 @@ lecturerPage() //Inforce lecturer in this page
 
                         <div class="col-md-6 mb-3">
                             <form action="lecturer-assign.php" method="post" id="unitForm" name = "unitForm">
-                             <input type="hidden" name ="courseId" value ="<?php echo $courseId?>">
-                                <select name="unitId"id="unitId" class="form-select" required>
+                            <input type="hidden" name ="action" value ="courseFieldSelection">
+                             <input type="hidden" id="courseId" name ="courseId" value ="<?php echo $courseId?>">
+                              <input type="hidden" id="assignmentId" name ="assignmentId" value ="<?php echo $assignmentId?>">
+                                <select name="unitId" id="unitId" class="form-select" required  <?php  if(!empty ($assignmentId)) echo "disabled"; ?>>
                                     <option value=""selected disabled>Select Unit</option>
                                   <?php foreach($courseUnits as $unit): ?>
                                         <option value="<?php echo $unit["unitId"]; ?>" <?php if($unit["unitId"] == $unitId) echo "selected"; ?>>
@@ -51,6 +55,7 @@ lecturerPage() //Inforce lecturer in this page
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
+                             <input type="hidden" id="unitId" name ="unitId" value ="<?php echo $unitId?>">
                         </div> 
 
                     </div> <div class="mb-3">
@@ -72,7 +77,7 @@ lecturerPage() //Inforce lecturer in this page
                     </div>
 
                     <div class="mb-3">
-                        <textarea name="taskDescription" class="form-control" rows="4" placeholder="Enter assignment description..."  value ="<?php echo $taskDescription?>"></textarea>
+                        <textarea name="taskDescription" class="form-control" rows="4" placeholder="Enter assignment description..." ><?php echo $taskDescription?></textarea>
                     </div>
 
                     <div class="mb-4">

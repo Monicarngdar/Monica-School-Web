@@ -16,6 +16,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
         $courseUnits = getCourseUnits($conn, $courseId);
      }
     $unitId= "";
+   $assignmentId = "";
     $taskTitle = "";
     $taskDescription = "";
     $maxMark = "";
@@ -33,10 +34,13 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
     }
 
         if(isset($_POST["action"]) && $_POST["action"] == "edit"){
-    $assignment = getAssignment($conn, $_POST["id"]);
+             $courses= getCourses($conn);
+             $assignment = getAssignment($conn, $_POST["id"]);
+            
 
    $assignmentId  = $assignment ['assignmentId'];
     $courseId  = $assignment['courseId'];
+    $courseUnits = getCourseUnits($conn, $courseId);
     $unitId  =  $assignment['unitId'];
     $taskTitle = $assignment['taskTitle'];
     $taskDescription = $assignment['taskDescription'];
@@ -56,6 +60,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
         $courseUnits = getCourseUnits($conn, $courseId);
      }
     $unitId=(empty($_POST ["unitId"]))?'':$_POST ["unitId"];
+    $assignmentId=(empty($_POST ["assignmentId"]))?'':$_POST ["assignmentId"];
     $taskTitle = (empty($_POST ["taskTitle"]))?'':$_POST ["taskTitle"];
     $taskDescription = (empty($_POST ["taskDescription"]))?'':$_POST ["taskDescription"];
     $maxMark = (empty($_POST ["maxMark"]))?'':$_POST ["maxMark"];
@@ -68,14 +73,20 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
  if(isset($_POST["action"]) && $_POST["action"] == "save"){
    
    $courseId = $_POST ["courseId"];
-   $unitId = $_POST ["unitId"];
+   $assignmentId = $_POST ["assignmentId"];
+   $unitId = $_POST ["unitId"]; 
    $taskTitle = $_POST ["taskTitle"];
    $taskDescription = $_POST ["taskDescription"];
    $maxMark = $_POST ["maxMark"];
    $dueDate = $_POST ["dueDate"];
    $assignmentFile = $_POST ["assignmentFile"];
+   if(empty ($courseId)) {  
    addAssignment($conn, $assignmentFile, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $_SESSION["userId"]);
 
+   } else{
+   saveAssignment($conn, $assignmentId, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $_SESSION["userId"]);
+   }
+   
       header("location: list-lecturer-assignments.php?success=true&action=list");   
       exit();
       }
