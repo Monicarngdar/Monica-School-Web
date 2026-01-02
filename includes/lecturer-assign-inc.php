@@ -51,7 +51,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
   }
 
 
-     if(isset($_POST["action"]) && $_POST["action"] == "courseFieldSelection"){
+     if(isset($_POST["courseFormAction"]) && $_POST["courseFormAction"] == "courseFieldSelection"){
     $courses= getCourses($conn);
      if(!isset($_POST["courseId"])){
         $courseId = 0;
@@ -80,8 +80,8 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
    $maxMark = $_POST ["maxMark"];
    $dueDate = $_POST ["dueDate"];
    $assignmentFile = $_POST ["assignmentFile"];
-   if(empty ($courseId)) {  
-   addAssignment($conn, $assignmentFile, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $_SESSION["userId"]);
+   if(empty ($assignmentId)) {  
+   addAssignment($conn, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $_SESSION["userId"]);
 
    } else{
    saveAssignment($conn, $assignmentId, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $_SESSION["userId"]);

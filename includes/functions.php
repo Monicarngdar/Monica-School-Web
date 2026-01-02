@@ -875,8 +875,8 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
 
      //Add Lecturer Assignments
-    function addAssignment($conn, $assignmentId, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $userId){
-    $sql = "INSERT INTO assignments (assignmentId, unitId, taskTitle, taskDescription, maxMark, dueDate, userId) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    function addAssignment($conn, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $userId){
+    $sql = "INSERT INTO assignments (unitId, taskTitle, taskDescription, maxMark, dueDate, userId) VALUES (?, ?, ?, ?, ?, ?)";
     
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -884,7 +884,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         header("location: ../lecturer-assign.php?error=stmtfailed");
         exit();
     }
-    mysqli_stmt_bind_param($stmt, "iissisi",  $assignmentId, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $userId);
+    mysqli_stmt_bind_param($stmt, "issisi", $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $userId);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 }

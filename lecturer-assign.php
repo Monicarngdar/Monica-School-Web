@@ -11,7 +11,8 @@ lecturerPage() //Inforce lecturer in this page
         $(document).ready(function() {
         $('#courseIdSelected').on('change', function() {
             var selectedCourse = $(this).children("option:selected").val();
-             $('#courseId').value = selectedCourse;
+             $('#courseId').val(selectedCourse);  
+             $('#courseFormAction').val("courseFieldSelection");
             document.forms["unitForm"].submit();
         });
         });
@@ -44,7 +45,7 @@ lecturerPage() //Inforce lecturer in this page
 
                         <div class="col-md-6 mb-3">
                             <form action="lecturer-assign.php" method="post" id="unitForm" name = "unitForm">
-                            <input type="hidden" name ="action" value ="courseFieldSelection">
+                            <input type="hidden" id="courseFormAction" name ="courseFormAction" value ="">
                              <input type="hidden" id="courseId" name ="courseId" value ="<?php echo $courseId?>">
                               <input type="hidden" id="assignmentId" name ="assignmentId" value ="<?php echo $assignmentId?>">
                                 <select name="unitId" id="unitId" class="form-select" required  <?php  if(!empty ($assignmentId)) echo "disabled"; ?>>
@@ -55,7 +56,9 @@ lecturerPage() //Inforce lecturer in this page
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
+                                 <?php  if(!empty ($assignmentId)):?>
                              <input type="hidden" id="unitId" name ="unitId" value ="<?php echo $unitId?>">
+                             <?php endif ?> 
                         </div> 
 
                     </div> <div class="mb-3">
