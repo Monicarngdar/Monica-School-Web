@@ -869,6 +869,166 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
+    function getLecturerAssignments(){
+        
+    }
+
+
+     //Add Lecturer Assignments
+    function addAssignment($conn, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $userId){
+    $sql = "INSERT INTO assignments (unitId, taskTitle, taskDescription, maxMark, dueDate, userId) VALUES (?, ?, ?, ?, ?, ?)";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../lecturer-assign.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "issisi", $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $userId);
+    mysqli_stmt_execute($stmt);
+    $assignmentId =  mysqli_insert_id($conn);
+    mysqli_stmt_close($stmt);
+    return $assignmentId;
+}
+
+               //Delete Assignment
+     function deleteAssignment($conn, $assignmentId){
+         $sql = "DELETE FROM assignments WHERE assignmentId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../list-lecturer-assignments.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $assignmentId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+       //Save Assignment
+    function saveAssignment($conn, $assignmentId,  $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate){
+    $sql = "UPDATE  assignments SET  unitId = ?, taskTitle = ?, taskDescription = ?,  maxMark = ?, dueDate = ? WHERE assignmentId = ?;";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../lecturer.assign.php?error=stmtfailed");
+        exit();
+    }
+    
+    mysqli_stmt_bind_param($stmt, "issisi", $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $assignmentId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+  
+    
+}
+
+     //Save Assignment File
+    function saveAssignmentFile($conn, $assignmentId, $newFileName, $filePath){
+    $sql = "INSERT INTO assignments_file (assignmentId, fileName, filePath, uploadDate) VALUES (?, ?, ?, NOW())";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../lecturer-assign.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "iss",$assignmentId, $newFileName, $filePath);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+          //Delete Assignment File
+     function deleteAssignmentFile($conn, $assignmentId){
+         $sql = "DELETE FROM  assignments_file WHERE assignmentId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../list-lecturer-assignments.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $assignmentId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+
+
+//Get Lecturer Assignments
+    function getAssignments($conn, $userId){
+      
+        $sql = "SELECT * FROM assignments, unit, course WHERE assignments.userId = ? and assignments.unitId = unit.unitid and course.courseId = unit.courseId";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load assignments.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return $result;
+    }
+
+    
+//Get Lecturer Assignment
+    function getAssignment($conn, $assignmentId){
+      
+        $sql = "SELECT * FROM assignments, unit, course WHERE assignments.assignmentId = ? and assignments.unitId = unit.unitid and course.courseId = unit.courseId";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load assignment.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $assignmentId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+          if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+     // Get Unit Course
+    function getUnitCourse($conn, $unitId){    
+        $sql = "SELECT * FROM course, unit WHERE unit.unitId = ? and course.courseId = unit.courseId;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load course.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $unitId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
 
 
 

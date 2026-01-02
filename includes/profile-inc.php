@@ -1,6 +1,11 @@
     <?php
 
      if(!isset($_POST["submit"])){
+     if (!isset($_SESSION["username"])){
+
+         header("location: login.php");   
+         exit();
+      }
      
  $user = getUser($conn, $_SESSION["userId"]);
  $userProfile = getUserProfile($conn, $_SESSION["userId"]);
@@ -20,7 +25,9 @@
     }
 
     else{
-       session_start();
+
+         
+
 
     $street1 = $_POST['street1'];
     $street2 = $_POST['street2'];

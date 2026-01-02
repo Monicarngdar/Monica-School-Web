@@ -1,0 +1,128 @@
+<?php 
+include "includes/functions.php";
+include "includes/header.php";
+include "includes/lecturer-assign-inc.php";
+lecturerPage() //Inforce lecturer in this page
+?>
+
+
+ <?php
+             if(isset($_GET["filetype"])) { 
+                 $message = "Only PDF files are accepted";
+                 include "includes/show-error.php";
+            }
+      ?>
+
+       <?php
+             if(isset($_GET["fileUpload"])) { 
+                 $message = "Error while uploading filw";
+                 include "includes/show-error.php";
+            }
+      ?>
+
+ <?php
+             if(isset($_GET["fileSize"])) { 
+                 $message = "File size should be less done 950MB";
+                 include "includes/show-error.php";
+            }
+      ?>
+
+
+      
+
+<script>
+
+        $(document).ready(function() {
+        $('#courseIdSelected').on('change', function() {
+            var selectedCourse = $(this).children("option:selected").val();
+             $('#courseId').val(selectedCourse);  
+             $('#courseFormAction').val("courseFieldSelection");
+            document.forms["unitForm"].submit();
+        });
+        });
+
+</script>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-myskolar text-white">
+                    <h4 class="mb-0 fw-bold text-center">Create New Assignment</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        
+                        <div class="col-md-6 mb-3">
+                            <form action="lecturer-assign.php" method="post" id="courseForm" name = "courseForm">
+                             <input type="hidden" name ="action" value ="courseFieldSelection">
+                                <select name="courseId" id="courseIdSelected" class="form-select"  required  <?php  if(!empty ($assignmentId)) echo "disabled"; ?>>
+                                    <option value=""selected disabled>Select Course</option>
+                                    <?php foreach($courses as $course): ?>
+                                        <option value="<?php echo $course["courseId"]; ?>" <?php if($course["courseId"] == $courseId) echo "selected"; ?> >
+                                            <?php echo $course["courseName"]; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </form>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <form action="lecturer-assign.php" method="post" id="unitForm" enctype="multipart/form-data" name = "unitForm">
+                            <input type="hidden" id="courseFormAction" name ="courseFormAction" value ="">
+                             <input type="hidden" id="courseId" name ="courseId" value ="<?php echo $courseId?>">
+                              <input type="hidden" id="assignmentId" name ="assignmentId" value ="<?php echo $assignmentId?>">
+                                <select name="unitId" id="unitId" class="form-select" required  <?php  if(!empty ($assignmentId)) echo "disabled"; ?>>
+                                    <option value=""selected disabled>Select Unit</option>
+                                  <?php foreach($courseUnits as $unit): ?>
+                                        <option value="<?php echo $unit["unitId"]; ?>" <?php if($unit["unitId"] == $unitId) echo "selected"; ?>>
+                                            <?php echo $unit["unitName"]; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                 <?php  if(!empty ($assignmentId)):?>
+                             <input type="hidden" id="unitId" name ="unitId" value ="<?php echo $unitId?>">
+                             <?php endif ?> 
+                        </div> 
+
+                    </div> <div class="mb-3">
+                        <input type="text" name="taskTitle" class="form-control" placeholder="Task Title"  value ="<?php echo $taskTitle?>" required>
+                    </div>
+
+                     <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <input name ="dueDate" placeholder="Due Date" class="form-control"  value ="<?php echo $dueDate?>" type="text"
+                                onfocus="(this.type='date')"
+                                onblur="(this.type='text')"
+                                id="date" 
+                                required/>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <input type="number" name="maxMark" class="form-control" placeholder="Max Mark" min="1" max="100"   value ="<?php echo $maxMark?>"required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <textarea name="taskDescription" class="form-control" rows="4" placeholder="Enter assignment description..." ><?php echo $taskDescription?></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <input type="file" name="assignmentFile" class="form-control" id="assignmentFile" >
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="reset" class="btn btn-secondary me-2">CANCEL</button>
+                        <button type="submit" name="action" id="save" value ="save" class="btn btn-primary px-4">SAVE</button>
+                    </div>
+
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php include "includes/footer.php"; ?>
