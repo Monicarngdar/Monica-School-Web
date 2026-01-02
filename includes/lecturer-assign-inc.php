@@ -79,13 +79,52 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
    $taskDescription = $_POST ["taskDescription"];
    $maxMark = $_POST ["maxMark"];
    $dueDate = $_POST ["dueDate"];
-   $assignmentFile = $_POST ["assignmentFile"];
    if(empty ($assignmentId)) {  
-   addAssignment($conn, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $_SESSION["userId"]);
-
+    $assignmentId = addAssignment($conn, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $_SESSION["userId"]);
    } else{
    saveAssignment($conn, $assignmentId, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $_SESSION["userId"]);
    }
+
+if (isset($_FILES['assignmentFile']) && $_FILES['assignmentFile']['error'] === UPLOAD_ERR_OK){
+
+        $fileName = $_FILES["assignmentFile"]["name"];
+        $fileTmpName = $_FILES["assignmentFile"]["tmp_name"];
+        $fileSize = $_FILES["assignmentFile"]["size"];
+        $fileError = $_FILES["assignmentFile"]["error"];
+        $fileType = $_FILES["assignmentFile"]["type"];
+
+        $allowed = array("pdf");
+        $fileTypeArray = explode(".",$fileName);
+        $fileExtActual = end($fileTypeArray);
+        $fileExt = strtolower($fileExtActual);
+        $userId = $_SESSION["userId"];
+
+        if(!in_array($fileExt, $allowed)){
+            header("location: ../lecturer-assign.php?error=filetype");
+            exit();
+        }
+
+        if($fileError!=0){
+            header("location: ../lecturer-assign.php?error=fileUpload");
+            exit();
+        }
+
+        if($fileSize > 1000000000){
+       
+            header("location: ../lecturer-assign.php?error=fileSize");
+            exit();
+        }
+
+        $newFileName = uniqid($userId."-".$fileName,true).".".$fileExt;
+        $uploadDir = "assignmentsUploads/".$newFileName;
+        
+        move_uploaded_file($fileTmpName, $uploadDir);
+        deleteAssignmentFile ($conn, $assignmentId);
+        saveAssignmentFile($conn, $assignmentId, $newFileName, $uploadDir);
+
+
+}
+     
    
       header("location: list-lecturer-assignments.php?success=true&action=list");   
       exit();

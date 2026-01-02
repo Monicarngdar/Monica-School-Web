@@ -16,7 +16,7 @@
             </div>
 
             <div class="p-4 d-flex flex-column flex-grow-1">
-                <form class="d-flex flex-column flex-grow-1" action="view-message.php" method="post" >
+                <form class="d-flex flex-column flex-grow-1" action="view-message.php" enctype="multipart/form-data" method="post" >
                     <div class="mb-4 border-bottom">
                         <label class="small fw-bold text-muted">From:</label>
                         <input type="text"  name="from" class="form-control border-0 shadow-none p-0"  value="<?php echo $from ?>" readonly>

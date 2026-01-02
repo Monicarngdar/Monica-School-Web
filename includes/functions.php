@@ -886,7 +886,9 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     }
     mysqli_stmt_bind_param($stmt, "issisi", $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $userId);
     mysqli_stmt_execute($stmt);
+    $assignmentId =  mysqli_insert_id($conn);
     mysqli_stmt_close($stmt);
+    return $assignmentId;
 }
 
                //Delete Assignment
@@ -896,7 +898,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         $stmt = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
-            header("location: ../llist-lecturer-assignments.php?error=stmtfailed");
+            header("location: ../list-lecturer-assignments.php?error=stmtfailed");
             exit();
         }
 
@@ -920,7 +922,42 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     mysqli_stmt_bind_param($stmt, "issisi", $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $assignmentId);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
+  
+    
 }
+
+     //Save Assignment File
+    function saveAssignmentFile($conn, $assignmentId, $newFileName, $filePath){
+    $sql = "INSERT INTO assignments_file (assignmentId, fileName, filePath, uploadDate) VALUES (?, ?, ?, NOW())";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../lecturer-assign.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "iss",$assignmentId, $newFileName, $filePath);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+          //Delete Assignment File
+     function deleteAssignmentFile($conn, $assignmentId){
+         $sql = "DELETE FROM  assignments_file WHERE assignmentId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../list-lecturer-assignments.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $assignmentId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
 
 
 //Get Lecturer Assignments

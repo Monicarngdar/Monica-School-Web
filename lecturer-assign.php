@@ -6,6 +6,30 @@ lecturerPage() //Inforce lecturer in this page
 ?>
 
 
+ <?php
+             if(isset($_GET["filetype"])) { 
+                 $message = "Only PDF files are accepted";
+                 include "includes/show-error.php";
+            }
+      ?>
+
+       <?php
+             if(isset($_GET["fileUpload"])) { 
+                 $message = "Error while uploading filw";
+                 include "includes/show-error.php";
+            }
+      ?>
+
+ <?php
+             if(isset($_GET["fileSize"])) { 
+                 $message = "File size should be less done 950MB";
+                 include "includes/show-error.php";
+            }
+      ?>
+
+
+      
+
 <script>
 
         $(document).ready(function() {
@@ -44,7 +68,7 @@ lecturerPage() //Inforce lecturer in this page
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <form action="lecturer-assign.php" method="post" id="unitForm" name = "unitForm">
+                            <form action="lecturer-assign.php" method="post" id="unitForm" enctype="multipart/form-data" name = "unitForm">
                             <input type="hidden" id="courseFormAction" name ="courseFormAction" value ="">
                              <input type="hidden" id="courseId" name ="courseId" value ="<?php echo $courseId?>">
                               <input type="hidden" id="assignmentId" name ="assignmentId" value ="<?php echo $assignmentId?>">
@@ -85,7 +109,7 @@ lecturerPage() //Inforce lecturer in this page
 
                     <div class="mb-4">
                         <div class="input-group">
-                            <input type="file" name="assignmentFile" class="form-control" id="assignmentFile"  value ="<?php echo $assignmentFile?>">
+                            <input type="file" name="assignmentFile" class="form-control" id="assignmentFile" >
                         </div>
                     </div>
 
