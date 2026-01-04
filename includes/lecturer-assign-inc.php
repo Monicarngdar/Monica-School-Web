@@ -16,7 +16,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
         $courseUnits = getCourseUnits($conn, $courseId);
      }
     $unitId= "";
-   $assignmentId = "";
+    $assignmentId = "";
     $taskTitle = "";
     $taskDescription = "";
     $maxMark = "";
