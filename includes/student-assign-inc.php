@@ -5,11 +5,12 @@
 
 if(isset($_GET["action"]) && $_GET["action"]=="list")
 {
-         $studentAssignments = getStudentAssignments($conn, $_SESSION["userId"]);
+    $userId = $_SESSION["userId"];
+    $studentAssignments = getStudentAssignments($conn, $userId );
 } 
 
- if(isset($_POST["action"]) && $_POST["action"] == "upload"){
-        $assignment = getAssignment($conn, $_POST["id"]);
+ if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upload"){
+        $assignment = getAssignment($conn, $_REQUEST["id"]);
         $assignmentId = $assignment ["assignmentId"];
         $courseName = $assignment ["courseName"];
         $unitName = $assignment ["unitName"];
@@ -21,7 +22,18 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
       //  $assignmentFile = $assignment ["assignmentFile"];//
          $action = "upload";
           $files = getStudentAssignmentsFiles($conn, $userId, $assignmentId);
+    }
 
+        if(isset($_POST["action"]) && $_POST["action"] == "delete"){
+        $fileName = $_POST['fileName'];
+        $filePath = $_POST['filePath'];
+        $fileId = $_POST['fileId'];
+        $assignmentId = $_POST['assignmentId'];
+
+        deleteStudentAssignmentFile($conn, $fileId);
+        unlink($filePath);
+        header("location: student-assign-deadlines.php?deleted=true&action=upload&id=$assignmentId");   
+        exit();
     }
 
      if(isset($_POST["action"]) && $_POST["action"] == "uploadFiles"){
@@ -74,27 +86,23 @@ for ($i = 0; $i < $fileCount; $i++) {
         $uploadDir = "studentAssignment/".$newFileName;
         
         move_uploaded_file($fileTmpName, $uploadDir);
-        saveStudentAssignmentFile($conn, $assignmentId, $userId, $newFileName, $uploadDir);
+        saveStudentAssignmentFile($conn, $assignmentId, $userId, $fileName, $newFileName, $uploadDir);
         $files = getStudentAssignmentsFiles($conn, $userId, $assignmentId);
       }
     }
   }
 
 
-     if(isset($_POST["action"]) && $_POST["action"] == "save"){
+     if(isset($_POST["action"]) && $_POST["action"] == "submit"){
    
-   $courseId = $_POST ["courseId"];
+
    $assignmentId = $_POST ["assignmentId"];
-   $unitId = $_POST ["unitId"]; 
-   $taskTitle = $_POST ["taskTitle"];
-   $taskDescription = $_POST ["taskDescription"];
-   $maxMark = $_POST ["maxMark"];
-   $dueDate = $_POST ["dueDate"];
-   if(empty ($assignmentId)) {  
-    $assignmentId = addAssignment($conn, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $_SESSION["userId"]);
-   } else{
-   saveAssignment($conn, $assignmentId, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $_SESSION["userId"]);
-   }
+   $userId = $_SESSION["userId"];
+
+   saveStudentSubmission($conn, $userId, $assignmentId);
+
+     header("location: list-student-assignments.php?action=list&success=true");
+      exit();
 }
 
 /*(

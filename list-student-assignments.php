@@ -1,5 +1,6 @@
 <?php 
  include "includes/functions.php";
+include "includes/dbh.php";
 include "includes/header.php";
 include "includes/student-assign-inc.php";
 studentPage()//Inforce student in this page
@@ -14,6 +15,13 @@ function submitForm(Id,action){
     document.getElementById('form' + Id).submit();
 }
 </script>
+
+<?php
+             if(isset($_GET["success"])) { 
+                 $message = "Assignment Submitted Successfully";
+                 include "includes/show-success.php";
+            }
+      ?>
 
 
 <div class="container user-register mt-5">
@@ -58,8 +66,11 @@ function submitForm(Id,action){
   
 
        <div class="col-2 text-center">
+        <?php if(!isAssignmentSubmitted($conn, $userId, $assignments["assignmentId"])):?>
       <i class="fa-solid fa-upload" style="color: #007bff;; cursor: pointer;" onclick="submitForm(<?php echo $assignments["assignmentId"] ?>,'upload');"></i>
-    </div>
+    
+    <?php endif?>
+</div>
     
   </div>
 </form>

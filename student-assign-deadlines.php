@@ -5,6 +5,46 @@ include "includes/student-assign-inc.php";
 studentPage()//Inforce student in this page
  ?>
 
+ <script>
+function submitForm(Id,action){
+    
+    form = document.getElementById('form' + Id);
+    form.action.value=action;
+    document.getElementById('form' + Id).submit();
+}
+</script>
+
+
+      <?php
+             if(isset($_GET["deleted"])) { 
+                 $message = "Assignment Deleted Successfully";
+                 include "includes/show-success.php";
+            }
+      ?>
+
+      <?php
+             if(isset($_GET["filetype"])) { 
+                 $message = "Only pdf, jpg, jpeg, png ,docx, pptx txt files are accepted";
+                 include "includes/show-error.php";
+            }
+      ?>
+
+       <?php
+             if(isset($_GET["fileUpload"])) { 
+                 $message = "Error while uploading file";
+                 include "includes/show-error.php";
+            }
+      ?>
+
+ <?php
+             if(isset($_GET["fileSize"])) { 
+                 $message = "File size should be less done 950MB";
+                 include "includes/show-error.php";
+            }
+      ?>
+
+
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -59,17 +99,23 @@ studentPage()//Inforce student in this page
                     </div>
             </form>      
 
+
                    <div class="row mb-2" style="border-bottom: 2px solid #dee2e6;">
                     <div class="col-9 col-md-9 fw-bold">File List</div>
                     <div class="col-3 col-md-3 fw-bold text-center">Delete</div>
                 </div>
-              <form action="student-assign-deadlines.php" method="post" id="fileList<?php echo $file ['fileId']; ?>" enctype="multipart/form-data" name="fileList">
+             <?php foreach($files as $file):?>
+              <form action="student-assign-deadlines.php" method="post" id="form<?php echo $file ['fileId']; ?>" enctype="multipart/form-data" name="fileList">
                <input type="hidden" name ="assignmentId" value ="<?php echo $assignmentId ?>">
-               <?php foreach($files as $file):?>
+                <input type="hidden" name ="action" value ="">
+                <input type="hidden" name ="fileName" value ="<?php echo $file["fileName"] ?>">
+                <input type="hidden" name ="filePath" value ="<?php echo $file["filePath"] ?>">
+                <input type="hidden" name ="fileId" value ="<?php echo $file["fileId"] ?>">
+              
                 <div class="row mb-2 align-items-center">
                     <div class="col-9 col-md-9">
                         <ul style="list-style-type: disc; list-style-position: inside; margin: 0; padding: 0;">
-                            <li id="fileName" name="fileName" value = "" style="display: list-item;"><?php echo $file["fileName"]?></li>
+                            <li id="fileName" name="fileName" value = "" style="display: list-item;"><?php echo $file["originalFileName"]?></li>
                         </ul>
                     </div>            
                 <div class="col-3 col-md-3 text-center">
@@ -77,7 +123,12 @@ studentPage()//Inforce student in this page
                 </div>
             </div>
        </form>
-                <?php endforeach?>
+                <?php endforeach?> 
+
+                <form action="student-assign-deadlines.php" method="post" id="submit" enctype="multipart/form-data" name ="submit">
+               <input type="hidden" name ="assignmentId" value ="<?php echo $assignmentId ?>">
+               <button type="submit" name="action" id="submit" value ="submit" class="btn btn-primary px-4">SUBMIT  ASSIGNMENT</button>
+             </form>
 
                 </div>
             </div>
