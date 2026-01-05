@@ -19,6 +19,13 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
         $maxMark = $assignment ["maxMark"];
         $dueDate = $assignment ["dueDate"];
          $userId = $_SESSION["userId"];
+         $assignmentFile = getAssignmentFile($conn, $assignmentId);
+   
+         if($assignmentFile){
+         $filePath = $assignmentFile['filePath'];
+        $fileName = $assignmentFile['originalFileName'];
+         }
+
       //  $assignmentFile = $assignment ["assignmentFile"];//
          $action = "upload";
           $files = getStudentAssignmentsFiles($conn, $userId, $assignmentId);
@@ -46,6 +53,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
         $maxMark = $assignment ["maxMark"];
         $dueDate = $assignment ["dueDate"];
          $userId = $_SESSION["userId"];
+         
 
 if (isset($_FILES['assignmentFile'])){
   $fileCount = count ($_FILES["assignmentFile"]["name"]);

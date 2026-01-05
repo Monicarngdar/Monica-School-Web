@@ -1138,6 +1138,31 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
     
+     // Get Assignment file
+    function getAssignmentFile($conn, $assignmentId){ 
+  
+        $sql = "SELECT * FROM assignments_file WHERE assignmentId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load assignment files.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $assignmentId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
 
 
 

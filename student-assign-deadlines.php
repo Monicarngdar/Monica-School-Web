@@ -12,6 +12,8 @@ function submitForm(Id,action){
     form.action.value=action;
     document.getElementById('form' + Id).submit();
 }
+
+
 </script>
 
 
@@ -87,14 +89,28 @@ function submitForm(Id,action){
                     <div class="mb-3">
                         <textarea name="taskDescription" class="form-control" rows="4"  disabled ><?php echo $taskDescription?></textarea>
                     </div>
+
+                    <?php if(!empty ($fileName)): ?>
+                   <div class="mb-3">
+                            <a href="<?php echo $filePath ?>" 
+                            class="nav-link" 
+                            target="_blank" 
+                            rel="noopener noreferrer">
+                      <div>
+                           <h6 class="fw-bold">Assignment Brief: <?php echo $fileName ?></h6>
+                    </div>
+                </a>
+            </div>
+            <?php endif ?>
+
             </form> 
 
             <form action="student-assign-deadlines.php" method="post" id="fileForm" enctype="multipart/form-data" name="fileForm">
                 <input type="hidden" name ="assignmentId" value ="<?php echo $assignmentId ?>">
                     <div class="mb-4">
                         <div class="input-group">
-                            <input type="file" name="assignmentFile[]" multiple  class="form-control" id="assignmentFile" >
-                             <button type="submit" name="action" id="uploadFiles" value ="uploadFiles" class="btn btn-primary px-4">UPLOAD</button>
+                            <input type="file" name="assignmentFile[]" multiple  class="form-control" id="assignmentFiles" >
+                             <button type="submit" name="action" id="uploadFiles" value ="uploadFiles" class="btn btn-primary px-4" disabled>UPLOAD</button>
                         </div>
                     </div>
             </form>      
@@ -115,7 +131,7 @@ function submitForm(Id,action){
                 <div class="row mb-2 align-items-center">
                     <div class="col-9 col-md-9">
                         <ul style="list-style-type: disc; list-style-position: inside; margin: 0; padding: 0;">
-                            <li id="fileName" name="fileName" value = "" style="display: list-item;"><?php echo $file["originalFileName"]?></li>
+                            <li id="fileName" name="fileName" value = "" style="display: list-item;"><a href = "<?php echo $file["filePath"]?>" target="_blank" ><?php echo $file["originalFileName"]?></a></li>
                         </ul>
                     </div>            
                 <div class="col-3 col-md-3 text-center">
@@ -137,6 +153,18 @@ function submitForm(Id,action){
 </div>
 
 
+<script>
+const fileInput = document.getElementById('assignmentFiles');
+    const uploadButton = document.getElementById('uploadFiles');
+
+    fileInput.addEventListener('change', function() {
+        if (this.files.length > 0) {
+            uploadButton.disabled = false;
+        } else {
+            uploadButton.disabled = true;
+        }
+    });
+</script>
 
 
 
