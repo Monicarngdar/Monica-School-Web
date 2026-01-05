@@ -16,7 +16,7 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
         $courseUnits = getCourseUnits($conn, $courseId);
      }
     $unitId= "";
-   $assignmentId = "";
+    $assignmentId = "";
     $taskTitle = "";
     $taskDescription = "";
     $maxMark = "";
@@ -120,7 +120,7 @@ if (isset($_FILES['assignmentFile']) && $_FILES['assignmentFile']['error'] === U
         
         move_uploaded_file($fileTmpName, $uploadDir);
         deleteAssignmentFile ($conn, $assignmentId);
-        saveAssignmentFile($conn, $assignmentId, $newFileName, $uploadDir);
+        saveAssignmentFile($conn, $assignmentId, $fileName, $newFileName, $uploadDir);
 
 
 }

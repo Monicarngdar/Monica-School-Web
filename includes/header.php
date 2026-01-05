@@ -109,7 +109,19 @@
       
 
                         <?php  if ($_SESSION ['userRole']==1 ):?>
-                       <li class="nav-item">
+                            <li class="nav-item">
+                            <a class="nav-link" href="#">Timetable</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link" href="#">My Units</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link" href="#">Attendance</a>
+                        </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="list-student-assignments.php?action=list">Assignments</a>
+                        </li>
+                         <li class="nav-item">
                             <a class="nav-link" href="#">Grades</a>
                         </li>
                          <?php endif ?>

@@ -15,7 +15,7 @@ lecturerPage() //Inforce lecturer in this page
 
        <?php
              if(isset($_GET["fileUpload"])) { 
-                 $message = "Error while uploading filw";
+                 $message = "Error while uploading file";
                  include "includes/show-error.php";
             }
       ?>

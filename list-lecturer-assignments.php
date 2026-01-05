@@ -39,9 +39,9 @@ function submitForm(Id,action){
             </div>
 
   <div class="row fw-bold border-bottom pb-2 mb-3">
-  <div class="col-3">Course</div>
-  <div class="col-3 ">Unit</div>
-  <div class="col-2 text-center">Task</div>
+  <div class="col-3  text-left">Course</div>
+  <div class="col-3  text-left">Unit</div>
+  <div class="col-2  text-left">Task</div>
   <div class="col-2 text-center">Edit</div>
   <div class="col-2 text-center">Delete</div>
 </div>
