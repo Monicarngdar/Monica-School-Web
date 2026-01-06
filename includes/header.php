@@ -103,7 +103,7 @@
                             <a class="nav-link" href="lecturer-assign.php?action=add">Add Assignment</a>
                         </li>
                        <li class="nav-item">
-                            <a class="nav-link" href="#">Grades</a>
+                            <a class="nav-link" href="list-grading-collection.php?action=list">Grading</a>
                         </li>
                          <?php endif ?>
       
@@ -122,7 +122,7 @@
                             <a class="nav-link" href="list-student-assignments.php?action=list">Assignments</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href="#">Grades</a>
+                            <a class="nav-link" href="">Grades</a>
                         </li>
                          <?php endif ?>
       

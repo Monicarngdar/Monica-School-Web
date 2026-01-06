@@ -110,7 +110,7 @@ function submitForm(Id,action){
                     <div class="mb-4">
                         <div class="input-group">
                             <input type="file" name="assignmentFile[]" multiple  class="form-control" id="assignmentFiles" >
-                             <button type="submit" name="action" id="uploadFiles" value ="uploadFiles" class="btn btn-primary px-4" disabled>UPLOAD</button>
+                             <button type="submit" name="action" id="uploadFiles" value ="uploadFiles" class="btn btn-primary px-4" disabled>Upload</button>
                         </div>
                     </div>
             </form>      
@@ -143,7 +143,7 @@ function submitForm(Id,action){
 
                 <form action="student-assign-deadlines.php" method="post" id="submit" enctype="multipart/form-data" name ="submit">
                <input type="hidden" name ="assignmentId" value ="<?php echo $assignmentId ?>">
-               <button type="submit" name="action" id="submit" value ="submit" class="btn btn-primary px-4">SUBMIT  ASSIGNMENT</button>
+               <button type="submit" name="action" id="submit" value ="submit" class="btn btn-primary px-4">Submit Assignment</button>
              </form>
 
                 </div>
