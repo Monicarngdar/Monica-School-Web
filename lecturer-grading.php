@@ -8,6 +8,7 @@
 
 
 
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -18,8 +19,9 @@
                 <div class="card-body">
 
                     <form action="lecturer-grading.php" method="post" id="gradingForm" enctype="multipart/form-data" name="gradingForm">
-                    <input type="hidden" name ="action" value ="gradingFieldSelection">
-                    <input type="hidden" name="action" value="">
+                    <input type="hidden" name="assignmentId" value="<?php echo $assignmentId?>">
+                    <input type="hidden" name="studentId" value="<?php echo $studentId?>">
+                    <input type="hidden" name="lecturerId" value="<?php echo $lecturerId?>">
                         
                         <div class="row"> 
 
@@ -58,22 +60,39 @@
                             </div>
                         </div>
 
-                        <div class="col-9 col-md-9 fw-bold">File List</div>
+                      <div class="card border-0 mb-4">
+                    <div class="card-header bg-white py-1">
+                        <h5 class="mb-0 fw-bold">File List</h5>
+                    </div>
+                    <div class="list-group list-group-flush">
                         <?php foreach($files as $file):?>
-                         <div class="row mb-2 align-items-center">
-
-                    <div class="col-9 col-md-9">
-                        <ul style="list-style-type: disc; list-style-position: inside; margin: 0; padding: 0;">
-                            <li id="fileName" name="fileName" value = "" style="display: list-item;"><a href = "<?php echo $file["filePath"]?>" target="_blank" ><?php echo $file["originalFileName"]?></a></li>
-                        </ul>
-                    </div>            
+                            <a href="<?php echo $file["filePath"]?>" 
+                            target="_blank" 
+                            class="list-group-item list-group-item-action d-flex align-items-center py-3 border-light file-row">                                
+                                <div class="flex-grow-1">
+                                    <div class="text-dark fw-semibold mb-0"><?php echo $file["originalFileName"]?></div>
+                                   <span class="text-muted" style="font-size: 0.6rem; display: block;">Click to View</span>
+                                </div>
+                            </a>
+                        <?php endforeach?>
+                    </div>
             </div>
-                <?php endforeach?> 
+
+                        <div class="mb-3">
+                                <input type="number" name="marksEarned" placeholder = "Final Mark" class="form-control" min="1" max="100" value="">
+                            </div>
+
+                        <div class="mb-3">
+                        <textarea name="lecturerComment"  placeholder = "Enter Comments..." class="form-control" value=""></textarea>
+                    </div>
+                   
                         
 
                         <div class="text-center mt-3">
-                        <button type="submit" class="btn btn-primary py-2">Grade Assignment </button>
+                        <button type="submit" name="action" id="save" value ="save" class="btn btn-primary py-2">Grade Assignment </button>
                     </div>
+
+                  
 
                 
                     </form>

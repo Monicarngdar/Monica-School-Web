@@ -116,11 +116,20 @@ function submitForm(Id,action){
             </form>      
 
 
-                   <div class="row mb-2" style="border-bottom: 2px solid #dee2e6;">
-                    <div class="col-9 col-md-9 fw-bold">File List</div>
-                    <div class="col-3 col-md-3 fw-bold text-center">Delete</div>
+            <div class="card border-0 mb-4">
+                <div class="card-header bg-white py-1">
+                    <div class="row align-items-center">
+                        <div class="col-9">
+                            <h6 class="mb-0 fw-bold" style="font-size: 1rem;">File List</h6>
+                        </div>
+                        <div class="col-3 text-center">
+                            <span class="fw-bold" style="font-size: 1rem;">Delete</span>
+                        </div>
+                    </div>
                 </div>
-             <?php foreach($files as $file):?>
+                <div class="list-group list-group-flush">
+
+                <?php foreach($files as $file):?>
               <form action="student-assign-deadlines.php" method="post" id="form<?php echo $file ['fileId']; ?>" enctype="multipart/form-data" name="fileList">
                <input type="hidden" name ="assignmentId" value ="<?php echo $assignmentId ?>">
                 <input type="hidden" name ="action" value ="">
@@ -140,10 +149,13 @@ function submitForm(Id,action){
             </div>
        </form>
                 <?php endforeach?> 
+                
 
                 <form action="student-assign-deadlines.php" method="post" id="submit" enctype="multipart/form-data" name ="submit">
                <input type="hidden" name ="assignmentId" value ="<?php echo $assignmentId ?>">
-               <button type="submit" name="action" id="submit" value ="submit" class="btn btn-primary px-4">Submit Assignment</button>
+               <div class="text-center mt-3">
+                    <button type="submit" name="action" id="submit" value="submit" class="btn btn-primary px-4">Submit Assignment</button>
+                </div>
              </form>
 
                 </div>

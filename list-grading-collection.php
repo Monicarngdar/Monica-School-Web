@@ -1,9 +1,17 @@
 <?php 
     include "includes/functions.php";
+     include "includes/dbh.php";
     include "includes/header.php";
     include "includes/lecturer-grading-inc.php";
     lecturerPage() //Inforce lecturer  only in this page
 ?>
+
+<?php
+             if(isset($_GET["success"])) { 
+                 $message = "Assignment Graded Successfully";
+                 include "includes/show-success.php";
+            }
+      ?>
 
 <script>
 function submitForm(Id,action){
@@ -36,6 +44,7 @@ function submitForm(Id,action){
   <div class="row align-items-center mb-3 border-bottom pb-2">
     
     <input type="hidden" name="id" value="<?php echo  $grading["submissionId"] ?>">
+
     <input type="hidden" name="action" value="edit">
 
        <div class="col-3">
@@ -50,9 +59,16 @@ function submitForm(Id,action){
         <?php echo $grading["unitName"]; ?>
     </div>
 
-  
+<?php //If the lecturer already these assignment show the marks else show the edit button?>
+  <?php $grade = getGrade($conn, $grading["assignmentId"] )?>
+  <?php if ($grade): ?> 
+   <div class="col-1 text-center">
+  <?php echo ($grade['marksEarned']); ?>
+  </div>
+  <?php else: ?>
     <div class="col-1 text-center"> <i class="fa-solid fa-pen" style="color: #007bff; cursor: pointer;"  onclick="submitForm(<?php echo  $grading["submissionId"] ?>,'edit');" ></i>
     </div> 
+    <?php endif ?>
 
   </div>
 </form>
