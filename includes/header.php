@@ -67,62 +67,73 @@
                         </li>
                         <?php  if ($_SESSION ['userRole']==3 ):?>
                         <li class="nav-item">
-                            <a class="nav-link" href="register.php?action=add">Register a User</a>
+                            <a class="nav-link" href="register.php?action=add"> 
+                            <i class="fa-solid fa-user-plus me-2"></i> Register a User</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="list-users.php?action=list">Manage Users</a>
+                            <a class="nav-link" href="list-users.php?action=list">
+                            <i class="fa-solid fa-user-gear me-2"></i>Manage Users</a>
                         </li>
                            <li class="nav-item">
-                            <a class="nav-link" href="list-courses.php?action=list">Manage Courses</a>
+                            <a class="nav-link" href="list-courses.php?action=list"> 
+                            <i class="fa-solid fa-layer-group me-2"></i> Manage Courses</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="course.php?action=add">Add Course</a>
+                            <a class="nav-link" href="course.php?action=add"> 
+                            <i class="fa-solid fa-circle-plus me-2"></i> Add Course</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="list-units.php?action=list">Manage Units</a>
+                            <a class="nav-link" href="list-units.php?action=list"> 
+                            <i class="fa-solid fa-layer-group me-2"></i> Manage Units</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href="unit.php?action=add">Add Unit</a>
+                            <a class="nav-link" href="unit.php?action=add">
+                            <i class="fa-solid fa-circle-plus me-2"></i> Add Unit</a>
                         </li>
                         <?php endif ?>
 
                         <?php  if ($_SESSION ['userRole']==2 ):?>
                          <li class="nav-item">
-                            <a class="nav-link" href="#">Timetable</a>
+                            <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days me-2"></i> Timetable</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href="#">My Units</a>
+                            <a class="nav-link" href="#"><i class="fa-solid fa-book-open me-2"></i> My Units</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href="#">Attendance</a>
+                            <a class="nav-link" href="#"><i class="fa-solid fa-user-clock me-2"></i> Attendance</a>
                         </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="list-lecturer-assignments.php?action=list">Assignments</a>
+                            <a class="nav-link" href="list-lecturer-assignments.php?action=list">
+                             <i class="fa-solid fa-list-check me-2"></i> Assignments</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href="lecturer-assign.php?action=add">Add Assignment</a>
+                            <a class="nav-link" href="lecturer-assign.php?action=add">
+                             <i class="fa-solid fa-pen me-2"></i> Add Assignment</a>
                         </li>
                        <li class="nav-item">
-                            <a class="nav-link" href="#">Grades</a>
+                            <a class="nav-link" href="list-grading-collection.php?action=list">
+                            <i class="fa-solid fa-circle-check me-2"></i> Grading</a>
                         </li>
                          <?php endif ?>
       
 
                         <?php  if ($_SESSION ['userRole']==1 ):?>
                             <li class="nav-item">
-                            <a class="nav-link" href="#">Timetable</a>
+                            <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days me-2"></i> Timetable</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href="#">My Units</a>
+                            <a class="nav-link" href="#"><i class="fa-solid fa-book-open me-2"></i> My Units</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href="#">Attendance</a>
+                            <a class="nav-link" href="#"><i class="fa-solid fa-user-clock me-2"></i> Attendance</a>
                         </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="list-student-assignments.php?action=list">Assignments</a>
+                            <a class="nav-link" href="list-student-assignments.php?action=list">   
+                            <i class="fa-solid fa-list-check me-2"></i> Assignments</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href="#">Grades</a>
+                            <a class="nav-link" href=""> 
+                            <i class="fa-solid fa-circle-check me-2"></i> Grades</a>
                         </li>
                          <?php endif ?>
       

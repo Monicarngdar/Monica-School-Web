@@ -1165,6 +1165,93 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     }
 
 
+    
+//Get Lecturer Grading Assignments
+    function getGradingAssignments($conn, $userId){
+      
+        $sql = "SELECT * FROM submission, assignments, user_profile, unit WHERE assignments.userId = ? and submission.assignmentId = assignments.assignmentId and submission.studentId = user_profile.userId and assignments.unitid = unit.unitid;";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load assignments grades.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return $result;
+    }
+
+    //Get Lecturer Submission Assignments
+    function getSubmission($conn, $userId){
+      
+        $sql = "SELECT * FROM submission WHERE submissionId = ?";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load assignment submission.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $userId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+        //Add Grading
+        function addGrading($conn, $userAccountId, $assignmentId, $lecturerUserAccountId,$marksEarned, $lecturerComment){
+    $sql = "INSERT INTO grades (userAccountId, assignmentId, lecturerUserAccountId,	marksEarned, lecturerComment, dateRecorded) VALUES (?, ?, ?, ?, ?, NOW())";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../lecturer-grading.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "iiiss", $userAccountId, $assignmentId, $lecturerUserAccountId,	$marksEarned, $lecturerComment);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+//Get Grade
+    function getGrade($conn, $assignmentId){    
+  
+        $sql = "SELECT * FROM grades WHERE assignmentId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load assignment grades.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $assignmentId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+
+
 
 
 
