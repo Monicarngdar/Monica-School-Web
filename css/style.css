@@ -183,17 +183,21 @@ html, body {
 }
 
 /* Event colors */
-.event-blue   {
-  background: #4c8bf5; color: white; 
+.event-publicholiday   {
+  background: #ff7c5f;
+   color: black;
 }
-.event-red    { 
-    background: #dc3545; color: white; 
+.event-semesterbreak    { 
+    background: #88ebff;
+    color: black;
 }
-.event-yellow { 
-    background: #ffc107; color: black; 
+.event-schoolholiday { 
+    background: #ffdc71; 
+    color: black;
 }
-.event-grey   {
-     background: #6c757d; color: white;
+.event-noschool  {
+     background: #6c757d;
+     color: white;
      }
 
  

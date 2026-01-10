@@ -24,11 +24,10 @@
                         <div class="mb-3">
                             <select name="eventType" id="eventType" class="form-select" required>
                             <option value="" selected disabled>Select Event</option>
-                            <option value="publicHoliday">Public Holidays</option>
-                            <option value="schoolHoliday">School Holidays</option>
-                            <option value="semesterBreak">Semester Break</option>
-                            <option value="backToSchool">Back to School</option>
-                            </select>
+                            <option value="event-publicholiday">Public Holidays</option>
+                            <option value="event-schoolholiday">School Holidays</option>
+                            <option value="event-semesterbreak">Semester Break</option>
+                            </select> 
                         </div>
 
                        

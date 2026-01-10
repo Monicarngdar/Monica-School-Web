@@ -1,7 +1,7 @@
 <?php 
     include "includes/header.php";
     include "includes/functions.php";
-    adminPage(); //Inforce admin only in this page
+    include "includes/dbh.php";
     include "includes/calendar-inc.php";
 ?>
 
@@ -56,10 +56,15 @@ $start=false;
 }
 
 ?>
-<div class="calendar-col">
+ <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
+<div class="calendar-col event-noschool ">
 <?php if ($start):?>
-  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;$day++;?></span>
-<?php endif ?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
+   <?php if ($event): //show the event when there is 1?>
+    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+     <?php $day=$day+1;?>
+  <?php endif ?>
 </div>
 <?php $dayOfWeekCount++;  ?>
 
@@ -73,10 +78,15 @@ $start=false; //stop showing days in grid
 }
 
 ?>
-<div class="calendar-col">
+ <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
+<div class="calendar-col <?php if($event) echo $event["eventType"] ?>">
 <?php if ($start):?>
- <span class="date-num"  id = '<?php echo "$year-$month-$day"?>'><?php echo $day;$day++;?></span>
-<?php endif ?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
+   <?php if ($event): //show the event when there is 1?>
+    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+     <?php $day=$day+1;?>
+  <?php endif ?>
 </div>
 <?php $dayOfWeekCount++;  ?>
 
@@ -90,10 +100,15 @@ $start=false;
 }
 
 ?>
-<div class="calendar-col">
+ <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
+<div class="calendar-col <?php if($event) echo $event["eventType"] ?>">
 <?php if ($start):?>
- <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;$day++;?></span>
-<?php endif ?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
+   <?php if ($event): //show the event when there is 1?>
+    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+     <?php $day=$day+1;?>
+  <?php endif ?>
 </div>
 <?php $dayOfWeekCount++;  ?>
 
@@ -107,10 +122,15 @@ $start=false;
 }
 ?>
 
-<div class="calendar-col">
+ <?php  $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
+<div class="calendar-col <?php if($event) echo $event["eventType"] ?>">
 <?php if ($start):?>
- <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;$day++;?></span>
-<?php endif ?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
+   <?php if ($event): //show the event when there is 1?>
+    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+     <?php $day=$day+1;?>
+  <?php endif ?>
 </div>
 <?php $dayOfWeekCount++;  ?>
 
@@ -124,14 +144,19 @@ $start=false;
 }
 
 ?>
-<div class="calendar-col">
+ <?php  $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
+<div class="calendar-col <?php if($event) echo $event["eventType"] ?>">
 <?php if ($start):?>
- <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;$day++;?></span>
-<?php endif ?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
+   <?php if ($event): //show the event when there is 1?>
+    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+     <?php $day=$day+1;?>
+  <?php endif ?>
 </div>
+<?php $dayOfWeekCount++;  ?>
 
 <!--Friday-->
-<?php $dayOfWeekCount++;  ?>
 <?php
 if ($dayOfWeekCount == $firstDayOfWeekMonth){
   $start=true; 
@@ -141,10 +166,15 @@ $start=false;
 }
 
 ?>
-<div class="calendar-col">
+ <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
+<div class="calendar-col <?php if($event) echo $event["eventType"] ?>">
 <?php if ($start):?>
- <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;$day++;?></span>
-<?php endif ?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
+   <?php if ($event): //show the event when there is 1?>
+    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+     <?php $day=$day+1;?>
+  <?php endif ?>
 </div>
 <?php $dayOfWeekCount++;  ?>
 
@@ -157,16 +187,20 @@ if ($day> $lastDayOfMonth){
 $start=false; 
 }
 ?>
-<div class="calendar-col">
+ <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
+<div class="calendar-col event-noschool">
 <?php if ($start):?>
- <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;$day++;?></span>
-<?php endif ?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
+   <?php if ($event): //show the event when there is 1?>
+    <div class="small text-muted">  <?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+     <?php $day=$day+1;?>
+  <?php endif ?>
 </div>
 <?php $dayOfWeekCount++;  ?>
 
 </div>
    <?php endfor ?>
-
         </div>
 
         <form action="calendar.php" method="post" id="calendarForm" name = "calendarForm">
@@ -174,7 +208,9 @@ $start=false;
         <input type="hidden" name ="date" value ="">
       </form>
         <div class="card-footer bg-white text-center">
-            <a href="calendar-event.php" class="btn btn-primary btn-sm"   >Schedule New Event</a>
+          <?php   if ($_SESSION['userRole']==3 ): //This button shows only for the admin user?>
+            <a href="calendar-event.php" class="btn btn-primary btn-sm">Schedule New Event</a>
+            <?php endif ?>
             <a href="?date=<?php echo $today;?>" class="btn btn-secondary btn-sm">Today</a>
         </div>
     </div>

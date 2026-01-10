@@ -1257,7 +1257,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-        header("location: ../unit.php?error=stmtfailed");
+        header("location: ../calendar.php?error=stmtfailed");
         exit();
     }
     mysqli_stmt_bind_param($stmt, "sss",  $eventDate, $eventDescription, $eventType);
@@ -1265,6 +1265,31 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     mysqli_stmt_close($stmt);
 }
 
+    // Get Calendar Event
+    function getCalendarEvent($conn, $date){    
+        $sql = "SELECT * FROM school_calendar WHERE eventDate = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load event dates.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "s", $date);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
 
 
 
