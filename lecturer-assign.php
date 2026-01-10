@@ -91,7 +91,8 @@ lecturerPage() //Inforce lecturer in this page
 
                      <div class="row">
                         <div class="col-md-6 mb-3">
-                            <input name ="dueDate" placeholder="Due Date" class="form-control"  value ="<?php echo $dueDate?>" type="text"
+                            <input name ="dueDate" placeholder="Due Date" class="form-control"  value ="<?php echo $dueDate?>" 
+                                type="text"
                                 onfocus="(this.type='date')"
                                 onblur="(this.type='text')"
                                 id="date" 

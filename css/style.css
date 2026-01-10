@@ -151,6 +151,60 @@ html, body {
 }
 
 
+/*Calendar Styles*/
+.calendar-col {
+     flex: 0 0 14.285%;
+     max-width: 14.285%;
+    min-height: 100px;
+    border: 1px solid #dee2e6;
+    padding: 10px;
+ }
+
+.day-header {
+     background-color: #385D7B;
+     color: white;
+     font-weight: bold;
+    text-align: center;
+     padding: 10px 0;
+}
+
+.not-month {
+     background-color: #f8f9fa;
+      color: #ced4da;
+}
+.today {
+    background-color: #fff3cd;
+    border: 2px solid #ffc107 !important;
+}
+
+ .date-num {
+     font-weight: bold;
+     font-size: 1.2rem;
+}
+
+/* Event colors */
+.event-publicholiday   {
+  background: #b8ff96;
+   color: black;
+}
+.event-semesterbreak    { 
+    background: #88ebff;
+    color: black;
+}
+.event-schoolholiday { 
+    background: #ffdc71; 
+    color: black;
+}
+.event-noschool  {
+     background: #6c757d;
+     color: white;
+     }
+
+.event-assignDue  {
+     background: #ff9682;
+     color: black;
+     }
+
 
  
 
