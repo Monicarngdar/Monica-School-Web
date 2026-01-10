@@ -184,7 +184,7 @@ html, body {
 
 /* Event colors */
 .event-publicholiday   {
-  background: #ff7c5f;
+  background: #b8ff96;
    color: black;
 }
 .event-semesterbreak    { 
@@ -199,6 +199,12 @@ html, body {
      background: #6c757d;
      color: white;
      }
+
+.event-assignDue  {
+     background: #ff9682;
+     color: black;
+     }
+
 
  
 

@@ -54,14 +54,17 @@ if ($dayOfWeekCount == $firstDayOfWeekMonth){
 if ($day> $lastDayOfMonth){
 $start=false; 
 }
-
 ?>
  <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
+ <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
 <div class="calendar-col event-noschool ">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
    <?php if ($event): //show the event when there is 1?>
     <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+ <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
+    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
  <?php endif; ?>
      <?php $day=$day+1;?>
   <?php endif ?>
@@ -76,14 +79,17 @@ if ($dayOfWeekCount == $firstDayOfWeekMonth){
 if ($day> $lastDayOfMonth){
 $start=false; //stop showing days in grid
 }
-
 ?>
  <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
-<div class="calendar-col <?php if($event) echo $event["eventType"] ?>">
+ <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
+<div class="calendar-col <?php if($event) echo $event["eventType"] ?> <?php if($assignEvent) echo "event-assignDue"?>">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
    <?php if ($event): //show the event when there is 1?>
     <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+ <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
+    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
  <?php endif; ?>
      <?php $day=$day+1;?>
   <?php endif ?>
@@ -101,11 +107,15 @@ $start=false;
 
 ?>
  <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
-<div class="calendar-col <?php if($event) echo $event["eventType"] ?>">
+  <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
+<div class="calendar-col <?php if($event) echo $event["eventType"] ?> <?php if($assignEvent) echo "event-assignDue" ?>">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
    <?php if ($event): //show the event when there is 1?>
     <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+ <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
+    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
  <?php endif; ?>
      <?php $day=$day+1;?>
   <?php endif ?>
@@ -123,11 +133,15 @@ $start=false;
 ?>
 
  <?php  $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
-<div class="calendar-col <?php if($event) echo $event["eventType"] ?>">
+ <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
+<div class="calendar-col <?php if($event) echo $event["eventType"] ?> <?php if($assignEvent) echo "event-assignDue"?>">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
    <?php if ($event): //show the event when there is 1?>
     <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+ <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
+    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
  <?php endif; ?>
      <?php $day=$day+1;?>
   <?php endif ?>
@@ -145,11 +159,15 @@ $start=false;
 
 ?>
  <?php  $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
-<div class="calendar-col <?php if($event) echo $event["eventType"] ?>">
+  <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
+<div class="calendar-col <?php if($event) echo $event["eventType"] ?> <?php if($assignEvent) echo "event-assignDue" ?>">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
    <?php if ($event): //show the event when there is 1?>
     <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+ <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
+    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
  <?php endif; ?>
      <?php $day=$day+1;?>
   <?php endif ?>
@@ -167,11 +185,15 @@ $start=false;
 
 ?>
  <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
-<div class="calendar-col <?php if($event) echo $event["eventType"] ?>">
+ <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
+<div class="calendar-col <?php if($event) echo $event["eventType"] ?> <?php if($assignEvent) echo "event-assignDue" ?>">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
    <?php if ($event): //show the event when there is 1?>
     <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+ <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
+    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
  <?php endif; ?>
      <?php $day=$day+1;?>
   <?php endif ?>
@@ -188,11 +210,15 @@ $start=false;
 }
 ?>
  <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
+ <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
 <div class="calendar-col event-noschool">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
    <?php if ($event): //show the event when there is 1?>
-    <div class="small text-muted">  <?php echo $event["eventDescription"]; ?></div>
+    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+    <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
+    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
  <?php endif; ?>
      <?php $day=$day+1;?>
   <?php endif ?>
