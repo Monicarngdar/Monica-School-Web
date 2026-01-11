@@ -1113,7 +1113,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     mysqli_stmt_close($stmt);
 }
 
-// Is  Assignment Submitted
+// Is Assignment Submitted
     function isAssignmentSubmitted($conn, $userId, $assignmentId){    
         $sql = "SELECT * FROM submission WHERE studentId = ? and assignmentId = ?;";
 
@@ -1165,7 +1165,6 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     }
 
 
-    
 //Get Lecturer Grading Assignments
     function getGradingAssignments($conn, $userId){
       
@@ -1248,6 +1247,30 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         else{
             return false;
         }
+    }
+
+    //Get Student Grades
+    //Join the grades table with profile for the lecturer name, assignment fot the total grades and assignment title, unit for the unitId
+    function getStudentGrades($conn, $studentId){
+      
+        $sql = "SELECT * FROM grades, assignments, user_profile, unit
+                    WHERE grades.userAccountId = ?   
+                     AND     grades.lecturerUserAccountId = user_profile.userId
+                     AND     assignments.assignmentId = grades.assignmentId
+                     AND     assignments.unitId = unit.unitId";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load student grades.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $studentId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return $result;
     }
 
        //Save Calendar
