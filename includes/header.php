@@ -132,7 +132,7 @@
                             <i class="fa-solid fa-list-check me-2"></i> Assignments</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href=""> 
+                            <a class="nav-link" href="student-grades.php?action=list"> 
                             <i class="fa-solid fa-circle-check me-2"></i> Grades</a>
                         </li>
                          <?php endif ?>
