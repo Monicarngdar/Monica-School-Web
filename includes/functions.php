@@ -466,6 +466,8 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     mysqli_stmt_close($stmt);
 }
 
+
+
 //Email Screen
 //Create a Message
     function createMessage($conn, $senderUserId, $Ids , $subject, $messageBody, $file ){
@@ -1273,7 +1275,56 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         return $result;
     }
 
-       //Save Calendar
+
+         // Get Student My Units
+    function getStudentMyUnits($conn, $studentId){
+      
+        $sql = "SELECT * FROM unit, unit_student, unit_lecturer, user_profile 
+                    WHERE unit_lecturer.lecturerId = user_profile.userId
+                    AND unit_student.unitId = unit_lecturer.unitId
+                    AND unit_student.unitId = unit.unitId
+                    AND  unit_student.studentId = ?" ;
+                    
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load student units.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $studentId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return $result;
+    }
+
+             // Get Lecturer My Units
+    function getLecturerMyUnits($conn, $lecturerId){
+      
+        $sql = "SELECT * FROM unit, unit_lecturer, course
+                    WHERE unit.courseId = course.courseId
+                    AND unit_lecturer.unitId = unit.unitId
+                    AND  unit_lecturer.lecturerId = ?" ;
+                    
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load lecturer units.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $lecturerId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return $result;
+    }
+
+
+       //Add Calendar
     function addCalendar($conn, $eventDate, $eventDescription, $eventType){
     $sql = "INSERT INTO school_calendar (eventDate,	 eventDescription, eventType) VALUES (?, ?, ?)";
     

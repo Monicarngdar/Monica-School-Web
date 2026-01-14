@@ -9,31 +9,29 @@
             $message = "";
             if ($_GET["error"] == "incorrectlogin"){
                 $message = "Incorrect Login";
+                include "includes/show-error.php";
             }
 
             //Wrong log in as student
              if ($_GET["error"] == "studentnotloggedin"){
                 $message = "Please log in as a student";
+                 include "includes/show-error.php";
             }
 
              //Wrong log in as lecturer
              if ($_GET["error"] == "lecturernotloggedin"){
                 $message = "Please log in as a lecturer";
+                include "includes/show-error.php";
             }
 
              //Wrong log in as admin
              if ($_GET["error"] == "adminnotloggedin"){
                 $message = "Please log in as an admin";
+                  include "includes/show-error.php";
             }
             ?>
             
-            <div class="row">
-                <div class="col"></div>
-                <div class="col border border-danger text-danger">
-                    <p><?php echo $message; ?></p>
-                </div>
-                <div class="col"></div>
-            </div>
+       
     <?php } ?>
 
 
