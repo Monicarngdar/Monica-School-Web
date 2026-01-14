@@ -97,7 +97,7 @@
                             <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days me-2"></i> Timetable</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-book-open me-2"></i> My Units</a>
+                            <a class="nav-link" href="lecturer-units.php?action=list"><i class="fa-solid fa-book-open me-2"></i> My Units</a>
                         </li>
                          <li class="nav-item">
                             <a class="nav-link" href="#"><i class="fa-solid fa-user-clock me-2"></i> Attendance</a>
@@ -122,7 +122,7 @@
                             <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days me-2"></i> Timetable</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-book-open me-2"></i> My Units</a>
+                            <a class="nav-link" href="student-units.php?action=list"><i class="fa-solid fa-book-open me-2"></i> My Units</a>
                         </li>
                          <li class="nav-item">
                             <a class="nav-link" href="#"><i class="fa-solid fa-user-clock me-2"></i> Attendance</a>
