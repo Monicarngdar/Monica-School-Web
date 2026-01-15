@@ -136,6 +136,26 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         return $result;
     }
 
+        //Get Lecturers
+     function getLecturers($conn){
+   
+        $sql = "SELECT user_account.userId as userId, username, roleId, name, surname FROM user_account, user_profile WHERE user_account.userId = user_profile.userId and user_account.roleId = 2";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load lecturers.</p>";
+            exit();
+        }
+
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return $result;
+    }
+
+
 
         //Save Profile Admin
        function saveProfileAdmin($conn, $userId, $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode){

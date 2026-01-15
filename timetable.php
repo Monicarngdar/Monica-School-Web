@@ -1,4 +1,9 @@
-<?php  include "includes/header.php";?>
+<?php  
+  include "includes/functions.php";
+  include "includes/timetable-inc.php";
+  include "includes/header.php";
+  adminPage(); //Inforce admin only in this page
+?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <div class="container user-register mt-5">
@@ -15,30 +20,46 @@
 
         <!-- Course Name & Unit Name -->
                 <div class="row mb-3">
-            <div class="col-md-6 mb-3 mb-md-0">
-                <select class="form-select" name="courseName">
-                <option selected disabled>Course Name</option>
-                <option>Interactive</option>
-                </select>
-            </div>
+                    <div class="col-md-6 mb-3 mb-md-0">
+                    <select name="courseId" id="courseId" class="form-control" >
+                        <option value="">Select Course</option>
+                        <?php foreach($courses as $course):?>
+                        <option value="<?php echo $course["courseId"]?>"
+                        <?php if($course["courseId"]== $courseId) echo "selected = selected" ?>>
+                        <?php echo $course["courseName"]?></option>
+                      <?php endforeach?>
+                    </select>
+                </div>
+     
+              
+                  <div class="col-md-6">
+                  <select name="unitId" id="unitId" class="form-control">
+                      <option value="" selected disabled>Select Unit</option>
 
-            <div class="col-md-6">
-                <select class="form-select" name="unitName">
-                <option selected disabled>Unit Name</option>
-                <option>Database</option>
-                </select>
-            </div>
+                      <?php foreach ($courseUnits as $unit): ?>
+                          <option value="<?php echo $unit['unitId']; ?>"
+                              <?php if ($unit['unitId'] == $unitId) echo 'selected'; ?>>
+                              <?php echo $unit['unitName']; ?>
+                          </option>
+                      <?php endforeach; ?>
+                  </select>
+              </div>
+     
             </div>
 
         <!-- Lecturer Name & Room -->
             <div class="row mb-3">
         <div class="col-md-6 mb-3 mb-md-0">
-            <select class="form-select" name="lecturerName">
-            <option selected disabled>Lecturer Name</option>
-            <option>Zoey Sky</option>
-            <option>New</option>
-            </select>
-        </div>
+               <select name="lecturerId" id="lecturerId" class="form-control" >
+                  <option value="">Select Lecturer</option>
+                    <?php foreach($lecturers as $lecturer):?>
+                     <option value="<?php echo $lecturer["userId"]?>"
+                        <?php if($lecturer["userId"]== $lecturerId) echo "selected = selected" ?>>
+                    <?php echo $lecturer['name']?> <?php echo $lecturer['surname']?>
+                      <?php endforeach?>
+                    </select>
+                </div>
+     
 
           <div class="col-md-6">
             <select class="form-select" name="room">
