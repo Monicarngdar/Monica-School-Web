@@ -90,6 +90,22 @@
                             <a class="nav-link" href="unit.php?action=add">
                             <i class="fa-solid fa-circle-plus me-2"></i> Add Unit</a>
                         </li>
+                         <li class="nav-item">
+                            <a class="nav-link" href="list-class.php?action=list">
+                            <i class="fa-solid fa-layer-group me-2"></i> Manage Class</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link" href="class.php?action=add">
+                            <i class="fa-solid fa-circle-plus me-2"></i> Add Class</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="list-timetables.php?action=list">
+                            <i class="fa-solid fa-layer-group me-2"></i> Manage Timetables</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="timetable.php?action=add">
+                            <i class="fa-solid fa-circle-plus me-2"></i> Add Timetable</a>
+                        </li>
                         <?php endif ?>
 
                         <?php  if ($_SESSION ['userRole']==2 ):?>

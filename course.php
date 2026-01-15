@@ -1,6 +1,7 @@
 <?php 
     include "includes/header.php";
     include "includes/course-inc.php";
+     adminPage(); //Inforce admin only in this page
 
 ?>
 
@@ -11,13 +12,14 @@
             }
       ?>
 
-<div class="container user-register mt-5">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container user-register mt-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6"> 
             
             <div class="row">
                 <div class="col">
-                    <h2 class="text-center mb-5"><?php echo $pageTitle?></h2>
+                    <h2 class="text-center mt-4 mb-5"><?php echo $pageTitle?></h2>
                 </div>
             </div>
         
@@ -41,7 +43,11 @@
          <!--Buttons-->
                <div class="row">
         <div class="col">
-            <button type="submit" name="submit" class="btn btn-primary w-100"><?php if(isset($_GET["action"])&& $_GET["action"]=="add") {echo "CREATE";} else {echo "SAVE"; }?></button>
+            <?php if(isset($_GET["action"])&& $_GET["action"]=="add"):?>
+            <button type="submit" name="submit" value = "add" class="btn btn-primary w-100"> CREATE</button>
+            <?php else:  ?>
+            <button type="submit" name="submit" value = "save" class="btn btn-primary w-100"> SAVE</button>
+            <?php endif  ?>
         </div>
             <div class="col">
             <button type="reset" class="btn btn-secondary w-100"> CANCEL</button>
@@ -51,5 +57,7 @@
             </form>
         </div>
     </div>
+    </div>
+   </main>
 
        <?php  include "includes/footer.php";?>

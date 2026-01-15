@@ -834,6 +834,102 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
     }
 
+    //Add Class
+    function addClass($conn, $courseId, $className, $classDescription){
+    $sql = "INSERT INTO class (courseId, className, classDescription) VALUES (?, ?, ?)";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../class.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "iss", $courseId, $className, $classDescription);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+   //Get Class
+    function getClass($conn, $classId){    
+        $sql = "SELECT * FROM class WHERE classId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load class.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $classId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+
+//Get Classes
+    function getClasses($conn){    
+        $sql = "SELECT * FROM class";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load classes.</p>";
+            exit();
+        }
+ 
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return
+            $result;
+    }
+
+        //Save Class
+    function saveClass($conn, $classId, $courseId, $className, $classDescription){
+    $sql = "UPDATE class SET courseId = ?, className = ?, classDescription = ? WHERE classId = ?";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../class.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "issi",  $courseId, $className, $classDescription, $classId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+        //Delete Class
+    function deleteClass($conn, $classId){
+        $sql = "DELETE FROM class WHERE classId = ?;";
+
+       $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../list-class.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $classId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+
+
+
     //User Roles for login
     //Admin Page
     function adminPage(){
@@ -871,11 +967,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
-    function getLecturerAssignments(){
-        
-    }
-
-
+    
      //Add Lecturer Assignments
     function addAssignment($conn, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $userId){
     $sql = "INSERT INTO assignments (unitId, taskTitle, taskDescription, maxMark, dueDate, userId) VALUES (?, ?, ?, ?, ?, ?)";
@@ -1322,6 +1414,9 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
         return $result;
     }
+
+
+   
 
 
        //Add Calendar

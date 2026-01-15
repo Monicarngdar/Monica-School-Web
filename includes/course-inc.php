@@ -33,7 +33,7 @@
   }
 
   //This trigger for the save unit
-    if (isset($_POST['submit'])&& $_POST ["action"] == "save") {  
+    if (isset($_POST['submit'])&& $_POST ["submit"] == "save") {  
     $courseName = $_POST['courseName'];
     $courseDescription = $_POST['courseDescription'];
     $credits = $_POST['credits'];

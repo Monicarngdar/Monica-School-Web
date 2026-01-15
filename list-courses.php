@@ -1,9 +1,9 @@
 <?php 
     include "includes/header.php";
-     include "includes/functions.php";
+    include "includes/functions.php";
     include "includes/dbh.php";
     $courses = getCourses($conn);
-    adminPage() //Inforce admin only in this page
+    adminPage(); //Inforce admin only in this page
 
 ?>
    <?php     
@@ -30,9 +30,6 @@
             }
       ?>
 
-
-
-
 <script>
 function submitForm(Id,action){
     
@@ -42,13 +39,14 @@ function submitForm(Id,action){
 }
 </script>
 
-<div class="container user-register mt-5">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container user-register mt-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6"> 
             
             <div class="row">
                 <div class="col">
-                    <h2 class="text-center mb-5">Manage Courses</h2>
+                  <h2 class="text-center mt-4 mb-5">Manage Courses</h2>
                 </div>
             </div>
         
@@ -80,5 +78,7 @@ function submitForm(Id,action){
                </div>
         </div>
     </div>
+   </div>
+   </main>
 
        <?php  include "includes/footer.php";?>
