@@ -387,6 +387,22 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
+       //Save Course
+    function saveCourse($conn, $courseId, $courseName, $courseDescription, $credits){
+    $sql = "UPDATE course SET courseName = ?, courseDescription = ?,  credits = ? WHERE courseId = ?";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../course.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "sssi",  $courseName, $courseDescription, $credits, $courseId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+
 
     //Get Units
     function getUnits($conn){

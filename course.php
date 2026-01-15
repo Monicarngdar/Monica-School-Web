@@ -1,6 +1,7 @@
 <?php 
-    include "includes/header.php";
+     include "includes/functions.php";
     include "includes/course-inc.php";
+    include "includes/header.php";
      adminPage(); //Inforce admin only in this page
 
 ?>
