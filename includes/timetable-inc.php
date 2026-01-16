@@ -4,61 +4,83 @@
 
     if(isset($_GET["action"]) && $_GET["action"]=="list")
     { 
-         $timetable = getTimetables($conn);
+         $timetables = getTimetables($conn);
     } 
 
     if(isset($_GET["action"]) && $_GET["action"] == "add"){
-    $courses = getCourses($conn);
     $courseUnits = getUnits($conn);
     $classes = getClasses($conn);
     $lecturers = getLecturers($conn);
+    $unitTimetableId = "";
+    $classId = "";
     $courseId = "";
     $unitId = "";
-    $lecturerId = "";;
+    $lecturerId = "";
+    $startTime = "";
+    $room = "";
+    $day = "";
+    $endTime = "";
     $pageTitle = "Add Timetable";
 
 }
     
 
     if(isset($_POST["action"]) && $_POST["action"] == "delete"){
-       $classId = $_POST['id'];
-       deleteClass($conn, $classId);
-        header("location: list-class.php?deleted=true&action=list");   
+       $unitTimetableId = $_POST['id'];
+       deleteTimetable($conn, $unitTimetableId);
+        header("location: list-timetables.php?deleted=true&action=list");   
         exit();
     }
 
       if(isset($_POST["action"]) && $_POST["action"] == "edit"){
-    $class = getClass($conn, $_POST["id"]);
-    $courses = getCourses($conn);
-    $classId =  $class ['classId'];
-    $courseId =  $class ['courseId'];
-    $className  = $class ['className'];
-    $classDescription  =  $class['classDescription'];
-    $pageTitle = "Edit Class";
+    $timetable = getTimetable($conn, $_POST["id"]);
+    $courseUnits = getUnits($conn);
+    $classes = getClasses($conn);
+    $lecturers = getLecturers($conn);
+
+    $unitTimetableId =  $timetable['unitTimetableId'];
+    $classId =  $timetable['classId'];
+    $unitId =  $timetable['unitId'];
+    $lecturerId =  $timetable ['lecturerId'];
+    $room=  $timetable ['room'];
+    $day =  $timetable ['day'];
+    $startTime =  date("H:i", strtotime($timetable["startTime"]));
+    $endTime =  date("H:i", strtotime($timetable["endTime"]));
+    $pageTitle = "Edit Timetable";
 
   }
 
-  //This trigger for the save a class
+  //This trigger for the save a timetable 
     if (isset($_POST['submit'])&& $_POST ["submit"] == "save") {  
-    $courseId = $_POST['courseId'];
     $classId = $_POST['classId'];
-    $className = $_POST['className'];
-    $classDescription = $_POST['classDescription'];
-    $_GET["action"] = "save";
-    saveClass($conn, $classId, $courseId, $className, $classDescription);
+    $unitId = $_POST['unitId'];
+    $lecturerId = $_POST['lecturerId'];
+    $room = $_POST['room'];
+    $day = $_POST['day'];
+    $startTime = $_POST['startTime'];
+    $endTime = $_POST['endTime'];
+    $unitTimetableId = $_POST['id'];
 
-      header("location:  list-class.php?success=true&action=list");   
+  
+    $_GET["action"] = "save";
+    saveTimetable($conn, $classId, $unitId, $lecturerId, $room, $day, $startTime, $endTime, $unitTimetableId);
+
+      header("location:  list-timetables.php?success=true&action=list");   
         exit();
     
 }
 
   if (isset($_POST['submit'])&& $_POST ["submit"] == "add") {  
-    $courseId = $_POST['courseId'];
-    $className = $_POST['className'];
-    $classDescription = $_POST['classDescription'];
-    addClass($conn, $courseId, $className, $classDescription);
+    $unitId = $_POST['unitId'];
+    $lecturerId = $_POST['lecturerId'];
+    $classId = $_POST['classId'];
+    $room = $_POST['room'];
+    $day = $_POST['day'];
+    $startTime = $_POST['startTime'];
+    $endTime = $_POST['endTime'];
+    addTimetable($conn, $unitId, $classId,  $room, $day, $startTime, $endTime, $lecturerId,);
 
-      header("location:  list-class.php?success=true&action=list");   
+      header("location:  list-timetables.php?success=true&action=list");   
         exit();
     
 }

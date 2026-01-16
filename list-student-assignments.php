@@ -3,7 +3,7 @@
 include "includes/dbh.php";
 include "includes/header.php";
 include "includes/student-assign-inc.php";
-studentPage()//Inforce student in this page
+studentPage();//Inforce student in this page
  ?>
 
 
@@ -23,10 +23,10 @@ function submitForm(Id,action){
             }
       ?>
 
-
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <div class="container user-register mt-5">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6"> 
+        <div class="col-12 col-md-8"> 
             
             <div class="row">
                 <div class="col">
@@ -75,6 +75,6 @@ function submitForm(Id,action){
   </div>
 </form>
 <?php endforeach?>
-
+</main>
 
 <?php include "includes/footer.php"; ?>

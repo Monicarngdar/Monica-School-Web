@@ -12,17 +12,8 @@
         background-color: #2787B4;
        }
 
-          /*Login Page */
-            .user-login-form{
-            display: block;
-            width: 100%;
-            background-color: white;
-            border: 3px solid #2787B4;
-            height: 50px;
-            font-size: 1.1rem;
-    }
-
-
+ /* Log in  */
+   
 
     /* Dashboard / Email subtitle text */
         .dashboard-subtitle,

@@ -963,6 +963,103 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         mysqli_stmt_close($stmt);
     }
 
+        //Add Timetable
+    function addTimetable($conn, $unitId, $classId, $room, $day, $startTime, $endTime, $lecturerId ) {
+    $sql = "INSERT INTO unit_timetable (unitId, classId, room, day, startTime, endTime, lecturerId) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../timetable.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "iissssi",  $unitId, $classId, $room, $day, $startTime, $endTime, $lecturerId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+}
+
+
+   //Get Timetable
+    function getTimetable($conn, $unitTimetableId){    
+        $sql = "SELECT * FROM unit_timetable WHERE unitTimetableId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load timetable.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $unitTimetableId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+    
+//Get Timetables
+    function getTimetables($conn){    
+        $sql = "SELECT * FROM unit_timetable, unit, class
+                    WHERE unit_timetable.unitId = unit.unitId
+                    AND unit_timetable.classId = class.classId
+                    ORDER BY  className, day, startTime, endTime ";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load timetables.</p>";
+            exit();
+        }
+ 
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return
+            $result;
+    }
+
+      //Save Timetbale
+    function saveTimetable($conn, $classId, $unitId, $lecturerId, $room, $day, $startTime, $endTime, $unitTimetableId){
+    $sql = "UPDATE unit_timetable SET classId = ?, unitId = ?, lecturerId = ?,  room = ? , day = ? , startTime = ? , endTime = ?  WHERE unitTimetableId = ?";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../timetable.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "iiissssi",   $classId, $unitId, $lecturerId, $room, $day, $startTime, $endTime, $unitTimetableId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+    
+        //Delete Timetable
+    function deleteTimetable($conn, $unitTimetableId){
+        $sql = "DELETE FROM unit_timetable WHERE unitTimetableId = ?;";
+
+       $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../list-timetables.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $unitTimetableId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
 
 
 

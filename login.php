@@ -3,6 +3,7 @@
 
 <!--- User Log in -->
             <main>
+            <div class="container mt-5">
 
     <?php 
         if(isset($_GET["error"])) { 
@@ -34,10 +35,10 @@
        
     <?php } ?>
 
-
-<form action="includes/login-inc.php" method="POST">
-    <div class="container">
-        <h2 class="user-login text-center">User Log in</h2>
+<div class="login-wrapper">
+<form action="includes/login-inc.php" method="POST" >
+    <div class="container" style="max-width: 450px;">
+        <h2 class= "text-center mt-4 mb-5">Log in to your Account</h2>
 
         <!-- Username -->
         <div class="row mb-3">
@@ -52,13 +53,15 @@
         </div>
 
         <!-- Button -->
-        <div class="row">
-            <div class="col">
-                <button   type="submit"   name="submit"  id="submit"  class="btn btn-primary w-100 m-2"> LOG IN</button>
-            </div>
+         <div class="row">
+        <div class="col d-flex justify-content-center">
+            <button type="submit" name="submit" id="submit" class="btn btn-primary w-50">LOG IN</button>
         </div>
     </div>
+    </div>
 </form>
+</div>
+</div>
  </main>
     
 
