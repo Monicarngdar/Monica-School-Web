@@ -1,11 +1,11 @@
 <?php
- include "includes/header.php";
  include "includes/user-inc.php"; 
+ include "includes/header.php";
  adminPage() //Inforce admin only in this page
  ?>
 
 
-
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <div class="container user-register mt-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6"> 
@@ -63,5 +63,6 @@
         </div>
     </div>
 </div>
+</main>
 
 <?php include "includes/footer.php"; ?>

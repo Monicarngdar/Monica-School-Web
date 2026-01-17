@@ -2,9 +2,9 @@
 
 
 <!--- User Log in -->
-            <main>
-            <div class="container mt-5">
 
+       
+<div style="overflow-x: hidden;">
     <?php 
         if(isset($_GET["error"])) { 
             $message = "";
@@ -31,11 +31,11 @@
                   include "includes/show-error.php";
             }
             ?>
-            
+       </div>     
        
     <?php } ?>
-
-<div class="login-wrapper">
+ <main>
+<div class="container mt-5">
 <form action="includes/login-inc.php" method="POST" >
     <div class="container" style="max-width: 450px;">
         <h2 class= "text-center mt-4 mb-5">Log in to your Account</h2>
@@ -60,7 +60,6 @@
     </div>
     </div>
 </form>
-</div>
 </div>
  </main>
     

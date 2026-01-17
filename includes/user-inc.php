@@ -22,7 +22,8 @@
     $city = $_POST['city'];
     $postCode =  $_POST['postCode'];
     $courseId = $_POST['courseId'];
-   
+    $classId = $_POST['classId'];
+
     $pageTitle = "Edit User";
 
     
@@ -55,11 +56,16 @@
      if(!empty ($courseId)){
     addEnrolment($conn, $userId, $courseId);
      }
+     deleteUserClass($conn, $userId);
+     if(!empty ($classId)){
+    addUserClass($conn,  $classId, $userId);
+     }
+
 
       header("location:  ../list-users.php?success=true&action=list");   
         exit();
 }
-
+/*
 //This condition will trigger when there is an error in the save page
   if(isset($_GET["action"]) && $_GET["action"] == "edit"){
     $user = getUser($conn, $_GET["id"]);
@@ -82,12 +88,21 @@
     $courseId = getEnrolledCourse($conn, $_GET["id"]);
     $action ="save";
     }
+*/
 
 //This condition will trigger when the user will click edit from the list page
-  if(isset($_POST["action"]) && $_POST["action"] == "edit"){
+// chnaged from $_POST to $_REQUEST to avoid duplicate code when redirected with errors
+  if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "edit"){
 
-    $user = getUser($conn, $_POST["id"]);
-    $profile = getUserProfile($conn, $_POST["id"]);
+    $user = getUser($conn, $_REQUEST["id"]);
+    $profile = getUserProfile($conn, $_REQUEST["id"]);
+    $userClass = getUserClass($conn, $_REQUEST["id"]);
+    
+    if(!$userClass){ 
+        $classId = "";
+    } else {
+        $classId =  $userClass ['classId'];
+    }
     $userId =  $user ['userId'];
     $username =  $user ['username'];
     $password =  $user['password'];
@@ -102,7 +117,8 @@
     $postCode = $profile['postCode'];
     $pageTitle = "Edit User";
     $courses = getCourses($conn);
-    $courseId = getEnrolledCourse($conn, $_POST["id"]);
+    $courseId = getEnrolledCourse($conn, $_REQUEST["id"]);
+    $classes = getClasses($conn);
 
    
     $action ="save";

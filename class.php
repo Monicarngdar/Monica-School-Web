@@ -36,7 +36,7 @@
                 </div>
      
         <div class="mb-4">
-          <textarea name="classDescription" id="classDescription" placeholder="Enter class description..." class="form-control"  rows="4"><?php echo $classDescription ?></textarea>
+          <textarea name="classDescription" id="classDescription" placeholder="Class description" class="form-control"  rows="4"><?php echo $classDescription ?></textarea>
         </div>
 
                <!--Buttons-->

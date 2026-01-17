@@ -30,8 +30,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <textarea name="unitDescription"  Id = "unitDescription" placeholder="Unit Description"  class="form-control"  rows="4" ><?php echo $unitDescription?>
-                    </textarea>
+                    <textarea name="unitDescription"  Id = "unitDescription" placeholder="Unit Description"  class="form-control"  rows="4" ><?php echo $unitDescription?></textarea>
                 </div>
 
          <!--Course ID-->  

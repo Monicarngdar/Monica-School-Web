@@ -1,8 +1,8 @@
 <?php
 include "includes/functions.php";
-include "includes/header.php";
 include "includes/student-assign-inc.php";
-studentPage()//Inforce student in this page
+include "includes/header.php";
+studentPage();//Inforce student in this page
  ?>
 
  <script>

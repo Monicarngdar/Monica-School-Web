@@ -194,7 +194,11 @@ html, body {
      color: black;
      }
 
+/*Timetable slots*/
+.timetable-highlight {
+        background-color: #8ab7db !important; 
 
+    }
  
 
 

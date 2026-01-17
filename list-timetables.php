@@ -1,8 +1,8 @@
 <?php  
-     include "includes/header.php";
      include "includes/functions.php";
      include "includes/dbh.php";
      include "includes/timetable-inc.php";
+     include "includes/header.php";
     adminPage(); //Inforce admin only in this page
 ?>
 
@@ -42,12 +42,12 @@ function submitForm(Id,action){
             </div>
         
          
-    <div class="row fw-bold border-bottom pb-2 mb-3 text-center">
-    <div class="col-2 text-start">Class Name</div>
-    <div class="col-2  text-start">Unit</div>
-    <div class="col-4  text-start">Day & Time</div>
-    <div class="col-2">Edit</div>
-    <div class="col-2">Delete</div>
+    <div class="row fw-bold border-bottom pb-2 mb-3">
+    <div class="col-3 text-start">Class Name</div>
+    <div class="col-3  text-start">Unit</div>
+    <div class="col-3  text-start">Day & Time</div>
+    <div class="col-1 text-center">Edit</div>
+    <div class="col-2 text-center">Delete</div>
   </div>
 
      <?php foreach($timetables as $timetable):?>
@@ -56,12 +56,12 @@ function submitForm(Id,action){
     <input type="hidden" name="id" value="<?php echo $timetable["unitTimetableId"] ?>">
     <input type="hidden" name="action" value="edit">
 
-    <div class="col-2"><?php echo $timetable["className"] ?></div>
-    <div class="col-2"><?php echo $timetable["unitName"] ?></div>
-    <div class="col-4"><?php echo $timetable["day"] ?> <?php echo date("H:i", strtotime($timetable["startTime"]))  ?> - <?php echo date("H:i", strtotime($timetable["endTime"]))  ?></div>
+    <div class="col-3"><?php echo $timetable["className"] ?></div>
+    <div class="col-3"><?php echo $timetable["unitName"] ?></div>
+    <div class="col-3 ps-0"><?php echo $timetable["day"] ?> <?php echo date("H:i", strtotime($timetable["startTime"]))  ?> - <?php echo date("H:i", strtotime($timetable["endTime"]))  ?></div>
 
 
-    <div class="col-2 text-center">
+    <div class="col-1 text-center">
    <i class="fa-solid fa-pen" style="color: #007bff; cursor: pointer;" onclick="submitForm(<?php echo $timetable["unitTimetableId"] ?>,'edit');" ></i>
     </div>
 
