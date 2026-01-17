@@ -43,6 +43,7 @@ lecturerPage() //Inforce lecturer in this page
 
 </script>
 
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -125,5 +126,6 @@ lecturerPage() //Inforce lecturer in this page
         </div>
     </div>
 </div>
+</main>
 
 <?php include "includes/footer.php"; ?>

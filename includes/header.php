@@ -110,7 +110,7 @@
 
                         <?php  if ($_SESSION ['userRole']==2 ):?>
                          <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days me-2"></i> Timetable</a>
+                            <a class="nav-link" href="lecturer-timetable.php?action=list"><i class="fa-solid fa-calendar-days me-2"></i> Timetable</a>
                         </li>
                          <li class="nav-item">
                             <a class="nav-link" href="lecturer-units.php?action=list"><i class="fa-solid fa-book-open me-2"></i> My Units</a>
@@ -135,7 +135,7 @@
 
                         <?php  if ($_SESSION ['userRole']==1 ):?>
                             <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days me-2"></i> Timetable</a>
+                            <a class="nav-link" href="student-timetable.php?action=list"><i class="fa-solid fa-calendar-days me-2"></i> Timetable</a>
                         </li>
                          <li class="nav-item">
                             <a class="nav-link" href="student-units.php?action=list"><i class="fa-solid fa-book-open me-2"></i> My Units</a>
