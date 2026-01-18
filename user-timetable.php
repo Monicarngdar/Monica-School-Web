@@ -52,9 +52,9 @@
                                         $monHalfHours = $monDiffSeconds / 1800;
                                 ?>
                                 <th scope="row" class="timetable-highlight" rowspan = "<?php echo $monHalfHours?>">
-                                        Unit<br>
-                                        Lecturer<br>
-                                        A111
+                                        <?php echo $monTimeSlot ["unitName"]?><br>
+                                         <?php echo $monTimeSlot ["name"] ?> <?php echo $monTimeSlot['surname'] ?><br>
+                                         <?php echo $monTimeSlot ["room"] ?>
                         </th>
                         <?php else: ?>
                             <?php if ($monSlotNumber<$monHalfHours):?>
@@ -84,9 +84,9 @@
                                         $tueHalfHours = $tueDiffSeconds / 1800;
                                 ?>
                                 <th scope="row"  class="timetable-highlight" rowspan = "<?php echo $tueHalfHours?>">
-                                        Unit<br>
-                                        Lecturer<br>
-                                        A111
+                                          <?php echo $tueTimeSlot ["unitName"]?><br>
+                                         <?php echo $tueTimeSlot ["name"] ?> <?php echo $tueTimeSlot['surname'] ?><br>
+                                         <?php echo $tueTimeSlot ["room"] ?>
                         </th>
                         <?php else: ?>
                             <?php if ($tueSlotNumber<$tueHalfHours):?>
@@ -116,9 +116,9 @@
                                         $wedHalfHours = $wedDiffSeconds / 1800;
                                 ?>
                                 <th scope="row"  class="timetable-highlight" rowspan = "<?php echo $wedHalfHours?>">
-                                        Unit<br>
-                                        Lecturer<br>
-                                        A111
+                                          <?php echo $wedTimeSlot ["unitName"]?><br>
+                                         <?php echo $wedTimeSlot ["name"] ?> <?php echo $wedTimeSlot['surname'] ?><br>
+                                         <?php echo $wedTimeSlot ["room"] ?>
                         </th>
                         <?php else: ?>
                             <?php if ($wedSlotNumber<$wedHalfHours):?>
@@ -148,9 +148,9 @@
                                         $thursHalfHours = $thursDiffSeconds / 1800;
                                 ?>
                                 <th scope="row"  class="timetable-highlight" rowspan = "<?php echo $thursHalfHours?>">
-                                        Unit<br>
-                                        Lecturer<br>
-                                        A111
+                                          <?php echo $thursTimeSlot ["unitName"]?><br>
+                                         <?php echo $thursTimeSlot ["name"] ?> <?php echo $thursTimeSlot['surname'] ?><br>
+                                         <?php echo $thursTimeSlot ["room"] ?>
                         </th>
                         <?php else: ?>
                             <?php if ($thursSlotNumber<$thursHalfHours):?>
@@ -180,9 +180,9 @@
                                         $friHalfHours = $friDiffSeconds / 1800;
                                 ?>
                                 <th scope="row"  class="timetable-highlight" rowspan = "<?php echo $friHalfHours?>">
-                                        Unit<br>
-                                        Lecturer<br>
-                                        A111
+                                         <?php echo $friTimeSlot ["unitName"]?><br>
+                                         <?php echo $friTimeSlot ["name"] ?> <?php echo $friTimeSlot['surname'] ?><br>
+                                         <?php echo $friTimeSlot ["room"] ?>
                         </th>
                         <?php else: ?>
                             <?php if ($friSlotNumber<$friHalfHours):?>

@@ -36,6 +36,9 @@ $classId = $userClass["classId"];
 
 $monSlotNumber = 0;
 $tueSlotNumber = 0;
+$wedSlotNumber = 0;
+$thursSlotNumber = 0;
+$friSlotNumber = 0;
 
 
 $monHalfHours = 0;
@@ -45,9 +48,6 @@ $thursHalfHours = 0;
 $friHalfHours = 0;
 
 
-$wedSlotNumber = 0;
-$thursSlotNumber = 0;
-$friSlotNumber = 0;
 
 
 

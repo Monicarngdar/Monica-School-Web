@@ -1122,9 +1122,12 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
        //Get Timetable Slot
     function getTimetableSlot($conn, $startTime,  $day, $classId){    
-        $sql = "SELECT * FROM unit_timetable, class WHERE startTime = ? 
+        $sql = "SELECT * FROM unit_timetable, class, unit_student, unit, user_profile WHERE startTime = ? 
                     AND day = ? AND unit_timetable.classId = ?
-                    AND class.classId = unit_timetable.classId";
+                    AND class.classId = unit_timetable.classId
+                    AND unit_student.unitId = unit_timetable.unitId
+                    AND unit_timetable.unitId = unit.unitId
+                    AND user_profile.userId = unit_timetable.lecturerId";
 
         $stmt = mysqli_stmt_init($conn);
 

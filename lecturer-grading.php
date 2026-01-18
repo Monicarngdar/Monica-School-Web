@@ -1,14 +1,11 @@
 <?php 
     include "includes/header.php";
     include "includes/lecturer-grading-inc.php";
-    lecturerPage() //Inforce lecturer  only in this page
+    lecturerPage(); //Inforce lecturer  only in this page
 ?>
 
 
-
-
-
-
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -101,6 +98,7 @@
         </div>
     </div>
 </div>
+</main>
 
 
 
