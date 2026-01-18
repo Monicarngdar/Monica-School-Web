@@ -5,7 +5,7 @@ Php & Databases - MySkolar
 MYSKOLAR is a school management system built with PHP scripts and MySQL for data management. This manages students, lecturers, courses, units, grades, attendance, and messages. The system simplifies and digitises academic workflows, enabling students, lecturers, and administrators to interact efficiently through a web interface.
 
 ## Functions and Database Handler
-* Created a fumctions.php to handle 
+* Created a functions.php to handle 
 * Created a dbh.php to handle the database handler to connect through the database.
 
 ```php
@@ -72,22 +72,18 @@ if(!$conn){
 ### Log in 
 The log in works as depended on the userRole Id that would be logged in.
 Shown Example as:
-**Student**
 ```php
+// Student
  <?php  if ($_SESSION ['userRole']==1 ):?>
- ```
-**Lecturer**
-```php
+// Lecturer
  <?php  if ($_SESSION ['userRole']==2 ):?>
- ```
-**Admin**
-```php
+// Admin
  <?php  if ($_SESSION ['userRole']==3 ):?>
  ```
 
  ### Role Dashboard
 This reinforces page of the proper user role,  This always get user from session to prevent other users from typing the page in the browser.
-  Admin Page
+  Shown Example as: 
   ```php
     function adminPage(){
         if (session_status() !== PHP_SESSION_ACTIVE ) {
@@ -100,32 +96,7 @@ This reinforces page of the proper user role,  This always get user from session
              }
     }
 ```
- Lecturer Page
- ```php
-    function lecturerPage(){
-        if (session_status() !== PHP_SESSION_ACTIVE ) {
-             session_start();
-       }
-            if ($_SESSION['userRole']!=2 ){
-                session_destroy();
-                header("location: login.php?error=lecturernotloggedin");
-                exit();
-            }   
-    }
-```
-Student Page
- ```php
-    function studentPage(){
-        if (session_status() !== PHP_SESSION_ACTIVE ) {
-             session_start();
-       }
-        if ($_SESSION['userRole']!=1 ){
-            session_destroy();
-             header("location: login.php?error=studentnotloggedin");
-             exit();   
-        }
-    }
-```
+
  This is placed above the page. 
  Example on how it is used: 
  ```php
@@ -230,6 +201,16 @@ This always get user from session to prevent other users from seeing others mess
 * Create, Update and Delete Courses and Units.
 * Assign users to courses and units.
 * Access control is implemented in **register-inc.php** and **register.php**
+
+### Register User
+* When registering a user, the role is automatically listed from the functions and database to the form.
+```php
+ <select name="role" id="role" class="form-select">
+                <option value="1" selected>Student</option>
+                <option value="2">Lecturer</option>
+                <option value="3">Admin</option>
+            </select>
+```
 
 ## Student Dashboard
 * Students can access their academic management, including timetable, enrolled units, attendance, assignments, and grades.

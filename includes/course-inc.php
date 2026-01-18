@@ -24,7 +24,7 @@
 
       if(isset($_POST["action"]) && $_POST["action"] == "edit"){
     $course = getCourse($conn, $_POST["id"]);
-
+    $courseId  = $course ['courseId'];
     $courseName  = $course ['courseName'];
     $courseDescription  =  $course['courseDescription'];
     $credits = $course['credits'];
@@ -33,12 +33,13 @@
   }
 
   //This trigger for the save unit
-    if (isset($_POST['submit'])&& $_POST ["action"] == "save") {  
+    if (isset($_POST['submit'])&& $_POST ["submit"] == "save") {  
+    $courseId = $_POST['courseId'];
     $courseName = $_POST['courseName'];
     $courseDescription = $_POST['courseDescription'];
     $credits = $_POST['credits'];
     $_GET["action"] = "save";
-    saveCourse($conn, $courseName, $courseDescription, $credits);
+    saveCourse($conn, $courseId, $courseName, $courseDescription, $credits);
 
       header("location:  list-courses.php?success=true&action=list");   
         exit();

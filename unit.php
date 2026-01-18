@@ -1,6 +1,7 @@
 <?php 
-    include "includes/header.php";
+    include "includes/functions.php";
     include "includes/unit-inc.php";
+    include "includes/header.php";
     adminPage() //Inforce admin only in this page
 
 
@@ -8,14 +9,14 @@
 
 
 
-
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <div class="container user-register mt-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6"> 
             
             <div class="row">
                 <div class="col">
-                    <h2 class="text-center mb-5"><?php echo $pageTitle?></h2>
+                    <h2 class="text-center mt-4 mb-5"><?php echo $pageTitle?></h2>
                 </div>
             </div>
 
@@ -29,8 +30,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <textarea name="unitDescription"  Id = "unitDescription" placeholder="Unit Description"  class="form-control"  rows="4" ><?php echo $unitDescription?>
-                    </textarea>
+                    <textarea name="unitDescription"  Id = "unitDescription" placeholder="Unit Description"  class="form-control"  rows="4" ><?php echo $unitDescription?></textarea>
                 </div>
 
          <!--Course ID-->  
@@ -69,5 +69,5 @@
             </form>
         </div>
     </div>
-
+</main>
        <?php  include "includes/footer.php";?>

@@ -1,7 +1,8 @@
 <?php
-include "includes/header.php";
+include "includes/functions.php";
 include "includes/user-inc.php";
-adminPage() //Inforce admin only in this page
+include "includes/header.php";
+adminPage(); //Inforce admin only in this page
 
 ?>
 
@@ -32,13 +33,14 @@ adminPage() //Inforce admin only in this page
     <?php } ?>    
 
      <!--Profile form with the users fields-->
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6"> 
             
             <div class="row">
                 <div class="col">
-                    <h2 class="text-center mb-5"><?php echo $pageTitle?></h2>
+                    <h2 class="text-center mt-4 mb-5"><?php echo $pageTitle?></h2>
                 </div> 
             </div>
 <div class="text-center mb-4">
@@ -89,7 +91,22 @@ adminPage() //Inforce admin only in this page
                     </select>
 
     </div>
-</div> <div class="row">
+</div> 
+
+<div class ="row">
+    <div class="col-12">
+                    <select name="classId" id="classId" class="form-control mb-3"  required>
+                        <option value="" selected disabled>Select Class</option>
+                        <?php foreach($classes as $class):?>
+                        <option value="<?php echo $class["classId"]?>"
+                        <?php if($class["classId"]== $classId) echo "selected = selected" ?>>
+                        <?php echo $class["className"]?></option>
+                      <?php endforeach?>
+                    </select>
+       </div>
+</div>
+
+<div class="row">
     <div class="col-md-6">
         <input type="password" name="password" id="password" placeholder="Password" class="form-control mb-3">
     </div>

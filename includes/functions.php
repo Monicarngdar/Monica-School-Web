@@ -1,5 +1,4 @@
 <?php
-
 // Insert into the user_profile
 function registerUser($conn, $username,$password,$firstName,$lastName,$role,$date_of_birth,$email){
 // Insert into the user_account
@@ -135,6 +134,28 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
         return $result;
     }
+
+
+
+        //Get Lecturers
+     function getLecturers($conn){
+   
+        $sql = "SELECT user_account.userId as userId, username, roleId, name, surname FROM user_account, user_profile WHERE user_account.userId = user_profile.userId and user_account.roleId = 2";
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load lecturers.</p>";
+            exit();
+        }
+
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return $result;
+    }
+
 
 
         //Save Profile Admin
@@ -386,6 +407,22 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
         }
     }
+
+       //Save Course
+    function saveCourse($conn, $courseId, $courseName, $courseDescription, $credits){
+    $sql = "UPDATE course SET courseName = ?, courseDescription = ?,  credits = ? WHERE courseId = ?";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../course.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "sssi",  $courseName, $courseDescription, $credits, $courseId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
 
 
     //Get Units
@@ -834,6 +871,316 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
     }
 
+    //Add Class
+    function addClass($conn, $courseId, $className, $classDescription){
+    $sql = "INSERT INTO class (courseId, className, classDescription) VALUES (?, ?, ?)";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../class.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "iss", $courseId, $className, $classDescription);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+   //Get Class
+    function getClass($conn, $classId){    
+        $sql = "SELECT * FROM class WHERE classId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load class.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $classId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+
+//Get Classes
+    function getClasses($conn){    
+        $sql = "SELECT * FROM class";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load classes.</p>";
+            exit();
+        }
+ 
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return
+            $result;
+    }
+
+         // Function to get user by class
+    function getUserClass($conn, $studentId){    
+        $sql = "SELECT * FROM class_student WHERE studentId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load student class.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $studentId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+     //Add User Class
+    function addUserClass($conn, $classId, $studentId){
+    $sql = "INSERT INTO class_student (classId, studentId) VALUES (?, ?)";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../user.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "ii",   $classId, $studentId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+       //Delete User Class
+    function deleteUserClass($conn, $studentId){
+        $sql = "DELETE FROM class_student WHERE studentId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../user.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $studentId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+
+        //Save Class
+    function saveClass($conn, $classId, $courseId, $className, $classDescription){
+    $sql = "UPDATE class SET courseId = ?, className = ?, classDescription = ? WHERE classId = ?";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../class.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "issi",  $courseId, $className, $classDescription, $classId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+        //Delete Class
+    function deleteClass($conn, $classId){
+        $sql = "DELETE FROM class WHERE classId = ?;";
+
+       $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../list-class.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $classId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+        //Add Timetable
+    function addTimetable($conn, $unitId, $classId, $room, $day, $startTime, $endTime, $lecturerId ) {
+    $sql = "INSERT INTO unit_timetable (unitId, classId, room, day, startTime, endTime, lecturerId) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../timetable.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "iissssi",  $unitId, $classId, $room, $day, $startTime, $endTime, $lecturerId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+}
+
+
+   //Get Timetable
+    function getTimetable($conn, $unitTimetableId){    
+        $sql = "SELECT * FROM unit_timetable WHERE unitTimetableId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load timetable.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $unitTimetableId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+    
+//Get Timetables
+    function getTimetables($conn){    
+        $sql = "SELECT * FROM unit_timetable, unit, class
+                    WHERE unit_timetable.unitId = unit.unitId
+                    AND unit_timetable.classId = class.classId
+                    ORDER BY  className, day, startTime, endTime ";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load timetables.</p>";
+            exit();
+        }
+ 
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return
+            $result;
+    }
+
+      //Save Timetbale
+    function saveTimetable($conn, $classId, $unitId, $lecturerId, $room, $day, $startTime, $endTime, $unitTimetableId){
+    $sql = "UPDATE unit_timetable SET classId = ?, unitId = ?, lecturerId = ?,  room = ? , day = ? , startTime = ? , endTime = ?  WHERE unitTimetableId = ?";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../timetable.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "iiissssi",   $classId, $unitId, $lecturerId, $room, $day, $startTime, $endTime, $unitTimetableId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+    
+        //Delete Timetable
+    function deleteTimetable($conn, $unitTimetableId){
+        $sql = "DELETE FROM unit_timetable WHERE unitTimetableId = ?;";
+
+       $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../list-timetables.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "i", $unitTimetableId);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+       //Get Timetable Slot
+    function getTimetableSlot($conn, $startTime,  $day, $classId){    
+        $sql = "SELECT * FROM unit_timetable, class, unit_student, unit, user_profile WHERE startTime = ? 
+                    AND day = ? AND unit_timetable.classId = ?
+                    AND class.classId = unit_timetable.classId
+                    AND unit_student.unitId = unit_timetable.unitId
+                    AND unit_timetable.unitId = unit.unitId
+                    AND user_profile.userId = unit_timetable.lecturerId";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load timetable slots.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "ssi",  $startTime,  $day, $classId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+    
+       //Get Timetable Lecturer Slot
+    function getTimetableLecturerSlot($conn, $startTime,  $day, $lecturerId){    
+        $sql = "SELECT * FROM unit_timetable, class, unit  WHERE startTime = ? 
+                    AND day = ? AND unit_timetable.lecturerId = ?
+                    AND class.classId = unit_timetable.classId
+                    AND unit_timetable.unitId = unit.unitId";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load lecturer timetable slots.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "ssi",  $startTime,  $day, $lecturerId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
+
+
     //User Roles for login
     //Admin Page
     function adminPage(){
@@ -871,11 +1218,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
-    function getLecturerAssignments(){
-        
-    }
-
-
+    
      //Add Lecturer Assignments
     function addAssignment($conn, $unitId, $taskTitle, $taskDescription, $maxMark, $dueDate, $userId){
     $sql = "INSERT INTO assignments (unitId, taskTitle, taskDescription, maxMark, dueDate, userId) VALUES (?, ?, ?, ?, ?, ?)";
@@ -1322,6 +1665,9 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
         return $result;
     }
+
+
+   
 
 
        //Add Calendar

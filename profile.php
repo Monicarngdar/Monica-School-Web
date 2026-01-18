@@ -34,13 +34,14 @@ if (!isset($_SESSION["userId"])) {
 
 
      <!--Profile form with the users fields-->
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6"> 
             
             <div class="row">
                 <div class="col">
-                    <h2 class="text-center mb-5">Profile</h2>
+                    <h2 class="text-center mt-4 mb-5">Profile</h2>
                 </div>
             </div>
 <div class="text-center mb-4">
@@ -102,6 +103,5 @@ if (!isset($_SESSION["userId"])) {
             </div>
         </div>
     </div>
-
 </main>
 <?php include "includes/footer.php"; ?>
