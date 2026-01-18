@@ -1179,6 +1179,94 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
+           //Get Day Timetable
+    function getDayTimetable($conn, $day, $lecturerId){    
+        $sql = "SELECT * FROM unit_timetable, class, unit  WHERE 
+                    day = ? AND unit_timetable.lecturerId = ?
+                    AND class.classId = unit_timetable.classId
+                    AND unit_timetable.unitId = unit.unitId";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load day timetables.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "si",  $day, $lecturerId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return
+            $result;
+    }
+
+               //Get Daily Attendance
+    function getDailyAttendance($conn,  $unitTimetableId, $date){    
+        $sql = "SELECT * FROM attendance  WHERE unitTimetableId = ?
+                    AND date = ?";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load daily attendance.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "is" ,$unitTimetableId, $date,);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        return
+            $result;
+    }
+
+           //Get Attendance Students
+    function getAttendanceStudents($conn, $unitTimetableId){    
+        $sql = "SELECT * FROM unit_timetable, unit_student, unit, user_profile 
+                    WHERE unit_timetable.unitTimetableId = ? 
+                    AND unit_student.unitId = unit_timetable.unitId
+                    AND unit_timetable.unitId = unit.unitId
+                    AND user_profile.userId = unit_student.studentId";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load timetable students.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "i", $unitTimetableId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+            return $result;
+
+    }
+
+        //Add Attendance
+    function addAttendance($conn, $userAccountId, $unitId,	$unitTimetableId){
+    $sql = "INSERT INTO attendance (userAccountId, unitId,	unitTimetableId, date) VALUES (?, ?, ?, NOW())";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../lecturer-attendance.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "iii", $userAccountId, $unitId, $unitTimetableId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+
+
 
 
     //User Roles for login
