@@ -35,7 +35,11 @@
                                  <?php //   ****** MONDAY *******
                                         // Variables should be per day or they will reset each other during the forwach loop and it will not work
                                         $day = "Monday";
-                                        $monTimeSlot = getTimetableSlot($conn, $slot, $day, $classId);
+                                        if ($userRole == 1){
+                                            $monTimeSlot = getTimetableSlot($conn, $slot, $day, $classId);
+                                        } else {
+                                            $monTimeSlot = getTimetableLecturerSlot($conn, $slot,  $day, $userId); // query for lecturer timetable is different from student
+                                        }
                                         ?>
                                         <?php   if ($monTimeSlot): ?>
 
@@ -53,7 +57,11 @@
                                 ?>
                                 <th scope="row" class="timetable-highlight" rowspan = "<?php echo $monHalfHours?>">
                                         <?php echo $monTimeSlot ["unitName"]?><br>
+                                        <?php  if ($userRole == 1): ?>
                                          <?php echo $monTimeSlot ["name"] ?> <?php echo $monTimeSlot['surname'] ?><br>
+                                         <?php else: ?>
+                                        <?php echo $monTimeSlot ["className"] ?>
+                                        <?php endif ?>
                                          <?php echo $monTimeSlot ["room"] ?>
                         </th>
                         <?php else: ?>
@@ -67,7 +75,11 @@
                               <?php //   ****** TUESDAY  *******
                                         // Variables should be per day or they will reset each other during the forwach loop and it will not work
                                         $day = "Tuesday";
-                                        $tueTimeSlot = getTimetableSlot($conn, $slot, $day, $classId);
+                                       if ($userRole == 1){
+                                            $tueTimeSlot = getTimetableSlot($conn, $slot, $day, $classId);
+                                        } else {
+                                            $tueTimeSlot = getTimetableLecturerSlot($conn, $slot,  $day, $userId); // query for lecturer timetable is different from student
+                                        }
                                         ?>
                                         <?php   if ($tueTimeSlot): ?>
 
@@ -85,7 +97,11 @@
                                 ?>
                                 <th scope="row"  class="timetable-highlight" rowspan = "<?php echo $tueHalfHours?>">
                                           <?php echo $tueTimeSlot ["unitName"]?><br>
+                                        <?php  if ($userRole == 1): ?>
                                          <?php echo $tueTimeSlot ["name"] ?> <?php echo $tueTimeSlot['surname'] ?><br>
+                                         <?php else: ?>
+                                        <?php echo $tueTimeSlot ["className"] ?>
+                                        <?php endif ?>
                                          <?php echo $tueTimeSlot ["room"] ?>
                         </th>
                         <?php else: ?>
@@ -99,7 +115,12 @@
                         <?php //   ****** WEDNESDAY  *******
                                         // Variables should be per day or they will reset each other during the forwach loop and it will not work
                                         $day = "Wednesday";
-                                        $wedTimeSlot = getTimetableSlot($conn, $slot, $day, $classId);
+                                         if ($userRole == 1){
+                                            $wedTimeSlot = getTimetableSlot($conn, $slot, $day, $classId);
+                                        } else {
+                                            $wedTimeSlot = getTimetableLecturerSlot($conn, $slot,  $day, $userId); // query for lecturer timetable is different from student
+                                        }
+                                        
                                         ?>
                                         <?php   if ($wedTimeSlot): ?>
 
@@ -116,9 +137,13 @@
                                         $wedHalfHours = $wedDiffSeconds / 1800;
                                 ?>
                                 <th scope="row"  class="timetable-highlight" rowspan = "<?php echo $wedHalfHours?>">
-                                          <?php echo $wedTimeSlot ["unitName"]?><br>
+                                         <?php echo $wedTimeSlot ["unitName"]?><br>
+                                        <?php  if ($userRole == 1): ?>
                                          <?php echo $wedTimeSlot ["name"] ?> <?php echo $wedTimeSlot['surname'] ?><br>
-                                         <?php echo $wedTimeSlot ["room"] ?>
+                                         <?php else: ?>
+                                        <?php echo $wedTimeSlot ["className"] ?>
+                                        <?php endif ?>
+                                         <?php echo $wedTimeSlot ["room"] ?>>
                         </th>
                         <?php else: ?>
                             <?php if ($wedSlotNumber<$wedHalfHours):?>
@@ -131,7 +156,11 @@
                         <?php //   ****** THURSDAY  *******
                                         // Variables should be per day or they will reset each other during the forwach loop and it will not work
                                         $day = "Thursday";
-                                        $thursTimeSlot = getTimetableSlot($conn, $slot, $day, $classId);
+                                        if ($userRole == 1){
+                                            $thursTimeSlot = getTimetableSlot($conn, $slot, $day, $classId);
+                                        } else {
+                                            $thursTimeSlot = getTimetableLecturerSlot($conn, $slot,  $day, $userId); // query for lecturer timetable is different from student
+                                        }
                                         ?>
                                         <?php   if ($thursTimeSlot): ?>
 
@@ -148,8 +177,12 @@
                                         $thursHalfHours = $thursDiffSeconds / 1800;
                                 ?>
                                 <th scope="row"  class="timetable-highlight" rowspan = "<?php echo $thursHalfHours?>">
-                                          <?php echo $thursTimeSlot ["unitName"]?><br>
+                                       <?php echo $thursTimeSlot ["unitName"]?><br>
+                                        <?php  if ($userRole == 1): ?>
                                          <?php echo $thursTimeSlot ["name"] ?> <?php echo $thursTimeSlot['surname'] ?><br>
+                                         <?php else: ?>
+                                        <?php echo $thursTimeSlot ["className"] ?>
+                                        <?php endif ?>
                                          <?php echo $thursTimeSlot ["room"] ?>
                         </th>
                         <?php else: ?>
@@ -163,7 +196,11 @@
                         <?php //   ****** FRIDAY  *******
                                         // Variables should be per day or they will reset each other during the forwach loop and it will not work
                                         $day = "Friday";
-                                        $friTimeSlot = getTimetableSlot($conn, $slot, $day, $classId);
+                                         if ($userRole == 1){
+                                            $friTimeSlot = getTimetableSlot($conn, $slot, $day, $classId);
+                                        } else {
+                                            $friTimeSlot = getTimetableLecturerSlot($conn, $slot,  $day, $userId); // query for lecturer timetable is different from student
+                                        }
                                         ?>
                                         <?php   if ($friTimeSlot): ?>
 
@@ -181,7 +218,11 @@
                                 ?>
                                 <th scope="row"  class="timetable-highlight" rowspan = "<?php echo $friHalfHours?>">
                                          <?php echo $friTimeSlot ["unitName"]?><br>
+                                        <?php  if ($userRole == 1): ?>
                                          <?php echo $friTimeSlot ["name"] ?> <?php echo $friTimeSlot['surname'] ?><br>
+                                         <?php else: ?>
+                                        <?php echo $friTimeSlot ["className"] ?>
+                                        <?php endif ?>
                                          <?php echo $friTimeSlot ["room"] ?>
                         </th>
                         <?php else: ?>

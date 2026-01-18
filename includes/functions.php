@@ -1150,6 +1150,35 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
+    
+       //Get Timetable Lecturer Slot
+    function getTimetableLecturerSlot($conn, $startTime,  $day, $lecturerId){    
+        $sql = "SELECT * FROM unit_timetable, class, unit  WHERE startTime = ? 
+                    AND day = ? AND unit_timetable.lecturerId = ?
+                    AND class.classId = unit_timetable.classId
+                    AND unit_timetable.unitId = unit.unitId";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load lecturer timetable slots.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "ssi",  $startTime,  $day, $lecturerId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+    }
+
 
 
     //User Roles for login

@@ -28,11 +28,15 @@
                         ];
                         
 
-$userType = $_SESSION['userRole'];
-$userId =  $_SESSION["userId"] ;
+$userRole = $_SESSION['userRole'];
+$userId =  $_SESSION["userId"];
 
+// Only students 
+if($userRole == 1){ 
 $userClass = getUserClass($conn, $userId);
 $classId = $userClass["classId"];
+}
+
 
 $monSlotNumber = 0;
 $tueSlotNumber = 0;
