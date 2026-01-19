@@ -197,16 +197,16 @@ if ($day> $lastDayOfMonth){
 $start=false; 
 }
 ?>
-  <?php $attedance = getStudentAttendanceStatus($conn, "$year-$month-$day", $studentId); ?>
-<div class="calendar-col">
+   <?php //$event = getCalendarEvent($conn, "$year-$month-$day"); ?>
+<div class="calendar-col event-noschool ">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
-   <?php foreach ($attedance as $lecture):?>
-    <?php $unit = getUnit($conn, $lecture["unitId"]);?>
-    <div class="small attendance-<?php echo $lecture["status"]?>">
-        <?php echo $unit["unitName"]; ?> - <?php echo $lecture["status"]; ?>
-    </div>
- <?php endforeach ?>
+   <?php if ($event): //show the event when there is 1?>
+    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
+ <?php endif; ?>
+ <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
+    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
+ <?php endif; ?>
      <?php $day=$day+1;?>
   <?php endif ?>
 </div>
