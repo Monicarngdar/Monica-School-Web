@@ -28,6 +28,53 @@ function submitForm(Id,action){
 }
 </script>
 
+<script>
+let formToSubmit = null; // Variable to store the form ID to be deleted
+
+function submitForm(Id, action) {
+    const form = document.getElementById('form' + Id);
+    form.action.value = action;
+
+    if (action === 'delete') {
+        // Store the form ID and show the Bootstrap Modal
+        formToSubmit = 'form' + Id;
+        const myModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        myModal.show();
+    } else {
+        // For 'edit' or 'unit', submit normally
+        form.submit();
+    }
+}
+
+
+// Logic for the "Yes" button inside the modal
+$(document).ready(function() {
+    $('#confirmDeleteBtn').click(function() {
+        if (formToSubmit) {
+            document.getElementById(formToSubmit).submit();
+        }
+    });
+});
+</script>
+<div class="modal fade" id="deleteModal" tabindex="-1" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this unit? <br>
+        All associated timetables, assignments and student grades will be deleted.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <div class="container user-register mt-5">
     <div class="row justify-content-center">
