@@ -1,6 +1,10 @@
 <?php 
     require_once "dbh.php";
     require_once "functions.php";
+    $lecturerAssignments = []; // solved bug when user reloads the page
+    $dueDate = "";
+   $taskTitle = "";
+   $taskDescription = "";
 
 if(isset($_GET["action"]) && $_GET["action"]=="list")
     {
@@ -33,9 +37,9 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
         exit();
     }
 
-        if(isset($_POST["action"]) && $_POST["action"] == "edit"){
-             $courses= getCourses($conn);
-             $assignment = getAssignment($conn, $_POST["id"]);
+ if(isset($_POST["action"]) && $_POST["action"] == "edit"){
+      $courses= getCourses($conn);
+      $assignment = getAssignment($conn, $_POST["id"]);
             
 
    $assignmentId  = $assignment ['assignmentId'];
@@ -46,6 +50,18 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
     $taskDescription = $assignment['taskDescription'];
     $maxMark = $assignment['maxMark'];
     $dueDate  =  $assignment['dueDate'];
+    $assignmentFile = getAssignmentFile($conn, $assignmentId);
+    if($assignmentFile){
+    $fileName = $assignmentFile["fileName"];
+    $originalFileName = $assignmentFile["originalFileName"];
+    $filePath = $assignmentFile["filePath"];
+    } else {
+    $fileName = "";
+    $originalFileName =  "";
+    $filePath = "";
+    }
+   
+
     //$assignmentFile = $assignment['assignmentFile'];//
 
   }
@@ -121,16 +137,12 @@ if (isset($_FILES['assignmentFile']) && $_FILES['assignmentFile']['error'] === U
         move_uploaded_file($fileTmpName, $uploadDir);
         deleteAssignmentFile ($conn, $assignmentId);
         saveAssignmentFile($conn, $assignmentId, $fileName, $newFileName, $uploadDir);
-
-
 }
      
    
       header("location: list-lecturer-assignments.php?success=true&action=list");   
       exit();
       }
-
-
 
 
 

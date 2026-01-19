@@ -91,31 +91,41 @@ function submitForm(Id,action){
                     <div class="mb-3">
                         <textarea name="taskDescription" class="form-control" rows="4"  disabled ><?php echo $taskDescription?></textarea>
                     </div>
+                        <?php if(!empty ($fileName)): ?>
+                            <div class="mb-3">
+                                <a href="<?php echo $filePath ?>" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                class="list-group-item list-group-item-action d-flex align-items-center py-3 border-light">
 
-                    <?php if(!empty ($fileName)): ?>
-                   <div class="mb-3">
-                            <a href="<?php echo $filePath ?>" 
-                            class="nav-link" 
-                            target="_blank" 
-                            rel="noopener noreferrer">
-                      <div>
-                           <h6 class="fw-bold">Assignment Brief: <?php echo $fileName ?></h6>
-                    </div>
-                </a>
-            </div>
-            <?php endif ?>
+                                    <div class="flex-grow-1">
+                                        <div class="text-dark fw-semibold mb-0">
+                                            Assignment Brief: <?php echo $fileName ?>
+                                        </div>
+                                        <span class="text-muted d-block small">
+                                            Click to View
+                                        </span>
+                                    </div>
+
+                                </a>
+                            </div>
+                        <?php endif ?>
 
             </form> 
 
-            <form action="student-assign-deadlines.php" method="post" id="fileForm" enctype="multipart/form-data" name="fileForm">
-                <input type="hidden" name ="assignmentId" value ="<?php echo $assignmentId ?>">
-                    <div class="mb-4">
-                        <div class="input-group">
-                            <input type="file" name="assignmentFile[]" multiple  class="form-control" id="assignmentFiles" >
-                             <button type="submit" name="action" id="uploadFiles" value ="uploadFiles" class="btn btn-primary px-4" disabled>Upload</button>
-                        </div>
+          <form action="student-assign-deadlines.php" method="post" id="fileForm" enctype="multipart/form-data" name="fileForm">
+         <input type="hidden" name="assignmentId" value="<?php echo $assignmentId ?>">
+            <div class="mb-4">
+                <div class="list-group-item border-light p-3">
+                    <div class="input-group">
+                        <input type="file" name="assignmentFile[]"multiple class="form-control" id="assignmentFiles">
+                        <button type="submit" name="action" id="uploadFiles" value="uploadFiles" class="btn btn-primary px-4" disabled>
+                            Upload
+                        </button>
                     </div>
-            </form>      
+                </div>
+            </div>
+        </form>
 
 
             <div class="card border-0 mb-4">
@@ -139,18 +149,27 @@ function submitForm(Id,action){
                 <input type="hidden" name ="filePath" value ="<?php echo $file["filePath"] ?>">
                 <input type="hidden" name ="fileId" value ="<?php echo $file["fileId"] ?>">
               
-                <div class="row mb-2 align-items-center">
-                    <div class="col-9 col-md-9">
-                        <ul style="list-style-type: disc; list-style-position: inside; margin: 0; padding: 0;">
-                            <li id="fileName" name="fileName" value = "" style="display: list-item;"><a href = "<?php echo $file["filePath"]?>" target="_blank" ><?php echo $file["originalFileName"]?></a></li>
-                        </ul>
-                    </div>            
-                <div class="col-3 col-md-3 text-center">
-                    <i class="fa-solid fa-trash-can" style="color: #dc3545; cursor: pointer;" onclick="submitForm(<?php echo $file ['fileId']; ?>, 'delete');"></i>
+             <div class="d-flex align-items-center justify-content-between mb-2 p-2 border rounded">
+
+        <!-- File link -->
+        <div class="flex-grow-1 me-3">
+            <a href="<?php echo $file["filePath"] ?>" target="_blank"  class="text-decoration-none d-block">
+                <div class="text-dark fw-semibold mb-0">
+                    <?php echo $file["originalFileName"] ?>
                 </div>
-            </div>
+                <span class="text-muted small d-block">
+                    Click to View
+                </span>
+            </a>
+        </div>
+
+        <!-- Trash icon next to file -->
+        <div class="col-3 text-center">
+            <i class="fa-solid fa-trash-can text-danger" style="cursor: pointer;" onclick="submitForm(<?php echo $file['fileId']; ?>, 'delete');"></i>
+             </div>
+         </div>
        </form>
-                <?php endforeach?> 
+     <?php endforeach?> 
                 
 
                 <form action="student-assign-deadlines.php" method="post" id="submit" enctype="multipart/form-data" name ="submit">
