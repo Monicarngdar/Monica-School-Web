@@ -1265,6 +1265,22 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     mysqli_stmt_close($stmt);
 }
 
+//Save Attendance
+    function saveAttendance($conn, $attendanceId, $status){
+    $sql = "UPDATE attendance SET status = ? WHERE attendanceId = ?";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../lecturer-attendance.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "si",  $status, $attendanceId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+
 
 
 

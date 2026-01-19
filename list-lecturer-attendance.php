@@ -7,6 +7,14 @@
    //Inforce lecturer only in this page
     ?>
 
+    <?php
+             if(isset($_GET["success"])) { 
+                 $message = "Attendance Marked Successfully";
+                 include "includes/show-success.php";
+            }
+      ?>
+
+
     <script>
     function submitForm(Id,action){
         

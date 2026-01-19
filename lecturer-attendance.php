@@ -5,6 +5,8 @@
   include "includes/header.php";
 ?>
 
+
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -16,6 +18,8 @@
                     <div class="card-body">
 
                         <form action="lecturer-attendance.php" method="post">
+                        <input type="hidden" name ="unitTimetableId" value ="<?php echo $unitTimetableId?>">
+                        
                         <div class="row mb-2">
                             <div class="col-6">
                                 <label class="fw-bold">Student Name:</label>
@@ -36,11 +40,11 @@
                                 </div>
 
                                 <div class="col-6">
-                                    <select name="status[<?php echo $attendance['userAccountId']; ?>]" class="form-select">
+                                    <select name="status[<?php echo $attendance['attendanceId']; ?>]" class="form-select">
                                         <option value="" selected disabled>Select Status</option>
-                                        <option value="present">Present</option>
-                                        <option value="absent">Absent</option>
-                                        <option value="late">Late</option>
+                                        <option value="present" <?php if ($attendance['status'] ==  "present" ) echo "selected" ?>>Present</option>
+                                        <option value="absent" <?php if ($attendance['status'] ==  "absent" ) echo "selected" ?>>Absent</option>
+                                        <option value="late"<?php if ($attendance['status'] ==  "late" ) echo "selected" ?>>Late</option>
                                     </select>
                                 </div>
                             </div>
@@ -48,7 +52,7 @@
 
                         <div class="text-end mt-4">
                             <button type="reset" class="btn btn-secondary me-2">CANCEL</button>
-                            <button type="submit" name="action" id="save" value="save" class="btn btn-primary px-4">SAVE</button>
+                            <button type="submit" name="submit" id="save" value="save" class="btn btn-primary px-4">SAVE</button>
                         </div>
                     </form>
                     </div>

@@ -107,6 +107,47 @@ This reinforces page of the proper user role,  This always get user from session
 ?>
 ```
 
+## Dynamic Web Application Techniques
+
+ ```php
+<?php foreach ($attendances as $attendance): ?>
+    <?php 
+        // Get the user profile linked to the attendance record
+        $profile = getUserProfile($conn, $attendance["userAccountId"]); 
+    ?>
+
+    <div class="row align-items-center mb-3">
+        <div class="col-6">
+            <p class="form-control-plaintext border-bottom pb-1 mb-0">
+                <?php echo $profile["name"]; ?> <?php echo $profile["surname"]; ?>
+            </p>
+        </div>
+
+        <div class="col-6">
+            <select name="status[<?php echo $attendance['userAccountId']; ?>]" class="form-select">
+                <option value="" selected disabled>Select Status</option>
+                <option value="present">Present</option>
+                <option value="absent">Absent</option>
+                <option value="late">Late</option>
+            </select>
+        </div>
+    </div>
+<?php endforeach; ?>
+```
+Explanation:
+* $attendances contains multiple attendance records retrieved from the database.
+* foreach loops through each record and outputs a row dynamically.
+* getUserProfile() retrieves the student’s details using their userAccountId.
+* The name="status[userId]" structure allows multiple attendance values to be submitted in one form.
+* This approach improves scalability and ensures the interface updates automatically when data changes.
+
+
+
+
+
+
+
+
 ### Profile 
 The profile shows depended on the roleId that has currenlty logged in.
 Shown Example as:

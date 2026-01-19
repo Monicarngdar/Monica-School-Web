@@ -23,11 +23,22 @@
         }
         $attendances = getDailyAttendance($conn, $unitTimetableId, $date); // getting the attendances again after inserting them
     }
-    
-
-
-
   }
+
+    //This trigger for the save attendance
+    if (isset($_POST['submit']) && $_POST ["submit"] == "save") 
+    {  
+    $stausList = $_POST['status'];
+    foreach(array_keys ($stausList) as $key){
+         // array keys will get a list of status from the form
+    saveAttendance($conn, $key, $stausList[$key]); //key is the attendanceId
+    }
+
+      header("location:  list-lecturer-attendance.php?success=true&action=list");   
+        exit();
+    }
+
+
 
 
 
