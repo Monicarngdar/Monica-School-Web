@@ -1280,6 +1280,26 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     mysqli_stmt_close($stmt);
 }
 
+// Get Student Attendance Status
+    function getStudentAttendanceStatus($conn, $date, $studentId){    
+        $sql = "SELECT * FROM attendance WHERE date = ?
+                    AND userAccountId = ?;";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load students status.</p>";
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "si", $date, $studentId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+            return $result;
+    }
 
 
 

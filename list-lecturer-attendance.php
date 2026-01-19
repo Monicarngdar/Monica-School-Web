@@ -1,10 +1,9 @@
 <?php 
     include "includes/functions.php";
-      lecturerPage(); 
+      lecturerPage();  //Inforce lecturer only in this page
    include "includes/attendance-inc.php";
-
     include "includes/header.php";
-   //Inforce lecturer only in this page
+  
     ?>
 
     <?php
