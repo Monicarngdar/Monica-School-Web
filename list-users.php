@@ -78,8 +78,11 @@ function submitForm(Id,action){
       <i class="fa-solid fa-pen" style="color: #007bff; cursor: pointer;" onclick="submitForm(<?php echo $user["userId"] ?>,'edit');" ></i>
     </div> 
     <div class="col-2 text-center">
+      <?php if($user["roleId"] != 3):?>
       <i class="fa-solid fa-book" style="color: #007bff; cursor: pointer;" onclick="submitForm(<?php echo $user["userId"] ?>,'unit');" ></i>
+      <?php endif ?>
     </div> 
+    
     <div class="col-2 text-center">
       <i class="fa-solid fa-x" style="color: #dc3545; cursor: pointer;" onclick="submitForm(<?php echo $user["userId"] ?>,'delete');"></i>
     </div>
