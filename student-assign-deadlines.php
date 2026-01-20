@@ -127,7 +127,7 @@ function submitForm(Id,action){
             </div>
         </form>
 
-
+       <?php if(mysqli_num_rows ($files)): ?>
             <div class="card border-0 mb-4">
                 <div class="card-header bg-white py-1">
                     <div class="row align-items-center">
@@ -140,6 +140,7 @@ function submitForm(Id,action){
                     </div>
                 </div>
                 <div class="list-group list-group-flush">
+            <?php endif ?> 
 
                 <?php foreach($files as $file):?>
               <form action="student-assign-deadlines.php" method="post" id="form<?php echo $file ['fileId']; ?>" enctype="multipart/form-data" name="fileList">
@@ -174,9 +175,17 @@ function submitForm(Id,action){
 
                 <form action="student-assign-deadlines.php" method="post" id="submit" enctype="multipart/form-data" name ="submit">
                <input type="hidden" name ="assignmentId" value ="<?php echo $assignmentId ?>">
+
+               <?php if(mysqli_num_rows ($files)): ?>
                <div class="text-center mt-3">
                     <button type="submit" name="action" id="submit" value="submit" class="btn btn-primary px-4">Submit Assignment</button>
                 </div>
+                <?php else: ?>
+
+                    <div class="text-center mt-3">
+                    <button type="submit" name="action" id="submit" value="submit" class="btn btn-secondary px-4" disabled>Submit Assignment</button>
+                </div>
+                <?php endif ?>
              </form>
 
                 </div>

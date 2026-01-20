@@ -24,6 +24,10 @@
                 $message = "Invalid Username";
                 include "includes/show-error.php";
             }
+             if (isset($_GET["userExists"])) {
+                $message = "User Already Exists, Please change the username";
+                include "includes/show-error.php";
+            }
              if (isset($_GET["invalidEmail"])) {
                 $message = "Invalid Email";
                  include "includes/show-error.php";

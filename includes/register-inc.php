@@ -31,6 +31,10 @@
             $error = $error."invalidUsername=true&";
         }
 
+        if(userExists($conn, $username)){
+            $error = $error."userExists=true&";
+        }
+
         if(invalidEmail($email)){
             $error = $error."invalidEmail=true&";
         }
