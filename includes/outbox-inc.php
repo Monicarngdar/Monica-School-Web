@@ -4,7 +4,9 @@
 
 if(isset($_GET["action"]) && $_GET["action"]=="list")
     {
-     $outbox = getOutbox($conn, $_SESSION["userId"]);
+    
+      $user = getUser($conn,$_SESSION["userId"]); // forcing userId from the session for security
+      $outbox = getOutbox($conn, $user["username"]);
        
     } 
 

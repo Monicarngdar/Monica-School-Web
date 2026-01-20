@@ -59,12 +59,6 @@ if (!isset($favourites)) {
                     onclick="submitForm(<?php echo $mail['messageId']; ?>, 'view');"
                     title="View Message"></i>
 
-                  <!-- Archive button -->
-                    <i class="fa-solid fa-box-archive"  
-                    style="color: #6c757d; cursor: pointer;" 
-                    onclick="submitForm(<?php echo $mail['messageId']; ?>, 'archive');"
-                    title="Archive Message"></i>
-
                     <!-- Unfavourite button -->
                    <i class="fa-solid fa-star"   
                     style="color: #FFD43B; cursor: pointer;" 

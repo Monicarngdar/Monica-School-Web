@@ -33,7 +33,7 @@
             </div>
 
             <div class="p-4 d-flex flex-column flex-grow-1">
-                <form class="d-flex flex-column flex-grow-1" action="includes/message-inc.php" method="post" >
+                <form class="d-flex flex-column flex-grow-1" action="includes/message-inc.php" method="post" enctype="multipart/form-data" >
                     <div class="mb-4 border-bottom">
                         <label class="small fw-bold text-muted">To:</label>
                         <input type="text"  name="recipients" class="form-control border-0 shadow-none p-0"  required=required>

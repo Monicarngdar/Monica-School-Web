@@ -1,6 +1,5 @@
-<?php include "includes/header.php"; ?>
 <?php include "includes/inbox-inc.php"; ?>
-
+<?php include "includes/header.php"; ?>
 
 <?php
 if (!isset($inbox)) {
@@ -57,7 +56,7 @@ function submitForm(Id,action){
                       <?php echo($mail['messageSubject']); ?>
                     </div>
                         <div class="col-3 text-muted">
-                        <?php echo($mail['username']); ?>
+                        <?php echo($mail['senderUsername']); ?>
                         </div>
                         <div class="col-3 text-muted small">
                         <?php echo date('M d, Y', strtotime($mail['sendDateTime'])); ?>
@@ -70,12 +69,6 @@ function submitForm(Id,action){
                     style="color: #007bff;; cursor: pointer;" 
                     onclick="submitForm(<?php echo $mail['messageId']; ?>, 'viewinbox');"
                     title="View Message"></i>
-
-                   <!-- Archive button -->
-                    <i class="fa-solid fa-box-archive"  
-                    style="color: #6c757d; cursor: pointer;" 
-                    onclick="submitForm(<?php echo $mail['messageId']; ?>, 'archive');"
-                    title="Archive Message"></i>
 
                 <!-- Favourites button -->
                     <i class="fa-solid fa-star"  

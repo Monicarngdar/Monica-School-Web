@@ -1,10 +1,15 @@
 <?php 
     require_once "dbh.php";
     require_once "functions.php";
+            if (session_status() !== PHP_SESSION_ACTIVE ) {
+             session_start();
+              }
 
 if(isset($_GET["action"]) && $_GET["action"]=="list")
     {
-         $inbox = getInbox($conn, $_SESSION["userId"]);
+        
+        $user = getUser($conn,$_SESSION["userId"]); // forcing userId from the session for security
+         $inbox = getInbox($conn, $user["username"]);
         
     } 
 

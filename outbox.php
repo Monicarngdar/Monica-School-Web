@@ -41,7 +41,7 @@ function submitForm(Id,action){
                 <div class="bg-white p-3">
                     <div class="row fw-bold border-bottom pb-2 mb-3 text-secondary">
                         <div class="col-4">Subject</div>
-                        <div class="col-3">From</div>
+                        <div class="col-3">To</div>
                         <div class="col-3">Date</div>
                         <div class="col-2">Actions</div> 
                     </div>
@@ -56,7 +56,7 @@ function submitForm(Id,action){
                       <?php echo($mail['messageSubject']); ?>
                     </div>
                         <div class="col-3 text-muted">
-                        <?php echo($mail['username']); ?>
+                        <?php echo($mail['recipientUsername']); ?>
                         </div>
                         <div class="col-3 text-muted small">
                         <?php echo date('M d, Y', strtotime($mail['sendDateTime'])); ?>
@@ -69,12 +69,6 @@ function submitForm(Id,action){
                     style="color: #007bff;; cursor: pointer;" 
                     onclick="submitForm(<?php echo $mail['messageId']; ?>, 'viewoutbox');"
                     title="View Message"></i>
-
-                   <!-- Archive button -->
-                    <i class="fa-solid fa-box-archive"  
-                    style="color: #6c757d; cursor: pointer;" 
-                    onclick="submitForm(<?php echo $mail['messageId']; ?>, 'archive');"
-                    title="Archive Message"></i>
 
                 <!-- Favourites button -->
                     <i class="fa-solid fa-star"  

@@ -35,7 +35,7 @@
    <!--When the user is logged in, the dashboard and email link would be shown -->
         <?php if (isset($_SESSION["username"])) {   ?>
             <a class="nav-link text-white mx-3 fw-semibold" href="calendar.php">Dashboard</a>
-            <a class="nav-link text-white fw-semibold" href="message.php">Emails</a>
+            <a class="nav-link text-white fw-semibold" href="inbox.php?action=list">Emails</a>
         <?php }  ?>
        
         
