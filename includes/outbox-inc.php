@@ -17,6 +17,16 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
         exit();
     } 
 
+   if(isset($_POST["action"]) && $_POST["action"] == "delete"){
+         //Always get user from session to prevent other users from seeing others messages by using inspect by the browser
+    $toUser = getUser ($conn, $_SESSION ['userId']);
+    deleteOutboxMessage($conn, $toUser ['username'], $_POST ['messageId']); 
+
+        header("location: outbox.php?action=list");   
+        exit();
+     }
+    
+
 
 
 ?>

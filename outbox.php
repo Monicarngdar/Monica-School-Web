@@ -62,19 +62,13 @@ function submitForm(Id,action){
                         <?php echo date('M d, Y', strtotime($mail['sendDateTime'])); ?>
                     </div>
 
-                <div class="col-2 d-flex justify-content-center align-items-center gap-2">
+                  <div class="col-2 d-flex gap-2">
 
                 <!-- View button -->
                     <i class="fa-solid fa-envelope-open" 
                     style="color: #007bff;; cursor: pointer;" 
                     onclick="submitForm(<?php echo $mail['messageId']; ?>, 'viewoutbox');"
                     title="View Message"></i>
-
-                <!-- Favourites button -->
-                    <i class="fa-solid fa-star"  
-                    style="color: #FFD43B; cursor: pointer;" 
-                    onclick="submitForm(<?php echo $mail['messageId']; ?>, 'favourite');"
-                    title="Favourite Message"></i>
                                                 
                 <!-- Delete button -->
                     <i class="fa-solid fa-trash"  

@@ -595,9 +595,9 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     }
 
     //Get Inbox
-    function getInbox($conn, $username){    
+    function getInbox($conn, $username, $favourite){    
         $sql = "SELECT * FROM message
-                     WHERE receiverUsername = ? ;";
+                     WHERE receiverUsername = ? AND isFavourite = ?;";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -605,7 +605,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
             echo "<p>We have an error - Could not load inbox.</p>";
             exit();
         }
-        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_bind_param($stmt, "ss", $username, $favourite);
         
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
@@ -702,6 +702,23 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
+
+            //Save Favourite Message
+          // Enforcing the login username for security reasons
+    function saveFavouriteMessage($conn, $username, $messageId, $favouriteStatus){
+    $sql = "UPDATE message SET isFavourite = ? WHERE messageId = ? AND receiverUsername = ?";
+ 
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../favourites.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "iis",   $favouriteStatus, $messageId, $username);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
         // Get Enrolled Course
     function getEnrolledCourse($conn, $userId){    
         $sql = "SELECT * FROM enrolment WHERE userAccountId = ?;";
@@ -725,6 +742,40 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         else{
             return 0;
         }
+    }
+
+       //Delete Message
+    function deleteMessage($conn, $username, $messageId){
+        $sql = "DELETE FROM message WHERE messageId = ? AND receiverUsername = ?;";
+
+       $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../inbox.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "is", $messageId, $username);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+       //Delete Outbox Message
+    function deleteOutboxMessage($conn, $username, $messageId){
+        $sql = "DELETE FROM messageoutbox WHERE messageId = ? AND senderUsername = ?;";
+
+       $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../outbox.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "is", $messageId, $username);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
     }
 
         //Add Enrolment

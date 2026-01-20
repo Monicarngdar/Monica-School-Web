@@ -62,7 +62,7 @@ function submitForm(Id,action){
                         <?php echo date('M d, Y', strtotime($mail['sendDateTime'])); ?>
                     </div>
 
-                <div class="col-2 d-flex justify-content-center align-items-center gap-2">
+                <div class="col-2 d-flex gap-2">
 
                 <!-- View button -->
                     <i class="fa-solid fa-envelope-open" 
