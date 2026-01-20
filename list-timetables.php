@@ -15,6 +15,7 @@ function submitForm(Id,action){
 }
 </script>
 
+<div style="overflow-x: hidden;">
 <?php
              if(isset($_GET["success"])) { 
                  $message = "Timetable Saved Successfully";
@@ -28,6 +29,54 @@ function submitForm(Id,action){
                  include "includes/show-success.php";
             }
       ?>
+  </div>
+
+      <script>
+let formToSubmit = null; // Variable to store the form ID to be deleted
+
+function submitForm(Id, action) {
+    const form = document.getElementById('form' + Id);
+    form.action.value = action;
+
+    if (action === 'delete') {
+        // Store the form ID and show the Bootstrap Modal
+        formToSubmit = 'form' + Id;
+        const myModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        myModal.show();
+    } else {
+        // For 'edit' or 'unit', submit normally
+        form.submit();
+    }
+}
+
+
+// Logic for the "Yes" button inside the modal
+$(document).ready(function() {
+    $('#confirmDeleteBtn').click(function() {
+        if (formToSubmit) {
+            document.getElementById(formToSubmit).submit();
+        }
+    });
+});
+</script>
+<div class="modal fade" id="deleteModal" tabindex="-1" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this timetable? <br>
+        This timetable entry will be removed for all students and lecturers.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

@@ -68,7 +68,7 @@ function submitForm(Id,action){
        <div class="col-2 text-center">
         <?php if(!isAssignmentSubmitted($conn, $userId, $assignments["assignmentId"])):?>
       <i class="fa-solid fa-upload" style="color: #007bff;; cursor: pointer;" onclick="submitForm(<?php echo $assignments["assignmentId"] ?>,'upload');"></i>
-    
+     <?php else: ?>  <div class = "fw-bold text-success">Done</div>
     <?php endif?>
 </div>
     

@@ -115,6 +115,27 @@ lecturerPage() //Inforce lecturer in this page
                         </div>
                     </div>
 
+                    <?php if(!empty ($originalFileName)): ?>
+            <div class="mb-4">
+                <a href="<?php echo $filePath ?>" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="list-group-item list-group-item-action d-flex align-items-center py-3 border-light">
+                    
+                    <div class="flex-grow-1">
+                        <div class="text-dark fw-semibold mb-0">
+                            Assignment Brief: <?php echo $originalFileName ?>
+                        </div>
+                        <span class="text-muted d-block" style="font-size: 0.6rem;">
+                            Click to View
+                        </span>
+                    </div>
+
+                </a>
+            </div>
+        <?php endif ?>
+            
+
                     <div class="text-end">
                         <button type="reset" class="btn btn-secondary me-2">CANCEL</button>
                         <button type="submit" name="action" id="save" value ="save" class="btn btn-primary px-4">SAVE</button>
