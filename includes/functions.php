@@ -743,7 +743,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
         // Get Enrolled Course
     function getEnrolledCourse($conn, $userId){    
-        $sql = "SELECT * FROM enrolment WHERE userAccountId = ?;";
+        $sql = "SELECT * FROM enrolment WHERE userAccountId = ?"; 
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -1062,7 +1062,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
          // Function to get user by class
     function getUserClass($conn, $studentId){    
-        $sql = "SELECT * FROM class_student WHERE studentId = ?;";
+        $sql = "SELECT * FROM class_student, class WHERE studentId = ? AND class_student.classId = class.classId;"; //get also the class name
 
         $stmt = mysqli_stmt_init($conn);
 

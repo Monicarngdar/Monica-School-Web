@@ -6,10 +6,21 @@
          header("location: login.php");   
          exit();
       }
+
+      $courseName = "";
+      $className = "";
      
  $user = getUser($conn, $_SESSION["userId"]);
  $userProfile = getUserProfile($conn, $_SESSION["userId"]);
-
+ $class = getUserClass($conn, $_SESSION["userId"]);
+ if($class){
+    $className = $class["className"];
+    }
+ $courseId = getEnrolledCourse($conn, $_SESSION["userId"]);
+ if($courseId) {
+ $course = getCourse($conn, $courseId);
+ $courseName = $course["courseName"];
+ }
 
     $username = $user['username'];
     $password = $user['password'];

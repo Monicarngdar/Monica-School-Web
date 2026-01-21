@@ -59,7 +59,8 @@ if (!isset($_SESSION["userId"])) {
             <h4 class="mt-3 mb-0">Admin</h4>
         <?php endif ?>
       
-    <p class="text-muted"><?php echo $username; ?></p>    
+    <h6 class="text-muted"><?php echo $username; ?></h6>    
+    <div><h6 class="text-muted"><?php echo $courseName; ?> <?php echo $className ?></h6> </div>
 </div>
 
     <div class="row">
@@ -73,12 +74,10 @@ if (!isset($_SESSION["userId"])) {
              <input type="text" name="surname"placeholder="Surname"  value="<?php echo $surname ?>" disabled class="form-control mb-3">
              <input type="email" name="email" placeholder="Email" value="<?php echo $email ?>" disabled class="form-control mb-3">
              <input type="date"  name="date_of_birth"  placeholder= "Date of Birth" value="<?php echo $date_of_birth ?>" disabled class="form-control mb-3">
-             <input type="className"  name="className"  placeholder= "Class Name" value="" disabled class="form-control mb-3">
 </div>
 
 
     <div class="col-md-6">
-          <input type="courseName"  name="courseName"  placeholder= "Course Name" value="" disabled class="form-control mb-3">
           <input type="text" id="street1" name="street1" placeholder="Street 1"  value="<?php echo $street1 ?>" disabled class="form-control mb-3">
           <input type="text" id="street2" name="street2"  placeholder="Street 2"value="<?php echo $street2 ?>" disabled class="form-control mb-3">
           <input type="text" id="city" name="city" placeholder="City"value="<?php echo $city ?>" disabled class="form-control mb-3">

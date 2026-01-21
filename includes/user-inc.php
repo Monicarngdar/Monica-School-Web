@@ -2,6 +2,11 @@
  require_once "dbh.php";
  require_once "functions.php";
 
+   if (!isset($_POST['submit'])&& !isset($_REQUEST ["action"])) {   // this will enforce the user to get redirected to the list page when there is no form data
+             header("location: list-users.php?action=list");
+            exit();
+   }
+
   if(isset($_GET["action"]) && $_GET["action"]=="list")
     {
          $users = getUsers($conn);
@@ -65,33 +70,9 @@
       header("location:  ../list-users.php?success=true&action=list");   
         exit();
 }
-/*
-//This condition will trigger when there is an error in the save page
-  if(isset($_GET["action"]) && $_GET["action"] == "edit"){
-    $user = getUser($conn, $_GET["id"]);
-    $profile = getUserProfile($conn, $_GET["id"]);
-  
-    $userId =  $user ['userId'];
-    $username =  $user ['username'];
-    $password =  $user['password'];
-    $roleId =  $user['roleId'];
-    $name =  $profile['name'];
-    $surname =  $profile['surname'];
-    $email =   $profile['email'];
-    $date_of_birth =  $profile['date_of_birth'];
-    $street1 =  $profile['street1'];
-    $street2 = $profile['street2'];
-    $city =  $profile['city'];
-    $postCode = $profile['postCode'];
-    $pageTitle = "Edit User";
-    $courses = getCourses($conn);
-    $courseId = getEnrolledCourse($conn, $_GET["id"]);
-    $action ="save";
-    }
-*/
 
 //This condition will trigger when the user will click edit from the list page
-// chnaged from $_POST to $_REQUEST to avoid duplicate code when redirected with errors
+// changed from $_POST to $_REQUEST to avoid duplicate code when redirected with errors
   if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "edit"){
 
     $user = getUser($conn, $_REQUEST["id"]);
@@ -202,7 +183,7 @@ if($roleId == 1) {
    }
 
 
-
+   
 
 
 ?>
