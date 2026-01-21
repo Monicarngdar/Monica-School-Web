@@ -108,6 +108,33 @@ This reinforces page of the proper user role,  This always get user from session
 ```
 
 ## Dynamic Web Application Techniques
+To show the list. 
+
+ ```php
+ <?php foreach($studentAssignments as $assignments):?>
+<form action="student-assign-deadlines.php" method="post" id="form<?php echo $assignments["assignmentId"] ?>" class="mt-4">
+  <div class="row align-items-center mb-3 border-bottom pb-2">
+    <input type="hidden" name = "id" value="<?php echo  $assignments["assignmentId"] ?>" >
+   <input type="hidden" name = "action" id ="action" value="">
+
+<div class="col-3">
+    <?php echo $assignments["courseName"]; ?>
+</div>
+
+<div class="col-3">
+    <?php echo $assignments["unitName"]; ?>
+</div>
+
+<div class="col-2">
+    <?php echo $assignments["taskTitle"]; ?>
+</div>
+
+<div class="col-2">
+    <?php echo $assignments["dueDate"]; ?>
+</div>
+```
+
+To get the attendance status
 
  ```php
 <?php foreach ($attendances as $attendance): ?>
@@ -140,11 +167,6 @@ Explanation:
 * getUserProfile() retrieves the student’s details using their userAccountId.
 * The name="status[userId]" structure allows multiple attendance values to be submitted in one form.
 * This approach improves scalability and ensures the interface updates automatically when data changes.
-
-
-
-
-
 
 
 
@@ -197,7 +219,7 @@ This include file **message-menu-inc.php**  that can be asily be includes on all
     <?php include "includes/message-menu-inc.php"; ?>
  ```
 ```php
- <div class="col-12 col-md-3 p-0" style="background-color:#8296A3;">
+    <div class="col-12 col-md-3 p-0" style="background-color:#8296A3;">
             <div class="list-group list-group-flush">
                 <a href="message.php" class="list-group-item text-white py-3 email-item">
                     <i class="fa-solid fa-pen-to-square me-2"></i>Compose
@@ -208,10 +230,7 @@ This include file **message-menu-inc.php**  that can be asily be includes on all
                     <a href="outbox.php?action=list" class="list-group-item text-white py-3 email-item">
                     <i class="fa-solid fa-box me-2"></i> Outbox 
                 </a>
-                <a href="archives.php" class="list-group-item text-white py-3 email-item">
-                    <i class="fa-solid fa-box-archive me-2"></i> Archives
-                </a>
-                <a href="favourites.php" class="list-group-item text-white py-3 email-item">
+                <a href="favourites.php?action=favourites" class="list-group-item text-white py-3 email-item">
                     <i class="fa-solid fa-star me-2"></i> Favourites
                 </a>
             </div>
@@ -233,7 +252,6 @@ This always get user from session to prevent other users from seeing others mess
     $message = $message['messageBody'];
      }
 ```
-
 
 
 ## Admin Dashboard

@@ -71,8 +71,8 @@ function submitForm(Id,action){
                     title="View Message"></i>
 
                 <!-- Favourites button -->
-                    <i class="fa-solid fa-star"  
-                    style="color: #FFD43B; cursor: pointer;" 
+                    <i class="fa-regular fa-star"  
+                    style="color: #ffc800; cursor: pointer;" 
                     onclick="submitForm(<?php echo $mail['messageId']; ?>, 'favourite');"
                     title="Favourite Message"></i>
                                                 

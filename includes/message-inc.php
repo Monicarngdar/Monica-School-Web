@@ -17,10 +17,14 @@
     $recipients= validateRecipients($conn, $recipients); //eventually we could get all users or course users or class users
  
     $sender = getUser($conn, $_SESSION["userId"]);
+    $file = validateMessageAttachment();
 
      createMessage($conn, $sender["username"], $recipients, $subject, $messageBody, $file);
 
-      header("location: ../inbox.php?action=list&success=true");   
+
+     //To upload a file
+   
+       header("location: ../inbox.php?action=list&success=true");   
         exit();
     
 }
@@ -35,7 +39,8 @@
     $to = $toUser['username'];
     $subject= $message['messageSubject'];
     $date= $message['sendDateTime'];
-    $message = $message['messageBody'];
+    $messageBody = $message['messageBody'];
+    $attachment = $message['attachment'];
      }
 
      
@@ -48,8 +53,12 @@
     $to = $message['recipientUsername'];
     $subject= $message['messageSubject'];
     $date= $message['sendDateTime'];
-    $message = $message['messageBody'];
+    $messageBody = $message['messageBody'];
+    $attachment = $message['attachment'];
      }
+
+
+
 
 
 

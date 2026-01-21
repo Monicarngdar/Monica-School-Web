@@ -55,11 +55,10 @@
                     <input type="file" name="file" id="file" class="form-control" style="border-color:#2787B4;">
                 </div>
             </div>
-                </form>
-            </div>
-        </div>
-
-    </div>
+        </form>
+     </div>
+ </div>
+</div>
 </main>
 
 <?php include "includes/footer.php"; ?>

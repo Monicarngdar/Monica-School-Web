@@ -202,16 +202,23 @@ html, body {
  
     /* Student Attendance Colours */
 .attendance-present   {
-  background: #50b350;
+   background: #50b350d9;
    color: white;
+   border-radius: 6px;
+   text-align: center;
+
 }
 .attendance-absent    { 
-    background: #ba212b;
+    background: #ba212be6;
     color: white;
+    border-radius: 6px;
+    text-align: center;
 }
 .attendance-late { 
-    background: #ef6c00; 
+   background: #ef6c00e6;
     color: white;
+    border-radius: 6px;
+    text-align: center;
 }
 
 

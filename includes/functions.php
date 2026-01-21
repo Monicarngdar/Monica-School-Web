@@ -511,7 +511,17 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 //Email Screen
 //Create a Message
     function createMessage($conn, $senderUsername, $recipients , $subject, $messageBody, $file ){
-    $sql = "INSERT INTO messageoutbox (senderUsername, messageSubject, messageBody, sendDateTime)VALUES (?, ?, ?, NOW())";
+    $attachment = "";
+    if ($file){
+        $fileName = $_FILES["file"]["name"];
+        $fileTmpName = $_FILES["file"]["tmp_name"];
+        $fileExt = $extension = pathinfo($fileName, PATHINFO_EXTENSION); // this is a better way to get an extension of a file
+        $newFileName = uniqid($senderUsername."-".$fileName,true).".".$fileExt;
+        $attachment = "messageAttachments/".$newFileName;
+       
+    }
+
+    $sql = "INSERT INTO messageoutbox (senderUsername, messageSubject, messageBody, sendDateTime, attachment)VALUES (?, ?, ?, NOW(), ?)";
     
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -520,11 +530,13 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         exit();
     }
 
-    mysqli_stmt_bind_param($stmt, "sss", $senderUsername, $subject, $messageBody);
+    mysqli_stmt_bind_param($stmt, "ssss", $senderUsername, $subject, $messageBody, $attachment);
     mysqli_stmt_execute($stmt);
+    if ($file) {
+        copy($fileTmpName,'../'.$attachment); // put the attachment in the proper folder 
+    } 
+     
     $messageId=mysqli_insert_id($conn);
-
-
 
     foreach($recipients as $recipientUsername){
          $sql2 = "INSERT INTO recipient (messageId, recipientUsername) VALUES (?, ?)";
@@ -535,13 +547,22 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
        mysqli_stmt_bind_param($stmt, "is", $messageId, $recipientUsername);
        mysqli_stmt_execute($stmt);
 
-         $sql3 = "INSERT INTO message (senderUsername, receiverUsername, messageSubject, messageBody, sendDateTime)VALUES (?, ?, ?, ?, NOW())";
+         $sql3 = "INSERT INTO message (senderUsername, receiverUsername, messageSubject, messageBody, sendDateTime, attachment)VALUES (?, ?, ?, ?, NOW(), ?)";
          if (!mysqli_stmt_prepare($stmt, $sql3)) {
             header("location: ../message.php?error=stmtfailed");
             exit();
         }
-       mysqli_stmt_bind_param($stmt, "ssss", $senderUsername, $recipientUsername, $subject, $messageBody);
+        if($file){
+        $newFileName = uniqid($recipientUsername."-".$fileName,true).".".$fileExt;
+        $attachment = "messageAttachments/".$newFileName;
+        }
+
+       mysqli_stmt_bind_param($stmt, "sssss", $senderUsername, $recipientUsername, $subject, $messageBody, $attachment);
        mysqli_stmt_execute($stmt);
+
+        if ($file) {
+        copy($fileTmpName,'../'.$attachment); // put the attachment in the proper folder 
+    } 
 
      } //end foreach
 
@@ -655,6 +676,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     function getMessageInbox($conn, $username, $messageId){
         $sql = "SELECT * FROM message
                     WHERE receiverUsername= ? AND messageId = ?";
+                   
         $stmt = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -777,6 +799,45 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
+
+
+// To upload a file 
+    function validateMessageAttachment(){
+
+    
+    if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK){
+
+        $fileName = $_FILES["file"]["name"];
+        $fileTmpName = $_FILES["file"]["tmp_name"];
+        $fileSize = $_FILES["file"]["size"];
+        $fileError = $_FILES["file"]["error"];
+        $fileType = $_FILES["file"]["type"];
+
+        $allowed = array("pdf", "jpg", "jpeg", "png", "txt", "docx", "pptx", "xlsx");
+        $fileTypeArray = explode(".",$fileName);
+        $fileExtActual = end($fileTypeArray);
+        $fileExt = strtolower($fileExtActual);
+
+        if(!in_array($fileExt, $allowed)){
+            header("location: ../message.php?error=filetype");
+            exit();
+        }
+
+        if($fileError!=0){
+            header("location: ../message.php?error=fileUpload");
+            exit();
+        }
+
+        if($fileSize > 1000000000){
+       
+            header("location: ../message.php?error=fileSize");
+            exit();
+        }
+         return true;
+
+    }
+     return false;
+}
 
         //Add Enrolment
     function addEnrolment($conn, $userId, $courseId){
