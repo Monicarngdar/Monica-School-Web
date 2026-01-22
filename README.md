@@ -12,11 +12,11 @@ MYSKOLAR is a school management system built with PHP scripts and MySQL for data
 ## Installation Instructions
 * It is assumed that XAMPP for windows is installed. 
 * Start Apache and MySql Database.
-* Create a new Database. Example: 2025-schoolweb.
-* Import 2025-schoolweb.sql into the database that was created.
 * Myskolar repository is https://github.com/Monicarngdar/Monica-School-Web/
 * Add the myskolar repository in the XAMPP/htdocs folder.
-* Confirgure the database confirguation file: includes/dbh.php.
+* Create a new Database uing **phpmyadmin**. Example: 2025-schoolweb.
+* Import databaseExport/2025-schoolweb.sql into the database that was created.
+* Check and configure the database configuration file: includes/dbh.php.
 * Load the website using http://localhost:8080/Monica-School-Web/
 * The website URL could be different if the repository was placed in a different folder ot XAMPP is confirgured in a different path. 
 * Log in to the site using one of the login info above. 
