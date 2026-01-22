@@ -6,12 +6,14 @@
     lecturerPage() //Inforce lecturer  only in this page
 ?>
 
+<div style="overflow-x: hidden;">
 <?php
              if(isset($_GET["success"])) { 
                  $message = "Assignment Graded Successfully";
                  include "includes/show-success.php";
             }
       ?>
+</div>
 
 <script>
 function submitForm(Id,action){

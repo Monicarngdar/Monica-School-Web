@@ -14,6 +14,7 @@
 
     //This trigger for the save a user
     if (isset($_POST['submit'])&& $_POST ["action"] == "save") {  
+
     $userId =  $_POST['userId'];
     $username =  $_POST['username'];
     $password =  $_POST['password'];
@@ -57,6 +58,11 @@
 
     saveProfileAdmin($conn, $userId, $name, $surname, $email, $date_of_birth, $street1, $street2, $city, $postCode);
     saveAccountAdmin($conn, $userId, $username);
+    if(!empty($password)){
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        updatePassword($conn, $userId, $hashedPassword);
+    }
+
     deleteEnrolment($conn, $userId);
      if(!empty ($courseId)){
     addEnrolment($conn, $userId, $courseId);

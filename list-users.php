@@ -108,6 +108,7 @@ $(document).ready(function() {
       </span>
   </div>
 
+   <!--To echo the user roles in the list-->
     <div class="col-3">
       <span class="text-muted fw-bold" >
       <?php if ($user["roleId"] == 1) {

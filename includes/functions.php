@@ -241,8 +241,8 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
 
     //Update user profile password
-        function updatePassword($conn, $userId, $passwordl){
-            $sql = "UPDATE user_account SET password = ?, WHERE userId = ?;";
+        function updatePassword($conn, $userId, $password){
+            $sql = "UPDATE user_account SET password = ? WHERE userId = ?;";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -250,7 +250,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
             echo "<p>We have an error - Could not set password.</p>";
             exit();
         }
-        mysqli_stmt_bind_param($stmt, "i", $userId);
+        mysqli_stmt_bind_param($stmt, "si", $password,  $userId);
         
         mysqli_stmt_execute($stmt);
 

@@ -16,12 +16,14 @@ function submitForm(Id,action){
 }
 </script>
 
+<div style="overflow-x: hidden;">
 <?php
              if(isset($_GET["success"])) { 
                  $message = "Assignment Submitted Successfully";
                  include "includes/show-success.php";
             }
       ?>
+</div>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <div class="container user-register mt-5">
@@ -33,6 +35,7 @@ function submitForm(Id,action){
                     <h2 class="text-center mb-5">Assignments</h2>
                 </div>
             </div>
+            
 
   <div class="row fw-bold border-bottom pb-2 mb-3">
   <div class="col-3 text-left">Course</div>

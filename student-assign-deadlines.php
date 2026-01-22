@@ -16,7 +16,7 @@ function submitForm(Id,action){
 
 </script>
 
-
+<div style="overflow-x: hidden;">
       <?php
              if(isset($_GET["deleted"])) { 
                  $message = "Assignment Deleted Successfully";
@@ -44,7 +44,7 @@ function submitForm(Id,action){
                  include "includes/show-error.php";
             }
       ?>
-
+</div>
 
 
 

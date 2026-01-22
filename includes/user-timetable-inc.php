@@ -2,6 +2,7 @@
     require_once "dbh.php";
     require_once "functions.php";
 
+    // time slots every 30 minutes
       $slots = [
                             "08:00 - 08:30",
                             "08:30 - 09:00",

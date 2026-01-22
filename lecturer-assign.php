@@ -29,9 +29,8 @@ lecturerPage() //Inforce lecturer in this page
 
 
       
-
+<!--JS to select course-->
 <script>
-
         $(document).ready(function() {
         $('#courseIdSelected').on('change', function() {
             var selectedCourse = $(this).children("option:selected").val();
@@ -40,7 +39,6 @@ lecturerPage() //Inforce lecturer in this page
             document.forms["unitForm"].submit();
         });
         });
-
 </script>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
