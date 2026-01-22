@@ -21,9 +21,6 @@
 
      createMessage($conn, $sender["username"], $recipients, $subject, $messageBody, $file);
 
-
-     //To upload a file
-   
        header("location: ../inbox.php?action=list&success=true");   
         exit();
     

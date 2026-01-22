@@ -53,6 +53,10 @@ if(isset($_GET["action"]) && $_GET["action"]=="list")
        if(isset($_POST["action"]) && $_POST["action"] == "delete"){
          //Always get user from session to prevent other users from seeing others messages by using inspect by the browser
     $toUser = getUser ($conn, $_SESSION ['userId']);
+    $message = getMessageInbox($conn, $toUser["username"], $_POST ['messageId']); // geting the message to delete its attachment file
+     if(!empty($message ["attachment"])){
+        unlink($message ["attachment"]); 
+    }
     deleteMessage($conn, $toUser ['username'], $_POST ['messageId']); 
 
         header("location: inbox.php?action=list");   

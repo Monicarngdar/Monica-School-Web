@@ -61,7 +61,7 @@ function submitForm(Id,action){
     </div>
 
 <?php //If the lecturer already these assignment show the marks else show the edit button?>
-  <?php $grade = getGrade($conn, $grading["assignmentId"] )?>
+  <?php $grade = getGrade($conn, $grading["assignmentId"],$grading["studentId"] )?>
   <?php if ($grade): ?> 
    <div class="col-1 text-center">
   <?php echo ($grade['marksEarned']); ?>

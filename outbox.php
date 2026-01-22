@@ -1,6 +1,5 @@
-<?php include "includes/header.php"; ?>
 <?php include "includes/outbox-inc.php"; ?>
-
+<?php include "includes/header.php"; ?>
 
 <?php
 if (!isset($outbox)) {

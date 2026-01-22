@@ -699,7 +699,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     }
 
         //Get Message Outbox. These need to be separated 
-    function getMessageOutbox($conn, $userId, $messageId){
+    function getMessageOutbox($conn, $username, $messageId){
         $sql = "SELECT * FROM messageoutbox, recipient 
                     WHERE senderUsername= ?  and messageoutbox.messageId = ? and recipient.messageId = messageoutbox.messageId;";
 
@@ -710,7 +710,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
             exit();
         }
 
-        mysqli_stmt_bind_param($stmt, "ii", $userId, $messageId);
+        mysqli_stmt_bind_param($stmt, "si", $username, $messageId);
         mysqli_stmt_execute($stmt);
 
         $result = mysqli_stmt_get_result($stmt);
@@ -1765,7 +1765,9 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 //Get Lecturer Grading Assignments
     function getGradingAssignments($conn, $userId){
       
-        $sql = "SELECT * FROM submission, assignments, user_profile, unit WHERE assignments.userId = ? and submission.assignmentId = assignments.assignmentId and submission.studentId = user_profile.userId and assignments.unitid = unit.unitid;";
+        $sql = "SELECT * FROM submission, assignments, user_profile, unit
+                    WHERE assignments.userId = ? and submission.assignmentId = assignments.assignmentId 
+                    and submission.studentId = user_profile.userId and assignments.unitid = unit.unitid;";
         $stmt = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -1821,9 +1823,9 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 }
 
 //Get Grade
-    function getGrade($conn, $assignmentId){    
+    function getGrade($conn, $assignmentId,$studentId){    
   
-        $sql = "SELECT * FROM grades WHERE assignmentId = ?;";
+        $sql = "SELECT * FROM grades WHERE assignmentId = ? and userAccountId=?;"; //useraccountid is the student. 
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -1831,7 +1833,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
             echo "<p>We have an error - Could not load assignment grades.</p>";
             exit();
         }
-        mysqli_stmt_bind_param($stmt, "i", $assignmentId);
+        mysqli_stmt_bind_param($stmt, "ii", $assignmentId, $studentId);
         
         mysqli_stmt_execute($stmt);
 
@@ -1993,6 +1995,51 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
+//Delete attachments
+function deleteAllMessages($conn, $username){
+
+    $messages = getInbox($conn, $username, 0); //not favourite messages
+   foreach ($messages as $message){
+    if(!empty($message ["attachment"])){
+        unlink($message ["attachment"]);      
+    }
+   }
+
+       $messages = getInbox($conn, $username, 1); // favourite messages
+   foreach ($messages as $message){
+    if(!empty($message ["attachment"])){
+        unlink($message ["attachment"]);      
+    }
+   }
+
+       $messages = getOutbox($conn, $username); 
+   foreach ($messages as $message){
+    if(!empty($message ["attachment"])){
+        unlink($message ["attachment"]);      
+    }
+   }
+       //Delete Inbox 
+       $sql = "DELETE FROM message WHERE  receiverUsername = ?;";
+       $stmt = mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../inbox.php?error=stmtfailed");
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_execute($stmt);
+
+              //Delete Outbox
+       $sql = "DELETE FROM messageoutbox WHERE senderUsername = ?;";
+       $stmt = mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../outbox.php?error=stmtfailed");
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_execute($stmt);
+
+
+}
 
 
 

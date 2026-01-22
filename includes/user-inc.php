@@ -108,6 +108,8 @@
     //Delete a user
     if(isset($_POST["action"]) && $_POST["action"] == "delete"){
        $userId = $_POST['id'];
+       $user = getUser($conn, $userId);
+       deleteAllMessages($conn, $user["username"]);
        deleteUser($conn, $userId);
         header("location: list-users.php?deleted=true&action=list");   
         exit();

@@ -4,6 +4,11 @@ Php & Databases - MySkolar
 ## Overview
 MYSKOLAR is a school management system built with PHP scripts and MySQL for data management. This manages students, lecturers, courses, units, grades, attendance, and messages. The system simplifies and digitises academic workflows, enabling students, lecturers, and administrators to interact efficiently through a web interface.
 
+## Log in INFO for testing
+* Admin: **username**: adminuser **password**:  123456
+* Lecturer: **username**: zoelecturer **password**: 123456
+* Student: **username**: kiarastudent **password**: 123456
+
 ## Functions and Database Handler
 * Created a functions.php to handle 
 * Created a dbh.php to handle the database handler to connect through the database.
