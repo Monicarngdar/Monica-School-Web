@@ -143,7 +143,7 @@
                                          <?php else: ?>
                                         <?php echo $wedTimeSlot ["className"] ?>
                                         <?php endif ?>
-                                         <?php echo $wedTimeSlot ["room"] ?>>
+                                         <?php echo $wedTimeSlot ["room"] ?>
                         </th>
                         <?php else: ?>
                             <?php if ($wedSlotNumber<$wedHalfHours):?>

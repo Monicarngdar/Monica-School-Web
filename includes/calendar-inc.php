@@ -1,13 +1,11 @@
 <?php 
 
-
 /* -----CALENDAR CALCULATIONS-------*/
 if (!empty($_GET['date'])){
 $date = date_create($_GET['date']);
 }else{
 $date = date_create("now");
 }
-
 
 /* First start with calculating the amount of weeks to show in calendar. Some month could be 4,5 or 6 depending on the year and days in month.*/
 $month=date_format($date,'m');

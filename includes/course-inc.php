@@ -2,6 +2,11 @@
     require_once "dbh.php";
     require_once "functions.php";
 
+      if (!isset($_POST['submit'])&& !isset($_REQUEST ["action"])) {   // this will enforce the user to get redirected to the list page when there is no form data
+             header("location: list-courses.php?action=list");
+            exit();
+   }
+
     if(isset($_GET["action"]) && $_GET["action"]=="list")
     {
          $courses = getCourses($conn);

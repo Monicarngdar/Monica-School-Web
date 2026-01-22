@@ -59,14 +59,15 @@ if (!isset($_SESSION["userId"])) {
             <h4 class="mt-3 mb-0">Admin</h4>
         <?php endif ?>
       
-    <p class="text-muted"><?php echo $username; ?></p>    
+    <h6 class="text-muted"><?php echo $username; ?></h6>    
+    <div><h6 class="text-muted"><?php echo $courseName; ?> <?php echo $className ?></h6> </div>
 </div>
 
     <div class="row">
         <div class="col">
             <form action="profile.php" method="post" class="mt-4">
           
-    <!--Name, Surname, Email and Date of Birth-->
+    <!--User Personal Details-->
    <div class="row">
         <div class="col-md-6">
             <input type="text"  name="name"  placeholder="Name" value="<?php echo $name ?>" disabled class="form-control mb-3">
@@ -75,7 +76,7 @@ if (!isset($_SESSION["userId"])) {
              <input type="date"  name="date_of_birth"  placeholder= "Date of Birth" value="<?php echo $date_of_birth ?>" disabled class="form-control mb-3">
 </div>
 
-    <!--Editable Address Details-->
+
     <div class="col-md-6">
           <input type="text" id="street1" name="street1" placeholder="Street 1"  value="<?php echo $street1 ?>" disabled class="form-control mb-3">
           <input type="text" id="street2" name="street2"  placeholder="Street 2"value="<?php echo $street2 ?>" disabled class="form-control mb-3">

@@ -1,7 +1,7 @@
 <?php 
-    include "includes/header.php";
     include "includes/user-inc.php";
     adminPage(); //Inforce admin only in this page
+    include "includes/header.php";
 ?>
 
 <div style="overflow-x: hidden;">
@@ -108,6 +108,7 @@ $(document).ready(function() {
       </span>
   </div>
 
+   <!--To echo the user roles in the list-->
     <div class="col-3">
       <span class="text-muted fw-bold" >
       <?php if ($user["roleId"] == 1) {
@@ -130,7 +131,6 @@ $(document).ready(function() {
       <i class="fa-solid fa-book" style="color: #007bff; cursor: pointer;" onclick="submitForm(<?php echo $user["userId"] ?>,'unit');" ></i>
       <?php endif ?>
     </div> 
-    
     <div class="col-2 text-center">
       <i class="fa-solid fa-x" style="color: #dc3545; cursor: pointer;" onclick="submitForm(<?php echo $user["userId"] ?>,'delete');"></i>
     </div>

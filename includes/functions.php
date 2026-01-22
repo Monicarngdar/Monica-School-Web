@@ -241,8 +241,8 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
 
     //Update user profile password
-        function updatePassword($conn, $userId, $passwordl){
-            $sql = "UPDATE user_account SET password = ?, WHERE userId = ?;";
+        function updatePassword($conn, $userId, $password){
+            $sql = "UPDATE user_account SET password = ? WHERE userId = ?;";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -250,7 +250,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
             echo "<p>We have an error - Could not set password.</p>";
             exit();
         }
-        mysqli_stmt_bind_param($stmt, "i", $userId);
+        mysqli_stmt_bind_param($stmt, "si", $password,  $userId);
         
         mysqli_stmt_execute($stmt);
 
@@ -510,8 +510,18 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
 //Email Screen
 //Create a Message
-    function createMessage($conn, $senderUserId, $Ids , $subject, $messageBody, $file ){
-    $sql = "INSERT INTO message (senderUserId, messageSubject, messageBody, sendDateTime)VALUES (?, ?, ?, NOW())";
+    function createMessage($conn, $senderUsername, $recipients , $subject, $messageBody, $file ){
+    $attachment = "";
+    if ($file){
+        $fileName = $_FILES["file"]["name"];
+        $fileTmpName = $_FILES["file"]["tmp_name"];
+        $fileExt = $extension = pathinfo($fileName, PATHINFO_EXTENSION); // this is a better way to get an extension of a file
+        $newFileName = uniqid($senderUsername."-".$fileName,true).".".$fileExt;
+        $attachment = "messageAttachments/".$newFileName;
+       
+    }
+
+    $sql = "INSERT INTO messageoutbox (senderUsername, messageSubject, messageBody, sendDateTime, attachment)VALUES (?, ?, ?, NOW(), ?)";
     
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -520,28 +530,52 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         exit();
     }
 
-    mysqli_stmt_bind_param($stmt, "iss", $senderUserId, $subject, $messageBody);
+    mysqli_stmt_bind_param($stmt, "ssss", $senderUsername, $subject, $messageBody, $attachment);
     mysqli_stmt_execute($stmt);
+    if ($file) {
+        copy($fileTmpName,'../'.$attachment); // put the attachment in the proper folder 
+    } 
+     
     $messageId=mysqli_insert_id($conn);
 
-
-    foreach($Ids as $recipientId){
-          $sql2 = "INSERT INTO recipient (messageId, recipientUserId) VALUES (?, ?)";
-       if (!mysqli_stmt_prepare($stmt, $sql2)) {
+    foreach($recipients as $recipientUsername){
+         $sql2 = "INSERT INTO recipient (messageId, recipientUsername) VALUES (?, ?)";
+         if (!mysqli_stmt_prepare($stmt, $sql2)) {
             header("location: ../message.php?error=stmtfailed");
             exit();
-    }
-    mysqli_stmt_bind_param($stmt, "ii", $messageId, $recipientId);
-    mysqli_stmt_execute($stmt);
-    }
+        }
+       mysqli_stmt_bind_param($stmt, "is", $messageId, $recipientUsername);
+       mysqli_stmt_execute($stmt);
+
+         $sql3 = "INSERT INTO message (senderUsername, receiverUsername, messageSubject, messageBody, sendDateTime, attachment)VALUES (?, ?, ?, ?, NOW(), ?)";
+         if (!mysqli_stmt_prepare($stmt, $sql3)) {
+            header("location: ../message.php?error=stmtfailed");
+            exit();
+        }
+        if($file){
+        $newFileName = uniqid($recipientUsername."-".$fileName,true).".".$fileExt;
+        $attachment = "messageAttachments/".$newFileName;
+        }
+
+       mysqli_stmt_bind_param($stmt, "sssss", $senderUsername, $recipientUsername, $subject, $messageBody, $attachment);
+       mysqli_stmt_execute($stmt);
+
+        if ($file) {
+        copy($fileTmpName,'../'.$attachment); // put the attachment in the proper folder 
+    } 
+
+     } //end foreach
+
+
+
     mysqli_stmt_close($stmt);
 
 }
 
-//Get recipients
-  function getRecipientsIds($conn, $recipients){
+//validate recipients (usernames). Using usernames instead of ids to solve problem with deletion of users.
+  function validateRecipients($conn, $recipients){
   $list = explode(",", $recipients);
-  $Ids = [];
+  $usernames = []; //define the usernames array as empty
   foreach ($list as $username)
     {
         $user=getUserByUsername($conn, $username);
@@ -550,10 +584,10 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
              exit();
         }
         else{
-            $Ids[]=$user["userId"];
+            $usernames[]=$user["username"];
         }
-    }
-    return $Ids;
+    } 
+    return $usernames;
   }
 
   // Get user by username
@@ -582,9 +616,9 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     }
 
     //Get Inbox
-    function getInbox($conn, $userId){    
-        $sql = "SELECT * FROM message, recipient, user_account 
-        WHERE recipientUserId = ? and userId = recipientUserId  and message.messageId = recipient.messageId;";
+    function getInbox($conn, $username, $favourite){    
+        $sql = "SELECT * FROM message
+                     WHERE receiverUsername = ? AND isFavourite = ?;";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -592,7 +626,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
             echo "<p>We have an error - Could not load inbox.</p>";
             exit();
         }
-        mysqli_stmt_bind_param($stmt, "i", $userId);
+        mysqli_stmt_bind_param($stmt, "ss", $username, $favourite);
         
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
@@ -602,7 +636,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
         //Sent Inbox
     function getSent($conn, $userId){    
-        $sql = "SELECT * FROM message WHERE senderUserId = ?;";
+        $sql = "SELECT * FROM messageoutbox WHERE senderUsername = ?;";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -620,9 +654,8 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
 
        //Get Outbox
-    function getOutbox($conn, $userId){    
-        $sql = "SELECT * FROM message, recipient, user_account 
-        WHERE senderUserId= ? and userId = senderUserId  and message.messageId = recipient.messageId;";
+    function getOutbox($conn, $username){    
+        $sql = "SELECT * FROM messageoutbox, recipient WHERE senderUsername= ? AND recipient.messageId = messageoutbox.messageId";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -630,7 +663,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
             echo "<p>We have an error - Could not load outbox.</p>";
             exit();
         }
-        mysqli_stmt_bind_param($stmt, "i", $userId);
+        mysqli_stmt_bind_param($stmt, "s", $username);
         
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
@@ -640,9 +673,10 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
     
     //Get Message Inbox
-    function getMessageInbox($conn, $userId, $messageId){
-        $sql = "SELECT * FROM message, recipient
-        WHERE recipientUserId= ?  and message.messageId = ? and recipient.messageId = message.messageId;";
+    function getMessageInbox($conn, $username, $messageId){
+        $sql = "SELECT * FROM message
+                    WHERE receiverUsername= ? AND messageId = ?";
+                   
         $stmt = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -650,7 +684,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
             exit();
         }
 
-        mysqli_stmt_bind_param($stmt, "ii", $userId, $messageId);
+        mysqli_stmt_bind_param($stmt, "si", $username, $messageId);
         mysqli_stmt_execute($stmt);
 
         $result = mysqli_stmt_get_result($stmt);
@@ -665,9 +699,10 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     }
 
         //Get Message Outbox. These need to be separated 
-    function getMessageOutbox($conn, $userId, $messageId){
-        $sql = "SELECT * FROM message, recipient 
-        WHERE senderUserId= ?  and message.messageId = ? and recipient.messageId = message.messageId;";
+    function getMessageOutbox($conn, $username, $messageId){
+        $sql = "SELECT * FROM messageoutbox, recipient 
+                    WHERE senderUsername= ?  and messageoutbox.messageId = ? and recipient.messageId = messageoutbox.messageId;";
+
         $stmt = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -675,7 +710,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
             exit();
         }
 
-        mysqli_stmt_bind_param($stmt, "ii", $userId, $messageId);
+        mysqli_stmt_bind_param($stmt, "si", $username, $messageId);
         mysqli_stmt_execute($stmt);
 
         $result = mysqli_stmt_get_result($stmt);
@@ -689,9 +724,26 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
+
+            //Save Favourite Message
+          // Enforcing the login username for security reasons
+    function saveFavouriteMessage($conn, $username, $messageId, $favouriteStatus){
+    $sql = "UPDATE message SET isFavourite = ? WHERE messageId = ? AND receiverUsername = ?";
+ 
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../favourites.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "iis",   $favouriteStatus, $messageId, $username);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
         // Get Enrolled Course
     function getEnrolledCourse($conn, $userId){    
-        $sql = "SELECT * FROM enrolment WHERE userAccountId = ?;";
+        $sql = "SELECT * FROM enrolment WHERE userAccountId = ?"; 
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -713,6 +765,79 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
             return 0;
         }
     }
+
+       //Delete Message
+    function deleteMessage($conn, $username, $messageId){
+        $sql = "DELETE FROM message WHERE messageId = ? AND receiverUsername = ?;";
+
+       $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../inbox.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "is", $messageId, $username);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+       //Delete Outbox Message
+    function deleteOutboxMessage($conn, $username, $messageId){
+        $sql = "DELETE FROM messageoutbox WHERE messageId = ? AND senderUsername = ?;";
+
+       $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../outbox.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "is", $messageId, $username);
+        
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+
+// To upload a file 
+    function validateMessageAttachment(){
+
+    
+    if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK){
+
+        $fileName = $_FILES["file"]["name"];
+        $fileTmpName = $_FILES["file"]["tmp_name"];
+        $fileSize = $_FILES["file"]["size"];
+        $fileError = $_FILES["file"]["error"];
+        $fileType = $_FILES["file"]["type"];
+
+        $allowed = array("pdf", "jpg", "jpeg", "png", "txt", "docx", "pptx", "xlsx");
+        $fileTypeArray = explode(".",$fileName);
+        $fileExtActual = end($fileTypeArray);
+        $fileExt = strtolower($fileExtActual);
+
+        if(!in_array($fileExt, $allowed)){
+            header("location: ../message.php?error=filetype");
+            exit();
+        }
+
+        if($fileError!=0){
+            header("location: ../message.php?error=fileUpload");
+            exit();
+        }
+
+        if($fileSize > 1000000000){
+       
+            header("location: ../message.php?error=fileSize");
+            exit();
+        }
+         return true;
+
+    }
+     return false;
+}
 
         //Add Enrolment
     function addEnrolment($conn, $userId, $courseId){
@@ -937,7 +1062,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
          // Function to get user by class
     function getUserClass($conn, $studentId){    
-        $sql = "SELECT * FROM class_student WHERE studentId = ?;";
+        $sql = "SELECT * FROM class_student, class WHERE studentId = ? AND class_student.classId = class.classId;"; //get also the class name
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -1640,7 +1765,9 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 //Get Lecturer Grading Assignments
     function getGradingAssignments($conn, $userId){
       
-        $sql = "SELECT * FROM submission, assignments, user_profile, unit WHERE assignments.userId = ? and submission.assignmentId = assignments.assignmentId and submission.studentId = user_profile.userId and assignments.unitid = unit.unitid;";
+        $sql = "SELECT * FROM submission, assignments, user_profile, unit
+                    WHERE assignments.userId = ? and submission.assignmentId = assignments.assignmentId 
+                    and submission.studentId = user_profile.userId and assignments.unitid = unit.unitid;";
         $stmt = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -1696,9 +1823,9 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 }
 
 //Get Grade
-    function getGrade($conn, $assignmentId){    
+    function getGrade($conn, $assignmentId,$studentId){    
   
-        $sql = "SELECT * FROM grades WHERE assignmentId = ?;";
+        $sql = "SELECT * FROM grades WHERE assignmentId = ? and userAccountId=?;"; //useraccountid is the student. 
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -1706,7 +1833,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
             echo "<p>We have an error - Could not load assignment grades.</p>";
             exit();
         }
-        mysqli_stmt_bind_param($stmt, "i", $assignmentId);
+        mysqli_stmt_bind_param($stmt, "ii", $assignmentId, $studentId);
         
         mysqli_stmt_execute($stmt);
 
@@ -1868,6 +1995,51 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
         }
     }
 
+//Delete attachments
+function deleteAllMessages($conn, $username){
+
+    $messages = getInbox($conn, $username, 0); //not favourite messages
+   foreach ($messages as $message){
+    if(!empty($message ["attachment"])){
+        unlink($message ["attachment"]);      
+    }
+   }
+
+       $messages = getInbox($conn, $username, 1); // favourite messages
+   foreach ($messages as $message){
+    if(!empty($message ["attachment"])){
+        unlink($message ["attachment"]);      
+    }
+   }
+
+       $messages = getOutbox($conn, $username); 
+   foreach ($messages as $message){
+    if(!empty($message ["attachment"])){
+        unlink($message ["attachment"]);      
+    }
+   }
+       //Delete Inbox 
+       $sql = "DELETE FROM message WHERE  receiverUsername = ?;";
+       $stmt = mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../inbox.php?error=stmtfailed");
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_execute($stmt);
+
+              //Delete Outbox
+       $sql = "DELETE FROM messageoutbox WHERE senderUsername = ?;";
+       $stmt = mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../outbox.php?error=stmtfailed");
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_execute($stmt);
+
+
+}
 
 
 

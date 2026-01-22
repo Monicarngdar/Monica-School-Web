@@ -1,6 +1,5 @@
-<?php include "includes/header.php"; ?>
 <?php include "includes/inbox-inc.php"; ?>
-
+<?php include "includes/header.php"; ?>
 
 <?php
 if (!isset($inbox)) {
@@ -57,13 +56,13 @@ function submitForm(Id,action){
                       <?php echo($mail['messageSubject']); ?>
                     </div>
                         <div class="col-3 text-muted">
-                        <?php echo($mail['username']); ?>
+                        <?php echo($mail['senderUsername']); ?>
                         </div>
                         <div class="col-3 text-muted small">
                         <?php echo date('M d, Y', strtotime($mail['sendDateTime'])); ?>
                     </div>
 
-                <div class="col-2 d-flex justify-content-center align-items-center gap-2">
+                <div class="col-2 d-flex gap-2">
 
                 <!-- View button -->
                     <i class="fa-solid fa-envelope-open" 
@@ -71,15 +70,9 @@ function submitForm(Id,action){
                     onclick="submitForm(<?php echo $mail['messageId']; ?>, 'viewinbox');"
                     title="View Message"></i>
 
-                   <!-- Archive button -->
-                    <i class="fa-solid fa-box-archive"  
-                    style="color: #6c757d; cursor: pointer;" 
-                    onclick="submitForm(<?php echo $mail['messageId']; ?>, 'archive');"
-                    title="Archive Message"></i>
-
                 <!-- Favourites button -->
-                    <i class="fa-solid fa-star"  
-                    style="color: #FFD43B; cursor: pointer;" 
+                    <i class="fa-regular fa-star"  
+                    style="color: #ffc800; cursor: pointer;" 
                     onclick="submitForm(<?php echo $mail['messageId']; ?>, 'favourite');"
                     title="Favourite Message"></i>
                                                 

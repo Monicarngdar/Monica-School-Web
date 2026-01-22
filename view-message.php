@@ -39,10 +39,24 @@
 
                      <div class="mb-4 border-bottom">
                         <label class="small fw-bold text-muted">Message:</label>
-                        <input type="text" name="message" class="form-control border-0 shadow-none p-0" value="<?php echo $message?>" readonly/>
+                        <input type="text" name="message" class="form-control border-0 shadow-none p-0" value="<?php echo $messageBody?>" readonly/>
                     </div>
 
-            </div>
+                    <!-- File link -->
+                     <?php if (!empty($attachment)):?>
+                        <div class="flex-grow-1 me-3">
+                        <a href="<?php echo $attachment?>" target="_blank"  class="text-decoration-none d-block">
+                            <div class="text-dark fw-semibold mb-0">
+                             Attachment
+                            </div>
+                            <span class="text-muted small d-block">
+                                Click to View
+                            </span>
+                        </a>
+                    </div>
+                 <?php endif ?>
+                    </div>
+                    
                 </form>
             </div>
         </div>

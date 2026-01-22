@@ -4,6 +4,7 @@
     adminPage(); //Inforce admin only in this page
 ?>
 
+<div style="overflow-x: hidden;">
 <?php
              if(isset($_GET["success"])) { 
                  $message = "Unit Saved Successfully";
@@ -17,7 +18,7 @@
                  include "includes/show-success.php";
             }
       ?>
-
+</div>
 
 <script>
 function submitForm(Id,action){

@@ -1,8 +1,8 @@
 <?php 
-    include "includes/header.php";
     include "includes/functions.php";
     include "includes/dbh.php";
     include "includes/calendar-inc.php";
+     include "includes/header.php";
 ?>
 
 <?php

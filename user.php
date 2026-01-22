@@ -1,9 +1,8 @@
 <?php
 include "includes/functions.php";
+adminPage(); //Inforce admin only in this page
 include "includes/user-inc.php";
 include "includes/header.php";
-adminPage(); //Inforce admin only in this page
-
 ?>
 
 <!--- Errors Message in form -->
@@ -80,7 +79,7 @@ adminPage(); //Inforce admin only in this page
         <input type="text" id="city" name="city" placeholder="City" value="<?php echo $city ?>" class="form-control mb-3">
         <input type="text" id="postCode" name="postCode" placeholder="Post Code" value="<?php echo $postCode ?>" class="form-control mb-3">
         
-               <select name="courseId" id="courseId" class="form-control mb-3" >
+               <select name="courseId" id="courseId" class="form-control mb-3" <?php if($roleId != 1) echo 'disabled'; ?>>
                         <option value="">Select Course</option>
                         <?php foreach($courses as $course):?>
                         <option value="<?php echo $course["courseId"]?>"
@@ -89,13 +88,12 @@ adminPage(); //Inforce admin only in this page
 
                         <?php endforeach?>
                     </select>
-
     </div>
 </div> 
 
 <div class ="row">
     <div class="col-12">
-                    <select name="classId" id="classId" class="form-control mb-3"  required>
+                    <select name="classId" id="classId" class="form-control mb-3"   <?php if($roleId != 1) echo 'disabled'; ?> required>
                         <option value="" selected disabled>Select Class</option>
                         <?php foreach($classes as $class):?>
                         <option value="<?php echo $class["classId"]?>"

@@ -1,3 +1,4 @@
+<?php include "includes/inbox-inc.php"; ?>
 <?php include "includes/header.php"; ?>
 
 <?php
@@ -5,6 +6,15 @@ if (!isset($favourites)) {
     $favourites = []; 
 }
 ?>
+
+<script>
+function submitForm(Id,action){
+    
+    form = document.getElementById('form' + Id);
+    form.action.value=action;
+    document.getElementById('form' + Id).submit();
+}
+</script>
 
 <main class="main-content-wrapper p-0 overflow-hidden ">
     <div class="row g-0 overflow-hidden bg-white" style="min-height: calc(100vh - 44px);">
@@ -38,32 +48,26 @@ if (!isset($favourites)) {
         <?php foreach($favourites as $mail): ?>
              <form action="favourites.php" method="post" id="form<?php  echo $mail['messageId']; ?>" class="mb-0">
                   <div class="row align-items-center py-3 border-bottom hover-effect">
-                      <input type="hidden" name="id" value="<?php echo $mail['messageId']; ?>">
+                      <input type="hidden" name="messageId" value="<?php echo $mail['messageId']; ?>">
                       <input type="hidden" name="action" id="action<?php echo $mail['messageId']; ?>" value="view">
 
                     <div class="col-4 fw-bold text-dark">
                       <?php echo($mail['messageSubject']); ?>
                     </div>
                         <div class="col-3 text-muted">
-                        <?php echo($mail['senderUserId']); ?>
+                        <?php echo($mail['senderUsername']); ?>
                         </div>
                         <div class="col-3 text-muted small">
                         <?php echo date('M d, Y', strtotime($mail['sendDateTime'])); ?>
                     </div>
 
-                 <div class="col-2 d-flex justify-content-center align-items-center gap-2">
+                    <div class="col-2 d-flex gap-2">
 
                    <!-- View button -->
                     <i class="fa-solid fa-envelope-open" 
                     style="color: #007bff;; cursor: pointer;" 
-                    onclick="submitForm(<?php echo $mail['messageId']; ?>, 'view');"
+                    onclick="submitForm(<?php echo $mail['messageId']; ?>, 'viewinbox');"
                     title="View Message"></i>
-
-                  <!-- Archive button -->
-                    <i class="fa-solid fa-box-archive"  
-                    style="color: #6c757d; cursor: pointer;" 
-                    onclick="submitForm(<?php echo $mail['messageId']; ?>, 'archive');"
-                    title="Archive Message"></i>
 
                     <!-- Unfavourite button -->
                    <i class="fa-solid fa-star"   
@@ -74,7 +78,7 @@ if (!isset($favourites)) {
                 <!-- Delete button -->
                     <i class="fa-solid fa-trash"  
                     style="color: #dc3545; cursor: pointer;" 
-                   onclick="submitForm(<?php echo $mail['imessageId']; ?>, 'delete');"
+                   onclick="submitForm(<?php echo $mail['messageId']; ?>, 'delete');"
                    title="Delete Message"></i>
 
                     </div>

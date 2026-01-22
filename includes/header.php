@@ -17,7 +17,6 @@
     ?>
     
 
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Myskolar Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +34,7 @@
    <!--When the user is logged in, the dashboard and email link would be shown -->
         <?php if (isset($_SESSION["username"])) {   ?>
             <a class="nav-link text-white mx-3 fw-semibold" href="calendar.php">Dashboard</a>
-            <a class="nav-link text-white fw-semibold" href="message.php">Emails</a>
+            <a class="nav-link text-white fw-semibold" href="inbox.php?action=list">Emails</a>
         <?php }  ?>
        
         
