@@ -12,12 +12,12 @@
             }
       ?>
 
-
+ <?php $event = getUserDayEvents($conn, "2026-04-03");?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <div class="container my-5">
     <div class="card shadow">
        
-        <iv class="card-header bg-white py-3">
+        <div class="card-header bg-white py-3">
             <div class="d-flex justify-content-between align-items-center">
                
                 <div class="btn-group" role="group">
@@ -31,7 +31,7 @@
                 </div>
 
             </div>
-        </iv>
+        </div>
 
         <div class="card-body p-0">
             <div class="d-flex flex-nowrap">
@@ -55,21 +55,31 @@ if ($day> $lastDayOfMonth){
 $start=false; 
 }
 ?>
- <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
- <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
-<div class="calendar-col event-noschool ">
+
+ <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+<div class="calendar-col ">
 <?php if ($start):?>
- <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
-   <?php if ($event): //show the event when there is 1?>
-    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
- <?php endif; ?>
- <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
-    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
- <?php endif; ?>
-     <?php $day=$day+1;?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
+ <?php $count = count($events); ?>
+  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
+        <?php $event = $events[$i];?>
+        <?php if ($event): //show the event when there is 1?>
+            <div class="small text-muted text-truncate <?php echo $event ["eventType"];?>"><?php echo $event["eventDescription"]; ?></div>
+    <?php endif; ?>
+    <?php endfor?>
+<?php if ($count > $eventLimit): ?>
+    <?php $remaining = $count - $eventLimit; ?>
+    <div class="text-end" style="margin-top: 2px;">
+        <button type="button" class="btn btn-outline-primary btn-sm py-0 px-1" style="font-size: 0.75rem;">
+            +<?php echo $remaining; ?> more
+        </button>
+    </div>
+<?php endif; ?>
+    <?php $day=$day+1;?>
   <?php endif ?>
 </div>
 <?php $dayOfWeekCount++;  ?>
+
 
 <!--Monday-->
 <?php
@@ -80,18 +90,23 @@ if ($day> $lastDayOfMonth){
 $start=false; //stop showing days in grid
 }
 ?>
- <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
- <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
-<div class="calendar-col <?php if($event) echo $event["eventType"] ?> <?php if($assignEvent) echo "event-assignDue"?>">
+ <?php //$event = getCalendarEvent($conn, "$year-$month-$day"); ?>
+ <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+<div class="calendar-col ">
 <?php if ($start):?>
- <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
-   <?php if ($event): //show the event when there is 1?>
-    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
- <?php endif; ?>
- <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
-    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
- <?php endif; ?>
-     <?php $day=$day+1;?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
+ <?php $count = count($events); ?>
+  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
+        <?php $event = $events[$i];?>
+        <?php if ($event): //show the event when there is 1?>
+            <div class="small text-muted text-truncate"><?php echo $event["eventDescription"]; ?></div>
+    <?php endif; ?>
+    <?php endfor?>
+    <?php if ($count > $eventLimit): ?>
+     <?php   $remaining = $count - $eventLimit;?>
+           <div class="small fw-bold text-primary text-end" style="margin-top: 2px; cursor: pointer;">+<?php echo $count?> more</div>
+      <?php endif ?>
+    <?php $day=$day+1;?>
   <?php endif ?>
 </div>
 <?php $dayOfWeekCount++;  ?>
@@ -104,23 +119,28 @@ if ($dayOfWeekCount == $firstDayOfWeekMonth){
 if ($day> $lastDayOfMonth){
 $start=false; 
 }
-
 ?>
- <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
-  <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
-<div class="calendar-col <?php if($event) echo $event["eventType"] ?> <?php if($assignEvent) echo "event-assignDue" ?>">
+
+ <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+<div class="calendar-col ">
 <?php if ($start):?>
- <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
-   <?php if ($event): //show the event when there is 1?>
-    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
- <?php endif; ?>
- <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
-    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
- <?php endif; ?>
-     <?php $day=$day+1;?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
+ <?php $count = count($events); ?>
+  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
+        <?php $event = $events[$i];?>
+        <?php if ($event): //show the event when there is 1?>
+            <div class="small text-muted text-truncate"><?php echo $event["eventDescription"]; ?></div>
+    <?php endif; ?>
+    <?php endfor?>
+    <?php if ($count > $eventLimit): ?>
+     <?php   $remaining = $count - $eventLimit;?>
+           <div class="small fw-bold text-primary text-end" style="margin-top: 2px; cursor: pointer;">+<?php echo $count?> more</div>
+      <?php endif ?>
+    <?php $day=$day+1;?>
   <?php endif ?>
 </div>
 <?php $dayOfWeekCount++;  ?>
+
 
 <!--Wednesday-->
 <?php
@@ -132,18 +152,22 @@ $start=false;
 }
 ?>
 
- <?php  $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
- <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
-<div class="calendar-col <?php if($event) echo $event["eventType"] ?> <?php if($assignEvent) echo "event-assignDue"?>">
+ <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+<div class="calendar-col ">
 <?php if ($start):?>
- <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
-   <?php if ($event): //show the event when there is 1?>
-    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
- <?php endif; ?>
- <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
-    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
- <?php endif; ?>
-     <?php $day=$day+1;?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
+ <?php $count = count($events); ?>
+  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
+        <?php $event = $events[$i];?>
+        <?php if ($event): //show the event when there is 1?>
+            <div class="small text-muted text-truncate"><?php echo $event["eventDescription"]; ?></div>
+    <?php endif; ?>
+    <?php endfor?>
+    <?php if ($count > $eventLimit): ?>
+     <?php   $remaining = $count - $eventLimit;?>
+          <div class="small fw-bold text-primary text-end" style="margin-top: 2px; cursor: pointer;">+<?php echo $count?> more</div>
+      <?php endif ?>
+    <?php $day=$day+1;?>
   <?php endif ?>
 </div>
 <?php $dayOfWeekCount++;  ?>
@@ -158,21 +182,27 @@ $start=false;
 }
 
 ?>
- <?php  $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
-  <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
-<div class="calendar-col <?php if($event) echo $event["eventType"] ?> <?php if($assignEvent) echo "event-assignDue" ?>">
+
+ <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+<div class="calendar-col ">
 <?php if ($start):?>
- <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
-   <?php if ($event): //show the event when there is 1?>
-    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
- <?php endif; ?>
- <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
-    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
- <?php endif; ?>
-     <?php $day=$day+1;?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
+ <?php $count = count($events); ?>
+  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
+        <?php $event = $events[$i];?>
+        <?php if ($event): //show the event when there is 1?>
+            <div class="small text-muted text-truncate"><?php echo $event["eventDescription"]; ?></div>
+    <?php endif; ?>
+    <?php endfor?>
+    <?php if ($count > $eventLimit): ?>
+     <?php   $remaining = $count - $eventLimit;?>
+      <div class="small fw-bold text-primary text-end" style="margin-top: 2px; cursor: pointer;">+<?php echo $count?> more</div>
+      <?php endif ?>
+    <?php $day=$day+1;?>
   <?php endif ?>
 </div>
 <?php $dayOfWeekCount++;  ?>
+
 
 <!--Friday-->
 <?php
@@ -184,21 +214,31 @@ $start=false;
 }
 
 ?>
- <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
- <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
-<div class="calendar-col <?php if($event) echo $event["eventType"] ?> <?php if($assignEvent) echo "event-assignDue" ?>">
+
+ <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+<div class="calendar-col ">
 <?php if ($start):?>
- <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
-   <?php if ($event): //show the event when there is 1?>
-    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
- <?php endif; ?>
- <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
-    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
- <?php endif; ?>
-     <?php $day=$day+1;?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
+ <?php $count = count($events); ?>
+  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
+        <?php $event = $events[$i];?>
+        <?php if ($event): //show the event when there is 1?>
+            <div class="small text-dark text-truncate p-1 mb-1 rounded <?php echo $event["eventType"];?>"><?php echo $event["eventDescription"]; ?></div>
+    <?php endif; ?>
+    <?php endfor?>
+<?php if ($count > $eventLimit): ?>
+    <?php $remaining = $count - $eventLimit; ?>
+      <div class="text-end" style="margin-top: 2px;">
+          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
+              +<?php echo $remaining; ?> more
+          </button>
+      </div>
+<?php endif; ?>
+    <?php $day=$day+1;?>
   <?php endif ?>
 </div>
 <?php $dayOfWeekCount++;  ?>
+
 
 <!--Saturday-->
 <?php
@@ -209,21 +249,27 @@ if ($day> $lastDayOfMonth){
 $start=false; 
 }
 ?>
- <?php $event = getCalendarEvent($conn, "$year-$month-$day"); ?>
- <?php $assignEvent = getAssignmentDueDate($conn, "$year-$month-$day"); ?>
-<div class="calendar-col event-noschool">
+
+ <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+<div class="calendar-col ">
 <?php if ($start):?>
- <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
-   <?php if ($event): //show the event when there is 1?>
-    <div class="small text-muted"><?php echo $event["eventDescription"]; ?></div>
- <?php endif; ?>
-    <?php if ($assignEvent): //show assignment due date on the students calendar ?> 
-    <div class="small text-muted">Task Due:<?php echo $assignEvent["taskTitle"]; ?></div>
- <?php endif; ?>
-     <?php $day=$day+1;?>
+ <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
+ <?php $count = count($events); ?>
+  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
+        <?php $event = $events[$i];?>
+        <?php if ($event): //show the event when there is 1?>
+            <div class="small text-muted text-truncate"><?php echo $event["eventDescription"]; ?></div>
+    <?php endif; ?>
+    <?php endfor?>
+    <?php if ($count > $eventLimit): ?>
+     <?php   $remaining = $count - $eventLimit;?>
+        <div class="small fw-bold text-primary text-end" style="margin-top: 2px; cursor: pointer;">+<?php echo $count?> more</div>
+      <?php endif ?>
+    <?php $day=$day+1;?>
   <?php endif ?>
 </div>
 <?php $dayOfWeekCount++;  ?>
+
 
 </div>
    <?php endfor ?>
@@ -237,6 +283,8 @@ $start=false;
           <?php   if ($_SESSION['userRole']==3 ): //This button shows only for the admin user?>
             <a href="calendar-event.php" class="btn btn-primary btn-sm">Schedule New Event</a>
             <?php endif ?>
+
+              <a href="user-event-calendar.php" class="btn btn-primary btn-sm">Schedule My Event</a>
             <a href="?date=<?php echo $today;?>" class="btn btn-secondary btn-sm">Today</a>
         </div>
     </div>

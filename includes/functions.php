@@ -1939,6 +1939,24 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
     mysqli_stmt_close($stmt);
 }
 
+
+
+       //Add User Calendar
+    function addUserCalendar($conn, $userId,  $eventDate, $eventDescription, $eventType){
+    $sql = "INSERT INTO user_calendar (userId, eventDate, eventDescription, eventType) VALUES (?, ?, ?, ?)";
+    
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        header("location: ../calendar.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt, "isss",  $userId, $eventDate, $eventDescription, $eventType);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+
+
     // Get Calendar Event
     function getCalendarEvent($conn, $date){    
         $sql = "SELECT * FROM school_calendar WHERE eventDate = ?;";
@@ -1955,14 +1973,58 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
         $result = mysqli_stmt_get_result($stmt);
         mysqli_stmt_close($stmt);
+        return $result;
+    }
 
-        if($row = mysqli_fetch_assoc($result)){
+    // Get Calendar Event
+    function getUserCalendarEvent($conn, $date, $userId){    
+        $sql = "SELECT * FROM user_calendar WHERE eventDate = ? AND userId = ?;";
 
-            return $row;
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            echo "<p>We have an error - Could not load event dates.</p>";
+            exit();
         }
-        else{
-            return false;
-        }
+        mysqli_stmt_bind_param($stmt, "si", $date, $userId);
+        
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+        return $result;
+    }
+
+    // Get User Day Events
+    function getUserDayEvents($conn, $date){
+         $assignEvent = getAssignmentDueDate($conn, $date); 
+         $schoolEvents = getCalendarEvent($conn, $date);
+         $userEvents = getUserCalendarEvent ($conn, $date,  $_SESSION["userId"] );
+         $eventList = [];
+         foreach($assignEvent as $event){
+             $newEvent ['eventDescription'] = $event['taskTitle'];
+              $newEvent ['eventId'] = $event['assignmentId'];
+              $newEvent ['eventType'] = "event-assignDue";
+              $eventList[]= $newEvent;
+         }
+ 
+        foreach($schoolEvents as $event){
+              $newEvent ['eventDescription'] = $event['eventDescription'];
+              $newEvent ['eventId'] = $event['calendarId'];
+              $newEvent ['eventType'] = $event['eventType'];
+            $eventList[]= $newEvent;
+         }
+
+         foreach($userEvents as $event){
+              $newEvent ['eventDescription'] = $event['eventDescription'];
+              $newEvent ['eventId'] = $event['calendarId'];
+              $newEvent ['eventType'] = $event['eventType'];
+               $eventList[]= $newEvent;
+
+         }
+    
+         return $eventList;
+
     }
 
     //Get Assignment Due Date to display in student calendars
@@ -1985,14 +2047,7 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
 
         $result = mysqli_stmt_get_result($stmt);
         mysqli_stmt_close($stmt);
-
-        if($row = mysqli_fetch_assoc($result)){
-
-            return $row;
-        }
-        else{
-            return false;
-        }
+         return $result;
     }
 
 //Delete attachments

@@ -190,15 +190,20 @@ html, body {
      }
 
 .event-assignDue  {
-     background: #ff9682;
-     color: black;
+     background: #ffc532;
+     color: white;
+     }
+
+     .event-user  {
+     background: #0b6a00;
+     color: white;
      }
 
 /*Timetable slots*/
 .timetable-highlight {
         background-color: #8ab7db !important; 
 
-    }
+    }e
  
     /* Student Attendance Colours */
 .attendance-present   {

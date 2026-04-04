@@ -42,9 +42,11 @@ $dayOfWeekCount=0;
 $day=1;
 $start=false;
 
-
+$eventLimit = 2;
 //Print some debugging information for calculations
 echo "<!--M: $month Y: $year FW: $firstWeek LW: $lastWeek LDM: $lastDayOfMonth -->";
+
+
 
 /* -----END CALENDAR CALCULATIONS-------*/
 

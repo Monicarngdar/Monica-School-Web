@@ -47,7 +47,7 @@ if ($day> $lastDayOfMonth){
 $start=false; 
 }
 ?>
- <?php //$event = getCalendarEvent($conn, "$year-$month-$day"); ?>
+ <?php  ?>
 <div class="calendar-col event-noschool ">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
@@ -196,7 +196,7 @@ if ($day> $lastDayOfMonth){
 $start=false; 
 }
 ?>
-   <?php //$event = getCalendarEvent($conn, "$year-$month-$day"); ?>
+   <?php ?>
 <div class="calendar-col event-noschool ">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;;?></span>
