@@ -5,6 +5,8 @@
      include "includes/header.php";
 ?>
 
+
+
 <?php
              if(isset($_GET["success"])) { 
                  $message = "Event Saved Successfully";
@@ -14,9 +16,6 @@
 
  <?php $event = getUserDayEvents($conn, "2026-04-03");?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-<div class="container my-5">
-    <div class="card shadow">
-       
         <div class="card-header bg-white py-3">
             <div class="d-flex justify-content-between align-items-center">
                
@@ -73,9 +72,12 @@ $start=false;
 <?php if ($count > $eventLimit): ?>
     <?php $remaining = $count - $eventLimit; ?>
       <div class="text-end" style="margin-top: 2px;">
-          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
-              +<?php echo $remaining; ?> more
-          </button>
+         <button type="button" 
+        class="btn btn-primary btn-sm py-0 px-1 custom-more-btn" 
+        data-date="<?php echo "$year-$month-$day"; ?>" 
+        onclick="openEventModal(this)">
+    +<?php echo $remaining; ?> more
+</button>
       </div>
 <?php endif; ?>
     <?php $day=$day+1;?>
@@ -110,9 +112,12 @@ $start=false;
 <?php if ($count > $eventLimit): ?>
     <?php $remaining = $count - $eventLimit; ?>
       <div class="text-end" style="margin-top: 2px;">
-          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
-              +<?php echo $remaining; ?> more
-          </button>
+        <button type="button" 
+        class="btn btn-primary btn-sm py-0 px-1 custom-more-btn" 
+        data-date="<?php echo "$year-$month-$day"; ?>" 
+        onclick="openEventModal(this)">
+    +<?php echo $remaining; ?> more
+</button>
       </div>
 <?php endif; ?>
     <?php $day=$day+1;?>
@@ -147,9 +152,12 @@ $start=false;
 <?php if ($count > $eventLimit): ?>
     <?php $remaining = $count - $eventLimit; ?>
       <div class="text-end" style="margin-top: 2px;">
-          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
-              +<?php echo $remaining; ?> more
-          </button>
+      <button type="button" 
+        class="btn btn-primary btn-sm py-0 px-1 custom-more-btn" 
+        data-date="<?php echo "$year-$month-$day"; ?>" 
+        onclick="openEventModal(this)">
+    +<?php echo $remaining; ?> more
+</button>
       </div>
 <?php endif; ?>
     <?php $day=$day+1;?>
@@ -185,9 +193,12 @@ $start=false;
 <?php if ($count > $eventLimit): ?>
     <?php $remaining = $count - $eventLimit; ?>
       <div class="text-end" style="margin-top: 2px;">
-          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
-              +<?php echo $remaining; ?> more
-          </button>
+      <button type="button" 
+        class="btn btn-primary btn-sm py-0 px-1 custom-more-btn" 
+        data-date="<?php echo "$year-$month-$day"; ?>" 
+        onclick="openEventModal(this)">
+    +<?php echo $remaining; ?> more
+</button>
       </div>
 <?php endif; ?>
     <?php $day=$day+1;?>
@@ -223,9 +234,12 @@ $start=false;
 <?php if ($count > $eventLimit): ?>
     <?php $remaining = $count - $eventLimit; ?>
       <div class="text-end" style="margin-top: 2px;">
-          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
-              +<?php echo $remaining; ?> more
-          </button>
+        <button type="button" 
+              class="btn btn-primary btn-sm py-0 px-1 custom-more-btn" 
+              data-date="<?php echo "$year-$month-$day"; ?>" 
+              onclick="openEventModal(this)">
+          +<?php echo $remaining; ?> more
+      </button>
       </div>
 <?php endif; ?>
     <?php $day=$day+1;?>
@@ -261,9 +275,12 @@ $start=false;
 <?php if ($count > $eventLimit): ?>
     <?php $remaining = $count - $eventLimit; ?>
       <div class="text-end" style="margin-top: 2px;">
-          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
-              +<?php echo $remaining; ?> more
-          </button>
+      <button type="button" 
+              class="btn btn-primary btn-sm py-0 px-1 custom-more-btn" 
+              data-date="<?php echo "$year-$month-$day"; ?>" 
+              onclick="openEventModal(this)">
+          +<?php echo $remaining; ?> more
+      </button>
       </div>
 <?php endif; ?>
     <?php $day=$day+1;?>
@@ -299,9 +316,12 @@ $start=false;
 <?php if ($count > $eventLimit): ?>
     <?php $remaining = $count - $eventLimit; ?>
       <div class="text-end" style="margin-top: 2px;">
-          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
-              +<?php echo $remaining; ?> more
-          </button>
+      <button type="button" 
+              class="btn btn-primary btn-sm py-0 px-1 custom-more-btn" 
+              data-date="<?php echo "$year-$month-$day"; ?>" 
+              onclick="openEventModal(this)">
+          +<?php echo $remaining; ?> more
+      </button>
       </div>
 <?php endif; ?>
     <?php $day=$day+1;?>
@@ -328,7 +348,55 @@ $start=false;
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered custom-modal-position">
+    <div class="modal-content">
+      <div class="modal-header bg-myskolar text-white">
+          <h5 class="modal-title" id="eventModalLabel">Events for <span id="modalDateDisplay"></span></h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modalEventList">
+        </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
 </main>
+
+
+
+<script>
+function openEventModal(button) {
+    const date = button.getAttribute('data-date');
+    const events = calendarEvents[date] || [];
+    const modalList = document.getElementById('modalEventList');
+    const modalDate = document.getElementById('modalDateDisplay');
+    
+    modalDate.innerText = date;
+    modalList.innerHTML = '';
+    
+    if (events.length > 0) {
+        events.forEach(event => {
+            const div = document.createElement('div');
+            
+            // CRITICAL: We add "modal-event-item" for layout AND event.eventType for the color
+            // Ensure your database/PHP returns the exact class name (e.g., "event-user")
+            div.className = `p-2 mb-2 rounded modal-event-item ${event.eventType}`;
+            
+            div.innerHTML = `<strong>${event.eventDescription}</strong>`;
+            modalList.appendChild(div);
+        });
+    } else {
+        modalList.innerHTML = '<p class="text-muted">No events found.</p>';
+    }
+    
+    const myModal = new bootstrap.Modal(document.getElementById('eventModal'));
+    myModal.show();
+}
+</script>
 
 <script>
     // PHP array to a  JavaScript Object
@@ -344,5 +412,7 @@ $start=false;
         return [];
     }
 </script>
+
+
 
 <?php  include "includes/footer.php";?>

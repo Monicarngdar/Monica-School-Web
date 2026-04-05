@@ -8,7 +8,6 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <div class="container flex-fill d-flex flex-column">
-       
         <div class="card-header bg-white py-3">
             <div class="d-flex justify-content-between align-items-center">
                

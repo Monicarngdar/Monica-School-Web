@@ -1,78 +1,80 @@
-/*Header font size adjustments */
-        .navbar-brand {
-            font-family: Tahoma;
-            font-weight: 700;
-            margin-right: 0;
-            padding-top: 0rem; 
-            padding-bottom: 0rem;
-        }
 
+html, body {
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        .bg-myskolar {
-        background-color: #2787B4;
-       }
-   
+.bg-myskolar {
+    background-color: #2787B4;
+}
 
-    /* Dashboard / Email subtitle text */
-        .dashboard-subtitle,
-        .email-subtitle {
-            margin-left: 5px;
-            padding-left: 10px;
-            line-height: 1.2;
-            padding-top: 2px;
-            font-size: 0.8rem; 
-            color: #ffffff;
-        }
-            
+/* HEADER & NAVIGATION*/
+.main-header {
+    height: 44px; 
+    padding-top: 0.4rem !important; 
+    padding-bottom: 0.4rem !important;
+    overflow-x: hidden;
+}
 
-        /* Header height consistency */
-        .main-header {
-            height: 44px; 
-            padding-top: 0.4rem !important; 
-            padding-bottom: 0.4rem !important;
-            overflow-x: hidden;
-        }
+.navbar-brand {
+    font-family: Tahoma;
+    font-weight: 700;
+    margin-right: 0;
+    padding-top: 0rem; 
+    padding-bottom: 0rem;
+}
 
-     /* Navbar brand container */
-        .navbar-brand-wrapper {
-            width: 240px; 
-            max-width: 100%;
-        }
-        
-        /* Main Content CSS */
-             .sidebar {
-            position: fixed;
-            top: 44px;
-            left: 0;
-            bottom: 0; 
-            width: 240px;
-            z-index: 100;
-            padding-top: 20px;
-            background-color: #2787B4; 
-            overflow-y: auto; 
-            transition: transform 0.3s ease-in-out;
-                }
+.navbar-brand-wrapper {
+    width: 240px; 
+    max-width: 100%;
+}
 
-        
-        /* Menu hover effect */
-        .sidebar .nav-link {
-         color: #ffffff;
-        font-weight: 500;
-        }
-        
-        .sidebar .nav-link.active {
-            background-color: #2787B4;
-            color: #ffffff;
-            font-weight: bold;
-        }
+.dashboard-subtitle,
+.email-subtitle {
+    margin-left: 5px;
+    padding-left: 10px;
+    line-height: 1.2;
+    padding-top: 2px;
+    font-size: 0.8rem; 
+    color: #ffffff;
+}
 
-            .sidebar .nav-link:hover {
-            color: #ffffff; 
-            background-color: #385D7B;
-            
-        }
+/*  SIDEBAR & LAYOUT */
+.sidebar {
+    position: fixed;
+    top: 44px;
+    left: 0;
+    bottom: 0; 
+    width: 240px;
+    z-index: 100;
+    padding-top: 20px;
+    background-color: #2787B4; 
+    overflow-y: auto; 
+    transition: transform 0.3s ease-in-out;
+}
 
-/* Desktop layout */
+.sidebar .nav-link {
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.sidebar .nav-link.active {
+    background-color: #2787B4;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.sidebar .nav-link:hover {
+    color: #ffffff; 
+    background-color: #385D7B;
+}
+
+.main-content-wrapper {
+    overflow-x: hidden;
+    transition: margin 0.3s ease;
+}
+
+/* Desktop layout Logic */
 @media (min-width: 768px) {
     .main-content-wrapper {
         margin-left: 240px;
@@ -80,12 +82,7 @@
     }
 }
 
-/* Prevent horizontal scroll */
-.main-content-wrapper {
-    overflow-x: hidden;
-}
-
-/* Mobile layout */
+/* Mobile layout Logic */
 @media (max-width: 767.98px) {
     .sidebar {
         position: relative;
@@ -98,80 +95,94 @@
     }
 }
 
-
- /*Email*/
-.list-group {
-    margin-bottom: 0;
-}
-
-.list-group-item {
-    border-radius: 0 !important;
-}
-
-/*Hover effect of compose box */
-.email-item {
-    background-color: #8296A3 !important;
-    transition: background-color 0.3s ease;
-}
-
-.email-item:hover {
-    background-color: #6c7e8a !important; 
-    color: #ffffff !important;
-}
-
-/*Attachment for file */
-.attach-file {
-    color: #8296A3; 
-    cursor: pointer;
-    transition: all 0.2s ease;
-    width: 40px;  
-    height: 40px
-}
-
-.attach-file:hover {
-    color: #2787B4 !important; 
-    background-color: #f8f9fa !important; 
-    border-radius: 50%;
-} 
-
-/*Main Body */
-html, body {
-    width: 100%;
-}
-
-
-/*Calendar Styles*/
+/*  CALENDAR GRID */
 .calendar-col {
-     flex: 0 0 14.285%;
-     max-width: 14.285%;
+    flex: 0 0 14.285%;
+    max-width: 14.285%;
     min-height: 100px;
     border: 1px solid #dee2e6;
-    padding: 10px;
- }
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
 
 .day-header {
-     background-color: #385D7B;
-     color: white;
-     font-weight: bold;
+    background-color: #385D7B;
+    color: white;
+    font-weight: bold;
     text-align: center;
-     padding: 10px 0;
+    padding: 10px 0;
 }
 
-.not-month {
-     background-color: #f8f9fa;
-      color: #ced4da;
+.date-num {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    display: block;
 }
+
 .today {
     background-color: #fff3cd;
     border: 2px solid #ffc107 !important;
 }
 
- .date-num {
-     font-weight: bold;
-     font-size: 1.2rem;
+.not-month {
+    background-color: #f8f9fa;
+    color: #ced4da;
 }
 
-/* Event colors */
+/* More Button styling */
+.custom-more-btn {
+    font-size: 0.7rem;
+    padding: 1px 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: auto; /* Pushes button to bottom of cell */
+}
+
+/*  EVENT & ATTENDANCE COLORS */
+/* 1. Default style for modal items */
+.modal-event-item {
+    border-left: none !important; /* This removes the blue tab entirely */
+    background-color: #f8f9fa;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Optional: adds slight depth since the tab is gone */
+}
+
+/* 2. Update specific event types to be solid colored blocks */
+.modal-event-item.event-publicholiday { 
+    background-color: #b8ff96 !important; 
+    color: black !important; 
+}
+
+.modal-event-item.event-semesterbreak { 
+    background-color: #88ebff !important; 
+    color: black !important; 
+}
+
+.modal-event-item.event-schoolholiday { 
+    background-color: #ffdc71 !important; 
+    color: black !important; 
+}
+
+.modal-event-item.event-noschool { 
+    background-color: #6c757d !important; 
+    color: rgb(0, 0, 0) !important; 
+}
+
+.modal-event-item.event-assignDue { 
+    background-color: #ffc532 !important; 
+    color: rgb(0, 0, 0) !important; 
+}
+
+.modal-event-item.event-user { 
+    background-color: #0b6a00 !important; 
+    color: rgb(0, 0, 0) !important; 
+}
+
 .event-publicholiday   {
   background: #b8ff96;
    color: black;
@@ -199,33 +210,75 @@ html, body {
      color: white;
      }
 
-/*Timetable slots*/
-.timetable-highlight {
-        background-color: #8ab7db !important; 
+.attendance-present { background: #50b350d9; color: white; border-radius: 6px; text-align: center; }
+.attendance-absent  { background: #ba212be6; color: white; border-radius: 6px; text-align: center; }
+.attendance-late    { background: #ef6c00e6; color: white; border-radius: 6px; text-align: center; }
 
-    }e
- 
-    /* Student Attendance Colours */
-.attendance-present   {
-   background: #50b350d9;
-   color: white;
-   border-radius: 6px;
-   text-align: center;
+.timetable-highlight { background-color: #8ab7db !important; }
 
-}
-.attendance-absent    { 
-    background: #ba212be6;
-    color: white;
-    border-radius: 6px;
-    text-align: center;
-}
-.attendance-late { 
-   background: #ef6c00e6;
-    color: white;
-    border-radius: 6px;
-    text-align: center;
+/* RESPONSIVE EVENT MODAL (The Right-Side Logic) */
+
+/* Default: Center on mobile */
+.modal-dialog.custom-modal-position {
+    display: flex;
+    align-items: center;
 }
 
+/* Event items inside the modal */
+.modal-event-item {
+    border-left: 5px solid #2787B4; 
+    background-color: #f8f9fa;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
 
+@media (min-width: 768px) {
+    /* Push modal to the right on Desktop */
+    .custom-modal-position {
+        margin-right: 20px !important; 
+        margin-left: auto !important;
+        max-width: 420px; 
+        height: calc(100vh - 40px);
+    }
+    
+    .modal.fade .modal-dialog.custom-modal-position {
+        transform: translate(100px, 0);
+        transition: transform 0.3s ease-out;
+    }
+    
+    .modal.show .modal-dialog.custom-modal-position {
+        transform: translate(0, 0);
+    }
+}
 
+/*  EMAIL */
+.list-group-item { border-radius: 0 !important; }
 
+.email-item {
+    background-color: #8296A3 !important;
+    transition: background-color 0.3s ease;
+}
+
+.email-item:hover {
+    background-color: #6c7e8a !important; 
+    color: #ffffff !important;
+}
+
+.attach-file {
+    color: #8296A3; 
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 40px;  
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.attach-file:hover {
+    color: #2787B4 !important; 
+    background-color: #f8f9fa !important; 
+    border-radius: 50%;
+}
