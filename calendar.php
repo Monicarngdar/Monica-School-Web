@@ -57,23 +57,26 @@ $start=false;
 ?>
 
  <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+ <?php if (!empty($events)) {
+        $jsEventsArray["$year-$month-$day"] = $events;
+    }?>
 <div class="calendar-col ">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
  <?php $count = count($events); ?>
-  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
-        <?php $event = $events[$i];?>
+  <?php for ($n = 0; $n < $eventLimit && $n < $count; $n++):?>
+        <?php $event = $events[$n];?>
         <?php if ($event): //show the event when there is 1?>
-            <div class="small text-muted text-truncate <?php echo $event ["eventType"];?>"><?php echo $event["eventDescription"]; ?></div>
+            <div class="small text-dark text-truncate p-1 mb-1 rounded <?php echo $event["eventType"];?>"><?php echo $event["eventDescription"]; ?></div>
     <?php endif; ?>
     <?php endfor?>
 <?php if ($count > $eventLimit): ?>
     <?php $remaining = $count - $eventLimit; ?>
-    <div class="text-end" style="margin-top: 2px;">
-        <button type="button" class="btn btn-outline-primary btn-sm py-0 px-1" style="font-size: 0.75rem;">
-            +<?php echo $remaining; ?> more
-        </button>
-    </div>
+      <div class="text-end" style="margin-top: 2px;">
+          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
+              +<?php echo $remaining; ?> more
+          </button>
+      </div>
 <?php endif; ?>
     <?php $day=$day+1;?>
   <?php endif ?>
@@ -87,25 +90,31 @@ if ($dayOfWeekCount == $firstDayOfWeekMonth){
   $start=true; //start showing days in grid
 }
 if ($day> $lastDayOfMonth){
-$start=false; //stop showing days in grid
+$start=false; 
 }
 ?>
- <?php //$event = getCalendarEvent($conn, "$year-$month-$day"); ?>
  <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+  <?php if (!empty($events)) {
+        $jsEventsArray["$year-$month-$day"] = $events;
+    }?>
 <div class="calendar-col ">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
  <?php $count = count($events); ?>
-  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
-        <?php $event = $events[$i];?>
+  <?php for ($n = 0; $n < $eventLimit && $n < $count; $n++):?>
+        <?php $event = $events[$n];?>
         <?php if ($event): //show the event when there is 1?>
-            <div class="small text-muted text-truncate"><?php echo $event["eventDescription"]; ?></div>
+            <div class="small text-dark text-truncate p-1 mb-1 rounded <?php echo $event["eventType"];?>"><?php echo $event["eventDescription"]; ?></div>
     <?php endif; ?>
     <?php endfor?>
-    <?php if ($count > $eventLimit): ?>
-     <?php   $remaining = $count - $eventLimit;?>
-           <div class="small fw-bold text-primary text-end" style="margin-top: 2px; cursor: pointer;">+<?php echo $count?> more</div>
-      <?php endif ?>
+<?php if ($count > $eventLimit): ?>
+    <?php $remaining = $count - $eventLimit; ?>
+      <div class="text-end" style="margin-top: 2px;">
+          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
+              +<?php echo $remaining; ?> more
+          </button>
+      </div>
+<?php endif; ?>
     <?php $day=$day+1;?>
   <?php endif ?>
 </div>
@@ -122,20 +131,27 @@ $start=false;
 ?>
 
  <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+  <?php if (!empty($events)) {
+        $jsEventsArray["$year-$month-$day"] = $events;
+    }?>
 <div class="calendar-col ">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
  <?php $count = count($events); ?>
-  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
-        <?php $event = $events[$i];?>
+  <?php for ($n = 0; $n < $eventLimit && $n < $count; $n++):?>
+        <?php $event = $events[$n];?>
         <?php if ($event): //show the event when there is 1?>
-            <div class="small text-muted text-truncate"><?php echo $event["eventDescription"]; ?></div>
+            <div class="small text-dark text-truncate p-1 mb-1 rounded <?php echo $event["eventType"];?>"><?php echo $event["eventDescription"]; ?></div>
     <?php endif; ?>
     <?php endfor?>
-    <?php if ($count > $eventLimit): ?>
-     <?php   $remaining = $count - $eventLimit;?>
-           <div class="small fw-bold text-primary text-end" style="margin-top: 2px; cursor: pointer;">+<?php echo $count?> more</div>
-      <?php endif ?>
+<?php if ($count > $eventLimit): ?>
+    <?php $remaining = $count - $eventLimit; ?>
+      <div class="text-end" style="margin-top: 2px;">
+          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
+              +<?php echo $remaining; ?> more
+          </button>
+      </div>
+<?php endif; ?>
     <?php $day=$day+1;?>
   <?php endif ?>
 </div>
@@ -153,20 +169,27 @@ $start=false;
 ?>
 
  <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+  <?php if (!empty($events)) {
+        $jsEventsArray["$year-$month-$day"] = $events;
+    }?>
 <div class="calendar-col ">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
  <?php $count = count($events); ?>
-  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
-        <?php $event = $events[$i];?>
+  <?php for ($n = 0; $n < $eventLimit && $n < $count; $n++):?>
+        <?php $event = $events[$n];?>
         <?php if ($event): //show the event when there is 1?>
-            <div class="small text-muted text-truncate"><?php echo $event["eventDescription"]; ?></div>
+            <div class="small text-dark text-truncate p-1 mb-1 rounded <?php echo $event["eventType"];?>"><?php echo $event["eventDescription"]; ?></div>
     <?php endif; ?>
     <?php endfor?>
-    <?php if ($count > $eventLimit): ?>
-     <?php   $remaining = $count - $eventLimit;?>
-          <div class="small fw-bold text-primary text-end" style="margin-top: 2px; cursor: pointer;">+<?php echo $count?> more</div>
-      <?php endif ?>
+<?php if ($count > $eventLimit): ?>
+    <?php $remaining = $count - $eventLimit; ?>
+      <div class="text-end" style="margin-top: 2px;">
+          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
+              +<?php echo $remaining; ?> more
+          </button>
+      </div>
+<?php endif; ?>
     <?php $day=$day+1;?>
   <?php endif ?>
 </div>
@@ -184,20 +207,27 @@ $start=false;
 ?>
 
  <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+  <?php if (!empty($events)) {
+        $jsEventsArray["$year-$month-$day"] = $events;
+    }?>
 <div class="calendar-col ">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
  <?php $count = count($events); ?>
-  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
-        <?php $event = $events[$i];?>
+  <?php for ($n = 0; $n < $eventLimit && $n < $count; $n++):?>
+        <?php $event = $events[$n];?>
         <?php if ($event): //show the event when there is 1?>
-            <div class="small text-muted text-truncate"><?php echo $event["eventDescription"]; ?></div>
+            <div class="small text-dark text-truncate p-1 mb-1 rounded <?php echo $event["eventType"];?>"><?php echo $event["eventDescription"]; ?></div>
     <?php endif; ?>
     <?php endfor?>
-    <?php if ($count > $eventLimit): ?>
-     <?php   $remaining = $count - $eventLimit;?>
-      <div class="small fw-bold text-primary text-end" style="margin-top: 2px; cursor: pointer;">+<?php echo $count?> more</div>
-      <?php endif ?>
+<?php if ($count > $eventLimit): ?>
+    <?php $remaining = $count - $eventLimit; ?>
+      <div class="text-end" style="margin-top: 2px;">
+          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
+              +<?php echo $remaining; ?> more
+          </button>
+      </div>
+<?php endif; ?>
     <?php $day=$day+1;?>
   <?php endif ?>
 </div>
@@ -212,16 +242,18 @@ if ($dayOfWeekCount == $firstDayOfWeekMonth){
 if ($day> $lastDayOfMonth){
 $start=false; 
 }
-
 ?>
 
  <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+  <?php if (!empty($events)) {
+        $jsEventsArray["$year-$month-$day"] = $events;
+    }?>
 <div class="calendar-col ">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
  <?php $count = count($events); ?>
-  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
-        <?php $event = $events[$i];?>
+  <?php for ($n = 0; $n < $eventLimit && $n < $count; $n++):?>
+        <?php $event = $events[$n];?>
         <?php if ($event): //show the event when there is 1?>
             <div class="small text-dark text-truncate p-1 mb-1 rounded <?php echo $event["eventType"];?>"><?php echo $event["eventDescription"]; ?></div>
     <?php endif; ?>
@@ -251,20 +283,27 @@ $start=false;
 ?>
 
  <?php $events = getUserDayEvents($conn, "$year-$month-$day"); ?>
+  <?php if (!empty($events)) {
+        $jsEventsArray["$year-$month-$day"] = $events;
+    }?>
 <div class="calendar-col ">
 <?php if ($start):?>
  <span class="date-num" id = '<?php echo "$year-$month-$day"?>'><?php echo $day;?></span>
  <?php $count = count($events); ?>
-  <?php for ($i = 0; $i < $eventLimit && $i < $count; $i++):?>
-        <?php $event = $events[$i];?>
+  <?php for ($n = 0; $n < $eventLimit && $n < $count; $n++):?>
+        <?php $event = $events[$n];?>
         <?php if ($event): //show the event when there is 1?>
-            <div class="small text-muted text-truncate"><?php echo $event["eventDescription"]; ?></div>
+            <div class="small text-dark text-truncate p-1 mb-1 rounded <?php echo $event["eventType"];?>"><?php echo $event["eventDescription"]; ?></div>
     <?php endif; ?>
     <?php endfor?>
-    <?php if ($count > $eventLimit): ?>
-     <?php   $remaining = $count - $eventLimit;?>
-        <div class="small fw-bold text-primary text-end" style="margin-top: 2px; cursor: pointer;">+<?php echo $count?> more</div>
-      <?php endif ?>
+<?php if ($count > $eventLimit): ?>
+    <?php $remaining = $count - $eventLimit; ?>
+      <div class="text-end" style="margin-top: 2px;">
+          <button type="button" class="btn btn-primary btn-sm py-0 px-1 custom-more-btn">
+              +<?php echo $remaining; ?> more
+          </button>
+      </div>
+<?php endif; ?>
     <?php $day=$day+1;?>
   <?php endif ?>
 </div>
@@ -291,5 +330,19 @@ $start=false;
 </div>
 </main>
 
+<script>
+    // PHP array to a  JavaScript Object
+    const calendarEvents = <?php echo json_encode($jsEventsArray); ?>;
+
+      console.log(calendarEvents); 
+
+    // get events for a specific date
+    function getEventsForDate(dateString) {
+        if (calendarEvents[dateString]) {
+            return calendarEvents[dateString];
+        }
+        return [];
+    }
+</script>
 
 <?php  include "includes/footer.php";?>

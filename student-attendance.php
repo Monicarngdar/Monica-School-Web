@@ -196,6 +196,7 @@ if ($day> $lastDayOfMonth){
 $start=false; 
 }
 ?>
+
    <?php ?>
 <div class="calendar-col event-noschool ">
 <?php if ($start):?>
