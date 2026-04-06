@@ -138,77 +138,80 @@ html, body {
     padding: 1px 5px;
     text-transform: uppercase;
     font-weight: bold;
-    margin-top: auto; /* Pushes button to bottom of cell */
+    margin-top: auto; 
 }
 
 /*  EVENT & ATTENDANCE COLORS */
 /* 1. Default style for modal items */
 .modal-event-item {
-    border-left: none !important; /* This removes the blue tab entirely */
+    border-left: none !important; 
     background-color: #f8f9fa;
     padding: 12px;
     margin-bottom: 10px;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Optional: adds slight depth since the tab is gone */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
 }
 
-/* 2. Update specific event types to be solid colored blocks */
-.modal-event-item.event-publicholiday { 
-    background-color: #b8ff96 !important; 
-    color: black !important; 
+
+.modal-event-item.event-publicholiday {
+  background-color: #5bbf4a !important;
+  color: #0f172a !important;
 }
 
-.modal-event-item.event-semesterbreak { 
-    background-color: #88ebff !important; 
-    color: black !important; 
+.modal-event-item.event-semesterbreak {
+  background-color: #38bdf8 !important;
+  color: #0f172a !important;
 }
 
-.modal-event-item.event-schoolholiday { 
-    background-color: #ffdc71 !important; 
-    color: black !important; 
+.modal-event-item.event-schoolholiday {
+  background-color: #75bcf7 !important;
+  color: #0f172a !important;
 }
 
-.modal-event-item.event-noschool { 
-    background-color: #6c757d !important; 
-    color: rgb(0, 0, 0) !important; 
+.modal-event-item.event-noschool {
+  background-color: #6b7280 !important;
+  color: #ffffff !important;
 }
 
-.modal-event-item.event-assignDue { 
-    background-color: #ffc532 !important; 
-    color: rgb(0, 0, 0) !important; 
+.modal-event-item.event-assignDue {
+  background-color: #f2c94c !important;
+  color: #0f172a !important;
 }
 
-.modal-event-item.event-user { 
-    background-color: #0b6a00 !important; 
-    color: rgb(0, 0, 0) !important; 
+.modal-event-item.event-user {
+  background-color: #22c55e !important;
+  color: #0f172a !important;
 }
 
-.event-publicholiday   {
-  background: #b8ff96;
-   color: black;
+/* Calendar Event Display*/
+.event-publicholiday {
+  background: #5bbf4a;
+  color: #0f172a;
 }
-.event-semesterbreak    { 
-    background: #88ebff;
-    color: black;
-}
-.event-schoolholiday { 
-    background: #ffdc71; 
-    color: black;
-}
-.event-noschool  {
-     background: #6c757d;
-     color: white;
-     }
 
-.event-assignDue  {
-     background: #ffc532;
-     color: white;
-     }
+.event-semesterbreak {
+  background: #38bdf8;
+  color: #0f172a;
+}
 
-     .event-user  {
-     background: #0b6a00;
-     color: white;
-     }
+.event-schoolholiday {
+  background: #75bcf7;
+  color: #0f172a;
+}
+.event-noschool {
+  background: #6b7280;
+  color: #ffffff;
+}
+
+.event-assignDue {
+  background: #f2c94c;
+  color: #0f172a;
+}
+
+.event-user {
+  background: #22c55e;
+  color: #0f172a;
+}
 
 .attendance-present { background: #50b350d9; color: white; border-radius: 6px; text-align: center; }
 .attendance-absent  { background: #ba212be6; color: white; border-radius: 6px; text-align: center; }

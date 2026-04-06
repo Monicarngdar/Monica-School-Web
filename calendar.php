@@ -385,9 +385,21 @@ function openEventModal(button) {
             // CRITICAL: We add "modal-event-item" for layout AND event.eventType for the color
             // Ensure your database/PHP returns the exact class name (e.g., "event-user")
             div.className = `p-2 mb-2 rounded modal-event-item ${event.eventType}`;
-            
-            div.innerHTML = `<strong>${event.eventDescription}</strong>`;
-            modalList.appendChild(div);
+                if (event.eventType == "event-assignDue") {
+                // Add Flexbox classes to the container div
+                div.classList.add('d-flex', 'justify-content-between', 'align-items-center');
+                
+                div.innerHTML = `
+                    <span class="text-truncate me-2"><strong>${event.eventDescription}</strong></span>
+                    <a href="student-assign-deadlines.php?action=upload&id=${event.eventId}" 
+                    class="fa-solid fa-upload" 
+                    style="color: #007bff; cursor: pointer; text-decoration: none;">
+                    </a>`;
+            }
+            else {
+             div.innerHTML = `<strong>${event.eventDescription}</>`;
+            }
+                modalList.appendChild(div);
         });
     } else {
         modalList.innerHTML = '<p class="text-muted">No events found.</p>';
