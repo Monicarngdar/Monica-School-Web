@@ -2005,13 +2005,20 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
              $newEvent ['eventDescription'] = $event['taskTitle'];
               $newEvent ['eventId'] = $event['assignmentId'];
               $newEvent ['eventType'] = "event-assignDue";
+               if  (isAssignmentSubmitted($conn, $_SESSION["userId"], $event['assignmentId']) ){
+                    $newEvent ['eventStatus'] = "Done";
+               } else{
+                $newEvent ['eventStatus'] = ""; 
+               }
               $eventList[]= $newEvent;
-         }
+          
+    }
  
         foreach($schoolEvents as $event){
               $newEvent ['eventDescription'] = $event['eventDescription'];
               $newEvent ['eventId'] = $event['calendarId'];
               $newEvent ['eventType'] = $event['eventType'];
+              $newEvent ['eventStatus'] = ""; 
             $eventList[]= $newEvent;
          }
 
@@ -2019,8 +2026,9 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
               $newEvent ['eventDescription'] = $event['eventDescription'];
               $newEvent ['eventId'] = $event['calendarId'];
               $newEvent ['eventType'] = $event['eventType'];
+              $newEvent ['eventStatus'] = ""; 
                $eventList[]= $newEvent;
-
+            
          }
     
          return $eventList;

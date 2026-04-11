@@ -375,31 +375,47 @@ function openEventModal(button) {
     const modalList = document.getElementById('modalEventList');
     const modalDate = document.getElementById('modalDateDisplay');
     
-    modalDate.innerText = date;
+    // Formatting the date
+    const dateObj = new Date(date.replace(/-/g, '\/'));
+    const formattedDate = dateObj.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+    });
+    
+    modalDate.innerText = formattedDate; 
     modalList.innerHTML = '';
     
     if (events.length > 0) {
         events.forEach(event => {
             const div = document.createElement('div');
-            
-            // CRITICAL: We add "modal-event-item" for layout AND event.eventType for the color
-            // Ensure your database/PHP returns the exact class name (e.g., "event-user")
             div.className = `p-2 mb-2 rounded modal-event-item ${event.eventType}`;
-                if (event.eventType == "event-assignDue") {
-                // Add Flexbox classes to the container div
+            
+            if (event.eventType == "event-assignDue") {
                 div.classList.add('d-flex', 'justify-content-between', 'align-items-center');
                 
+                let actionContent = '';
+                
+                if (event.eventStatus && event.eventStatus.trim() !== "") {
+            
+                    actionContent = `<span class="badge bg-success">${event.eventStatus}</span>`;
+                } else {
+        
+                    actionContent = `<a href="student-assign-deadlines.php?action=upload&id=${event.eventId}" 
+                                     class="fa-solid fa-upload" 
+                                     style="color: #007bff; cursor: pointer; text-decoration: none;">
+                                     </a>`;
+                }
+
                 div.innerHTML = `
                     <span class="text-truncate me-2"><strong>${event.eventDescription}</strong></span>
-                    <a href="student-assign-deadlines.php?action=upload&id=${event.eventId}" 
-                    class="fa-solid fa-upload" 
-                    style="color: #007bff; cursor: pointer; text-decoration: none;">
-                    </a>`;
+                    ${actionContent}`;
+    
+
+            } else {
+                div.innerHTML = `<strong>${event.eventDescription}</strong>`;
             }
-            else {
-             div.innerHTML = `<strong>${event.eventDescription}</>`;
-            }
-                modalList.appendChild(div);
+            modalList.appendChild(div);
         });
     } else {
         modalList.innerHTML = '<p class="text-muted">No events found.</p>';
@@ -408,6 +424,7 @@ function openEventModal(button) {
     const myModal = new bootstrap.Modal(document.getElementById('eventModal'));
     myModal.show();
 }
+
 </script>
 
 <script>
