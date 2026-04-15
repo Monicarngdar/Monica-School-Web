@@ -12,6 +12,11 @@
                  $message = "Event Saved Successfully";
                  include "includes/show-success.php";
             }
+
+             if(getAssignmentsDueThisWeek($conn)) { 
+                 $message = "You upcoming assignments in the next 14 days";
+                 include "includes/show-warning.php";
+            }
       ?>
 
  <?php $event = getUserDayEvents($conn, "2026-04-03");?>

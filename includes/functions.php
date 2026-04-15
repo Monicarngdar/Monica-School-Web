@@ -2058,6 +2058,38 @@ function registerUser($conn, $username,$password,$firstName,$lastName,$role,$dat
          return $result;
     }
 
+    // Get AssignmentsDueThisWeek
+    function getAssignmentsDueThisWeek($conn) {
+    if ($_SESSION['userRole'] != 1) {
+        return false;
+    }
+
+    $sql = "SELECT * FROM assignments 
+            WHERE dueDate BETWEEN CURDATE() AND (CURDATE() + INTERVAL 14 DAY)
+            ORDER BY dueDate ASC;";
+
+    $stmt = mysqli_stmt_init($conn);
+    
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        echo "<p>Error: Could not load upcoming assignments.</p>";
+        return false;
+    }
+
+    mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_close($stmt);
+
+        if($row = mysqli_fetch_assoc($result)){
+            return $row;
+        }
+        else{
+            return false;
+        }
+
+}
+
+
 //Delete attachments
 function deleteAllMessages($conn, $username){
 
